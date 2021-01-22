@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Sales</string>
+    <string name="title_benefit_app">The benefit from this application :</string>
+    <string name="benefit_app_one">1. Neatly structured recording</string>
+    <string name="benefit_app_three">3. Easy to use</string>
+    <string name="benefit_app_two">2. Data always up to date</string>
+    <string name="skip">Skip</string>
+    <string name="next">NEXT</string>
+    <string name="login">LOGIN</string>
+    <string name="three">3</string>
+    <string name="e_mail">e-mail</string>
+    <string name="password">password</string>
+    <string name="forgot_password"><u>Forgot Password?</u></string>
+    <string name="title_on_login">Login and feel the ease</string>
+    <string name="home">Home</string>
+    <string name="history">History</string>
+    <string name="account">Account</string>
+    <string name="customer">+Customer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_customer">Add Customer</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="title_step_one">Step One</string>
+    <string name="area">Area</string>
+    <string name="company_shop_name">Company / Shop name</string>
+    <string name="company_npwp">Company NPWP</string>
+    <string name="company_phone">Company Phone</string>
+    <string name="name_admin_company">Name Admin Company</string>
+    <string name="id_card_admin_company">ID Card Admin Company</string>
+    <string name="place_date_birth_of_admin"><![CDATA[Place & Date Birth of Admin]]></string>
+    <string name="date_birth">Date Birth</string>
+    <string name="place_birth">Place Birth</string>
+    <string name="npwp_admin">NPWP Admin Company / Shop</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+</resources>
