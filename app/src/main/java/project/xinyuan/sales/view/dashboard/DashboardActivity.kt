@@ -22,6 +22,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     var doubleTap: Boolean = false
     private val fragmentManager = supportFragmentManager
     private var fragment:Fragment? =null
+    private val itemAddFragment:Int = R.id.addFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +31,10 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         loadFragment(fragment)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         binding.linearAccount.setOnClickListener(this)
-       fragmentManager.beginTransaction().apply {
+        binding.floatingAdd.setOnClickListener(this)
+        fragmentManager.beginTransaction().apply {
            replace(R.id.view_botnav, HomeFragment()).commit()
        }
-
     }
 
     private fun loadFragment(fragment: Fragment?): Boolean {
@@ -56,6 +57,12 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         return loadFragment(fragment)
     }
 
+    private fun middleBotnav(item:Int){
+        if(item == R.id.addFragment){
+            loadFragment(AddCustomerFragment())
+        }
+    }
+
     override fun onBackPressed() {
         if (doubleTap) {
             super.onBackPressed()
@@ -76,6 +83,9 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             R.id.linear_account -> {
                 val intent = Intent(applicationContext, AccountActivity::class.java)
                 startActivity(intent)
+            }
+            R.id.floating_add ->{
+                middleBotnav(itemAddFragment)
             }
         }
     }
