@@ -115,7 +115,6 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
             }
             R.id.btn_register_customer -> {
                 popupLoading?.show()
-//                move()
                 checkDataCustomer()
             }
         }

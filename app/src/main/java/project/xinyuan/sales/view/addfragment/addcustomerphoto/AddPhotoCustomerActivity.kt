@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -18,6 +17,7 @@ import android.view.View
 import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.MultipartBody.Part.createFormData
@@ -25,6 +25,7 @@ import okhttp3.RequestBody
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityAddPhotoCustomerBinding
 import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.view.dashboard.DashboardActivity
 import java.io.File
 
 
@@ -43,14 +44,17 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
     private var addressAdmin:String=""
     private var npwpAdmin:String=""
     private var placeAndBirthAdmin:String=""
-    private var fileUri: Uri = Uri.EMPTY
+    private var uriPhotoShop: Uri = Uri.EMPTY
+    private var uriPhotoIdCard: Uri = Uri.EMPTY
+    private var uriPhotoNpwpAdmin: Uri = Uri.EMPTY
+    private var uriNpwpCompany: Uri = Uri.EMPTY
     private var statusCapture:String = ""
     private var filePhotoShopOne: File? =null
     private var bodyPhotoShopTwo: MultipartBody.Part? = null
-    private lateinit var bodyPhotoIdCardAdmin: MultipartBody.Part
-    private lateinit var bodyPhotoNpwpAdmin: MultipartBody.Part
-    private lateinit var bodyPhotoNpwpCompany: MultipartBody.Part
-    private var idCustomer:Int = 0
+    private var bodyPhotoIdCardAdmin: MultipartBody.Part? = null
+    private var bodyPhotoNpwpAdmin: MultipartBody.Part? = null
+    private var bodyPhotoNpwpCompany: MultipartBody.Part? = null
+    private var idCustomer:String = ""
     private var popupLoading: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,11 +127,23 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                     ||checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 requestPermissions(permission, PERMISSION_CODE)
-            } else {
+            } else if (statusCapture == "shopOne"){
                 openCamera()
+            } else if (statusCapture == "idCardAdmin"){
+                openCameraIdCard()
+            } else if (statusCapture == "npwpAdmin"){
+                openCameraNpwpAdmin()
+            } else if (statusCapture == "npwpCompany"){
+                openCameraNpwpCompany()
             }
-        } else {
+        } else if (statusCapture == "shopOne"){
             openCamera()
+        } else if (statusCapture == "idCardAdmin"){
+            openCameraIdCard()
+        } else if (statusCapture == "npwpAdmin"){
+            openCameraNpwpAdmin()
+        } else if (statusCapture == "npwpCompany"){
+            openCameraNpwpCompany()
         }
     }
 
@@ -144,7 +160,20 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         when(requestCode){
             PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera()
+                    when (statusCapture) {
+                        "shopOne" -> {
+                            openCamera()
+                        }
+                        "idCardAdmin" -> {
+                            openCameraIdCard()
+                        }
+                        "npwpAdmin" -> {
+                            openCameraNpwpAdmin()
+                        }
+                        "npwpCompany" -> {
+                            openCameraNpwpCompany()
+                        }
+                    }
                 } else {
                     Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
@@ -157,44 +186,35 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         if (resultCode == RESULT_OK) {
             when (statusCapture) {
                 "shopOne" -> {
-                    binding.ivShopOne.setImageURI(fileUri)
-                    val filePath = getRealPathFromURIPath(fileUri)
+                    binding.ivShopOne.setImageURI(uriPhotoShop)
+                    val filePath = getRealPathFromURIPath(uriPhotoShop)
                     val file = File(filePath)
                     val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
                     bodyPhotoShopTwo = createFormData("foto_toko", file.name, mFile)
                 }
+                "idCardAdmin" -> {
+                    binding.ivIdCard.setImageURI(uriPhotoIdCard)
+                    val filePath = getRealPathFromURIPath(uriPhotoIdCard)
+                    val file = File(filePath)
+                    val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                    bodyPhotoIdCardAdmin = createFormData("ktp", file.name, mFile)
+                }
+                "npwpAdmin" -> {
+                    binding.ivNpwpAdmin.setImageURI(uriPhotoNpwpAdmin)
+                    val filePath = getRealPathFromURIPath(uriPhotoNpwpAdmin)
+                    val file = File(filePath)
+                    val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                    bodyPhotoNpwpAdmin = createFormData("npwp_pengurus", file.name, mFile)
+                }
+                "npwpCompany" -> {
+                    binding.ivNpwpCompany.setImageURI(uriNpwpCompany)
+                    val filePath = getRealPathFromURIPath(uriNpwpCompany)
+                    val file = File(filePath)
+                    val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                    bodyPhotoNpwpCompany = createFormData("npwp_perusahaan", file.name, mFile)
+                }
             }
         }
-//                "shopTwo" -> {
-//                    binding.ivShopTwo.setImageURI(fileUri)
-////                    val filePath = fileUri?.let { getRealPathFromURIPath(it) }
-////                    val file = File(filePath)
-////                    val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-////                   bodyPhotoShopTwo = createFormData("foto_toko", file.name, mFile)
-//                }
-//                "idCardAdmin" -> {
-//                    binding.ivIdCard.setImageURI(fileUri)
-////                    val filePath = fileUri?.let { getRealPathFromURIPath(it) }
-////                    val file = File(filePath)
-////                    val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-////                    bodyPhotoIdCardAdmin = createFormData("ktp", file.name, mFile)
-//                }
-//                "npwpAdmin" -> {
-//                    binding.ivNpwpAdmin.setImageURI(fileUri)
-////                    val filePath = fileUri?.let { getRealPathFromURIPath(it) }
-////                    val file = File(filePath)
-////                    val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-////                    bodyPhotoNpwpAdmin = createFormData("npwp_pengurus", file.name, mFile)
-//                }
-//                "npwpCompany" -> {
-//                    binding.ivNpwpCompany.setImageURI(fileUri)
-////                    val filePath = fileUri?.let { getRealPathFromURIPath(it) }
-////                    val file = File(filePath)
-////                    val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-////                    bodyPhotoNpwpCompany = createFormData("npwp_perusahaan", file.name, mFile)
-//                }
-//            }
-//        }
     }
 
     private fun getRealPathFromURIPath(contentURI: Uri): String? {
@@ -212,9 +232,41 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         val values = ContentValues()
         val intent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         values.put(MediaStore.Images.Media.TITLE, "Picture")
-        fileUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+        uriPhotoShop = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhotoShop)
         startActivityForResult(intent, IMAGE_CAPTURE_CODE)
+    }
+
+    private fun openCameraIdCard(){
+        val values = ContentValues()
+        val intent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        values.put(MediaStore.Images.Media.TITLE, "IDCard")
+        uriPhotoIdCard = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhotoIdCard)
+        startActivityForResult(intent, IMAGE_CAPTURE_CODE)
+    }
+
+    private fun openCameraNpwpAdmin(){
+        val values = ContentValues()
+        val intent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        values.put(MediaStore.Images.Media.TITLE, "Npwp-Admin")
+        uriPhotoNpwpAdmin = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhotoNpwpAdmin)
+        startActivityForResult(intent, IMAGE_CAPTURE_CODE)
+    }
+
+    private fun openCameraNpwpCompany(){
+        val values = ContentValues()
+        val intent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        values.put(MediaStore.Images.Media.TITLE, "Npwp-Company")
+        uriNpwpCompany = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriNpwpCompany)
+        startActivityForResult(intent, IMAGE_CAPTURE_CODE)
+    }
+
+    private fun move(){
+        val intent = Intent(applicationContext, DashboardActivity::class.java)
+        startActivity(intent)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -230,23 +282,26 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
     override fun messageUploadPhoto(msg: String) {
         Log.d("uploadPhoto", msg)
         popupLoading?.dismiss()
+        if (msg.contains("Success")){
+            Snackbar.make(binding.btnAddCustomer, "Add Customer Success", Snackbar.LENGTH_SHORT).show()
+            move()
+        } else {
+            Snackbar.make(binding.btnAddCustomer, "Add Customer Failed", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     override fun messageRegisterDataCustomer(msg: String) {
         Log.d("registerData", msg)
-        if (msg.contains("Success")){
-            val idCustomerFill: RequestBody = RequestBody.create(MultipartBody.FORM, "12")
-            val filePath = getRealPathFromURIPath(fileUri)
-            val file = File(filePath)
-            val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-            bodyPhotoShopTwo = createFormData("foto_toko", file.name, mFile)
-            presenter.addPhotoCustomer(idCustomerFill, null, bodyPhotoShopTwo, null, null )
-        }
     }
 
-    override fun getIdCustomer(idCustomerFill: DataCustomer?) {
-        Log.d("idCustomer", idCustomerFill?.id.toString())
-        idCustomer = idCustomerFill?.id!!
+    override fun getIdCustomer(item: DataCustomer?) {
+        idCustomer = item?.id.toString()
+        Log.d("idCustomer", idCustomer)
+        if (idCustomer.isNotEmpty()){
+            popupLoading?.show()
+            val idCustomerFill: RequestBody = RequestBody.create(MultipartBody.FORM, idCustomer)
+            presenter.addPhotoCustomer(idCustomerFill, bodyPhotoIdCardAdmin, bodyPhotoShopTwo, bodyPhotoNpwpAdmin, bodyPhotoNpwpCompany )
+        }
     }
 
 }

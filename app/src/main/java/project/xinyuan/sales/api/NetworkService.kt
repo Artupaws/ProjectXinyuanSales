@@ -65,4 +65,11 @@ interface NetworkService {
         @Part npwpPengurus:MultipartBody.Part?,
         @Part npwpPerusahaan:MultipartBody.Part?
     ):Call<ResponseUploadImageCustomer>
+
+    //Get Customer List
+    @Headers("No-Authentication: true")
+    @POST("api/customer")
+    fun getListCustomer(
+
+    ):Call<ResponseGetListCustomer>
 }

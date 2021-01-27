@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ResponseGetListCustomer(
 
 	@field:SerializedName("data")
-	val data: DataCustomer? = null,
+	val data: List<DataCustomer?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
