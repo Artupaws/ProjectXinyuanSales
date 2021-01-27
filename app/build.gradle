@@ -63,7 +63,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //Interceptor logging test
-    implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

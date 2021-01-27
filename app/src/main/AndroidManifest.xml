@@ -3,6 +3,9 @@
     package="project.xinyuan.sales">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sales"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.addfragment.addcustomerdata.DataCustomerActivty"></activity>
+        <activity android:name=".view.addfragment.addcustomerphoto.AddPhotoCustomerActivity"></activity>
+        <activity android:name=".view.addfragment.addcustomerdata.DataCustomerActivty" />
         <activity android:name=".view.account.AccountActivity" />
         <activity android:name=".view.dashboard.DashboardActivity" />
         <activity android:name=".view.login.LoginActivity" />

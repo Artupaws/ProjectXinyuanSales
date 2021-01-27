@@ -26,6 +26,7 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,6 +61,7 @@
                         android:layout_height="45dp"
                         android:background="@drawable/background_input"
                         android:hint="@string/area"
+                        android:focusable="false"
                         android:inputType="text"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp" />
@@ -97,6 +99,29 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/company_address"
+                        android:textColor="@color/black" />
+
+                    <EditText
+                        android:id="@+id/et_company_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_input"
+                        android:hint="@string/company_address"
+                        android:inputType="text"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/company_npwp"
                         android:textColor="@color/black" />
 
@@ -106,7 +131,7 @@
                         android:layout_height="45dp"
                         android:background="@drawable/background_input"
                         android:hint="@string/company_npwp"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp" />
                 </LinearLayout>
@@ -130,6 +155,7 @@
                         android:background="@drawable/background_input"
                         android:hint="@string/company_phone"
                         android:inputType="phone"
+                        android:digits="0123456789"
                         android:maxLength="13"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp" />
@@ -176,7 +202,33 @@
                         android:layout_height="45dp"
                         android:background="@drawable/background_input"
                         android:hint="@string/id_card_admin_company"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
+                        android:maxLength="16"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_number_admin"
+                        android:textColor="@color/black" />
+
+                    <EditText
+                        android:id="@+id/et_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_input"
+                        android:hint="@string/phone_number_admin"
+                        android:maxLength="13"
+                        android:inputType="phone"
+                        android:digits="0123456789"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp" />
                 </LinearLayout>
@@ -216,9 +268,11 @@
                             android:id="@+id/et_date_birth"
                             android:layout_width="0dp"
                             android:layout_height="45dp"
+                            android:focusable="false"
                             android:layout_marginStart="5dp"
+                            android:enabled="false"
                             android:layout_weight="1"
-                            android:background="@drawable/background_input"
+                            android:background="@drawable/state_background_input_optional"
                             android:hint="@string/date_birth"
                             android:inputType="date"
                             android:paddingStart="10dp"
@@ -244,9 +298,10 @@
                         android:id="@+id/et_npwp_admin"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:background="@drawable/background_input"
+                        android:enabled="true"
+                        android:background="@drawable/state_background_input_optional"
                         android:hint="@string/npwp_admin"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp" />
                 </LinearLayout>
@@ -260,51 +315,56 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/phone_number"
-                        android:textColor="@color/black" />
-
-                    <EditText
-                        android:id="@+id/et_phone_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:background="@drawable/background_input"
-                        android:hint="@string/phone_number"
-                        android:maxLength="13"
-                        android:inputType="phone"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/address"
+                        android:text="@string/address_admin"
                         android:textColor="@color/black" />
 
                     <EditText
                         android:id="@+id/et_address_admin"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:background="@drawable/background_input"
-                        android:hint="@string/address"
+                        android:enabled="true"
+                        android:background="@drawable/state_background_input_optional"
+                        android:hint="@string/address_admin"
                         android:inputType="text"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp" />
                 </LinearLayout>
 
-                <Button
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/next"/>
+                    android:layout_marginTop="25dp"
+                    android:text="@string/note_optional"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/title_next_upload_document"
+                    android:textColor="@color/black" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp">
+
+                    <ProgressBar
+                        android:id="@+id/progress_circular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        android:layout_gravity="center_horizontal|bottom"/>
+
+                    <Button
+                        android:id="@+id/btn_register_customer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:backgroundTint="@color/orange"
+                        android:text="@string/next"
+                        android:textColor="@color/white" />
+                </FrameLayout>
 
             </LinearLayout>
 

@@ -18,7 +18,7 @@
     <string name="customer">+Customer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_customer">Add Customer</string>
+    <string name="add_customer">Add</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="title_step_one">Step One</string>
     <string name="area">Area</string>
@@ -27,11 +27,25 @@
     <string name="company_phone">Company Phone</string>
     <string name="name_admin_company">Name Admin Company</string>
     <string name="id_card_admin_company">ID Card Admin Company</string>
-    <string name="place_date_birth_of_admin"><![CDATA[Place & Date Birth of Admin]]></string>
+    <string name="place_date_birth_of_admin"><![CDATA[Place & Date Birth of Admin]]><u>*optional</u></string>
     <string name="date_birth">Date Birth</string>
     <string name="place_birth">Place Birth</string>
-    <string name="npwp_admin">NPWP Admin Company / Shop</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="address">Address</string>
+    <string name="npwp_admin">NPWP Admin Company / Shop<u>*optional</u></string>
+    <string name="phone_number_admin">Phone Number Admin</string>
+    <string name="address_admin">Address Admin<u>*optional</u></string>
     <string name="empty_title"> </string>
+    <string name="company_address">Company Address</string>
+    <string name="step_two">Step Two</string>
+    <string name="list_area">List Area</string>
+    <string name="cancel">Cancel</string>
+    <string name="note_optional">Note : optional can be left blank</string>
+    <string name="please_wait">Please wait</string>
+    <string name="title_next_upload_document">Next : upload KTP Admin, upload shop display, upload NPWP admin, upload NPWP company</string>
+    <string name="title_shop_photo">Shop</string>
+    <string name="id_card">ID Card &amp; NPWP Admin</string>
+    <string name="title_npwp_admin">NPWP Admin</string>
+    <string name="npwp_company">NPWP Company</string>
+    <string name="register">Register</string>
+    <string name="photo_1">Photo 1</string>
+    <string name="photo_2">Photo 2</string>
 </resources>

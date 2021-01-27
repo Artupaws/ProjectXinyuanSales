@@ -1,15 +1,14 @@
 package project.xinyuan.sales.api
 
-import project.xinyuan.sales.model.ResponseGetListProduct
-import project.xinyuan.sales.model.ResponseLogin
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import project.xinyuan.sales.model.*
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface NetworkService {
 
+    //Login
     @FormUrlEncoded
     @Headers("No-Authentication: true")
     @POST("api/sales/login")
@@ -19,7 +18,51 @@ interface NetworkService {
             @Field("password")password:String
     ):Call<ResponseLogin>
 
+    //Get List Product
     @Headers("No-Authentication: true")
     @POST("api/product")
     fun getListProduct():Call<ResponseGetListProduct>
+
+    //Get List Area
+    @Headers("No-Authentication: true")
+    @POST("api/area")
+    fun getListArea():Call<ResponseGetListArea>
+
+    //Register Data Customer
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/customer/register")
+    fun registerDataCustomer(
+        @Field("id_area")idArea:Int,
+        @Field("company_name")companyName:String,
+        @Field("company_address")companyAddress:String,
+        @Field("administrator_name")administratorName:String,
+        @Field("administrator_id")administratorId:String,
+        @Field("administrator_phone")administratorPhone:String,
+        @Field("company_phone")companyPhone:String,
+        @Field("company_npwp")companyNpwp:String,
+        @Field("administrator_address")administratorAddress:String,
+        @Field("administrator_birthdate")administratorBirthdate:String,
+        @Field("administrator_npwp")administratorNpwp:String
+    ):Call<ResponseRegisterDataCustomer>
+
+    //Check ID Customer
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/customer/idcheck")
+    fun checkIdCustomer(
+        @Field("administrator_id")administratorId:String
+    ):Call<ResponseCheckIdCustomer>
+
+    //Upload Image Customer
+    @Multipart
+    @Headers("No-Authentication: true")
+    @POST("api/customer/photo")
+    fun uploadImageCustomer(
+        @Part ("id_customer")idCustomer:RequestBody,
+        @Part ktp:MultipartBody.Part?,
+        @Part fotoToko:MultipartBody.Part?,
+        @Part npwpPengurus:MultipartBody.Part?,
+        @Part npwpPerusahaan:MultipartBody.Part?
+    ):Call<ResponseUploadImageCustomer>
 }

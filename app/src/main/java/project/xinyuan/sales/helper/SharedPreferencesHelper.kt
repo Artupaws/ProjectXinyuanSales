@@ -2,6 +2,8 @@ package project.xinyuan.sales.helper
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
+import java.net.URI
 
 class SharedPreferencesHelper(context: Context) {
 
@@ -32,9 +34,7 @@ class SharedPreferencesHelper(context: Context) {
 
     fun save(KEY_NAME: String, value: Int) {
         val editor: SharedPreferences.Editor = sharedPref.edit()
-
         editor.putInt(KEY_NAME, value)
-
         editor.apply()
     }
 
@@ -48,7 +48,6 @@ class SharedPreferencesHelper(context: Context) {
     }
 
     fun getValueInt(KEY_NAME: String): Int {
-
         return sharedPref.getInt(KEY_NAME, 0)
     }
 
@@ -57,19 +56,14 @@ class SharedPreferencesHelper(context: Context) {
     }
 
     fun clearSharedPreference() {
-
         val editor: SharedPreferences.Editor = sharedPref.edit()
-
         //sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-
         editor.clear()
         editor.apply()
     }
 
     fun removeValue(KEY_NAME: String) {
-
         val editor: SharedPreferences.Editor = sharedPref.edit()
-
         editor.remove(KEY_NAME)
         editor.apply()
     }

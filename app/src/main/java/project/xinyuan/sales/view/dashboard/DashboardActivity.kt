@@ -1,6 +1,7 @@
 package project.xinyuan.sales.view.dashboard
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
@@ -31,7 +32,6 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         loadFragment(fragment)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         binding.linearAccount.setOnClickListener(this)
-        binding.floatingAdd.setOnClickListener(this)
         fragmentManager.beginTransaction().apply {
            replace(R.id.view_botnav, HomeFragment()).commit()
        }
@@ -50,17 +50,20 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var fragment: Fragment? = null
         when (item.itemId) {
-            R.id.homeFragment -> fragment = HomeFragment()
-            R.id.addFragment -> fragment = AddCustomerFragment()
-            R.id.historyFragment -> fragment = HistoryFragment()
+            R.id.homeFragment -> {
+                binding.floatingAdd.setImageResource(R.drawable.ic_add_black)
+                fragment = HomeFragment()
+            }
+            R.id.addFragment -> {
+                binding.floatingAdd.setImageResource(R.drawable.ic_add_white)
+                fragment = AddCustomerFragment()
+            }
+            R.id.historyFragment -> {
+                binding.floatingAdd.setImageResource(R.drawable.ic_add_black)
+                fragment = HistoryFragment()
+            }
         }
         return loadFragment(fragment)
-    }
-
-    private fun middleBotnav(item:Int){
-        if(item == R.id.addFragment){
-            loadFragment(AddCustomerFragment())
-        }
     }
 
     override fun onBackPressed() {
@@ -83,9 +86,6 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             R.id.linear_account -> {
                 val intent = Intent(applicationContext, AccountActivity::class.java)
                 startActivity(intent)
-            }
-            R.id.floating_add ->{
-                middleBotnav(itemAddFragment)
             }
         }
     }

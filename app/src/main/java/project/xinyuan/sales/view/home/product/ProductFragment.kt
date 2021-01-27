@@ -32,7 +32,7 @@ class ProductFragment : Fragment(), ProductContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getListProduct()
+//        presenter.getListProduct()
     }
 
     override fun onDestroy() {
