@@ -1,7 +1,10 @@
 package project.xinyuan.sales.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class DataCustomer(
 
 	@field:SerializedName("company_phone")
@@ -48,4 +51,4 @@ data class DataCustomer(
 
 	@field:SerializedName("id")
 	val id: Int? = null
-)
+):Parcelable

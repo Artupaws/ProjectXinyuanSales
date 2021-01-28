@@ -1,7 +1,6 @@
 package project.xinyuan.sales.view.dashboard
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
@@ -13,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityDashboardBinding
 import project.xinyuan.sales.view.account.AccountActivity
-import project.xinyuan.sales.view.addfragment.AddCustomerFragment
+import project.xinyuan.sales.view.addfragment.AddFragment
 import project.xinyuan.sales.view.history.HistoryFragment
 import project.xinyuan.sales.view.home.HomeFragment
 
@@ -56,7 +55,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             }
             R.id.addFragment -> {
                 binding.floatingAdd.setImageResource(R.drawable.ic_add_white)
-                fragment = AddCustomerFragment()
+                fragment = AddFragment()
             }
             R.id.historyFragment -> {
                 binding.floatingAdd.setImageResource(R.drawable.ic_add_black)

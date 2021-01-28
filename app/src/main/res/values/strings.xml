@@ -49,4 +49,11 @@
     <string name="photo_1">Photo 1</string>
     <string name="photo_2">Photo 2</string>
     <string name="sample_name">Good Sales</string>
+    <string name="title_add_customer">Add Customer</string>
+    <string name="add_order_customer">Add Order Customer</string>
+    <string name="place_order">Place Order</string>
+    <string name="input_your_price_here">Input your price here</string>
+    <string name="input_price">Input your price here</string>
+    <string name="create_order_for">Create order for :</string>
+    <string name="dash_line">-</string>
 </resources>
