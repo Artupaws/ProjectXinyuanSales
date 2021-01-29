@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.Hold
 import project.xinyuan.sales.databinding.ListItemProductAddOrderBinding
@@ -20,6 +21,18 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct:L
         }
 
     }
+
+//    override fun getLoadJobCategory(itemHaina: MutableList<DataItemHaina?>?) {
+//        val category = mutableListOf<DataItemHaina?>()
+//        category.addAll(listOf(DataItemHaina("All Category", "All Category", -1)))
+//        category.addAll(itemHaina!!)
+//        val jobCategoryAdapter = AdapterJobCategoryOnJob(this, category)
+//        binding.rvCategoryJob.apply {
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            adapter = jobCategoryAdapter
+//            jobCategoryAdapter.notifyDataSetChanged()
+//        }
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterListProductAddOrder.Holder {
         val inflater = LayoutInflater.from(parent.context)

@@ -22,8 +22,8 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         setContentView(binding.root)
         presenter = AddOrderCustomerPresenter(this, this)
         presenter.getListProduct()
-        refresh()
 
+        refresh()
         binding.toolbarAddOrderCustomer.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarAddOrderCustomer.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarAddOrderCustomer.title = "Add Order Customer"
