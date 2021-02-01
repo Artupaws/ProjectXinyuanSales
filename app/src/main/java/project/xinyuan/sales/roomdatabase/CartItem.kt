@@ -6,17 +6,21 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "Cart")
-data class CartItem(
+@Entity(tableName = "carts")
+@Parcelize
+data class CartItem (
+        @PrimaryKey(autoGenerate = true)
+        var id:Int=0,
 
-        @PrimaryKey
-        val id: Int,
-        @ColumnInfo
-        val type: String,
-        @ColumnInfo
-        val photo: String,
-        @ColumnInfo
-        val price: String,
-        @ColumnInfo
-        val total: Int
-)
+        @ColumnInfo(name = "type")
+        var type: String="",
+
+        @ColumnInfo(name = "photo")
+        var photo: String="",
+
+        @ColumnInfo(name = "price")
+        var price: String="",
+
+        @ColumnInfo(name = "total")
+        var total: String=""
+):Parcelable

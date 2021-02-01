@@ -1,24 +1,22 @@
 package project.xinyuan.sales.roomdatabase
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface CartDao {
 
     @Insert
-    fun addToCart(cartItem: CartItem)
+    fun insert(cart: CartItem)
 
-    @Query("SELECT * FROM Cart")
-    fun getData(): MutableList<CartItem?>?
+    @Update
+    fun update(cart: CartItem)
 
-    @Query("SELECT EXISTS (SELECT 1 FROM cart WHERE id=:id)")
-    fun isAddToCart(id: Int): Int
+    @Delete
+    fun delete(cart: CartItem)
 
-    @Query("select COUNT (*) from Cart")
-    fun countCart(): Int
+    @Query("SELECT * FROM carts")
+    fun getAll() : List<CartItem>
 
-    @Query("DELETE FROM Cart WHERE id=:id ")
-    fun deleteItem(id: Int): Int
+    @Query("SELECT * FROM carts WHERE id = :id")
+    fun getById(id: Int) : List<CartItem>
 }

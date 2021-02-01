@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
@@ -34,6 +35,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         fragmentManager.beginTransaction().apply {
            replace(R.id.view_botnav, HomeFragment()).commit()
        }
+
     }
 
     private fun loadFragment(fragment: Fragment?): Boolean {
@@ -70,9 +72,9 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             super.onBackPressed()
         } else {
             Snackbar.make(
-                binding.viewBotnav,
-                "Please click once again to exit",
-                Snackbar.LENGTH_SHORT
+                    binding.viewBotnav,
+                    "Please click once again to exit",
+                    Snackbar.LENGTH_SHORT
             ).show()
             doubleTap = true
             val handler: Handler = Handler()
