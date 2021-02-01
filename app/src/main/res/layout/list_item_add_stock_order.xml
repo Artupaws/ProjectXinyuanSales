@@ -61,6 +61,7 @@
                         android:background="@drawable/state_background_input_optional"
                         android:textSize="12sp"
                         android:inputType="numberDecimal"
+                        android:focusableInTouchMode="true"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:digits="0123456789"
@@ -69,17 +70,37 @@
                         android:layout_marginTop="10dp"/>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_title_choose"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|end"
-                    android:visibility="gone"
-                    android:layout_margin="5dp"
-                    android:text="@string/choose"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp"
-                    app:drawableEndCompat="@drawable/ic_checklist_green" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_title_choose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:visibility="gone"
+                        android:layout_margin="5dp"
+                        android:text="@string/choose"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp"
+                        app:drawableEndCompat="@drawable/ic_checklist_green" />
+                    <TextView
+                        android:id="@+id/tv_remove"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:visibility="gone"
+                        android:layout_margin="5dp"
+                        android:text="@string/remove"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp"
+                        app:drawableEndCompat="@drawable/ic_remove" />
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
@@ -88,6 +109,7 @@
                 android:layout_height="match_parent"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
+                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="vertical">

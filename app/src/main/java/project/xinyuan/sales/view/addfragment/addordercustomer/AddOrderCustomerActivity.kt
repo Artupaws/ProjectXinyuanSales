@@ -15,6 +15,8 @@ import project.xinyuan.sales.adapter.AdapterListProductAddOrder
 import project.xinyuan.sales.databinding.ActivityAddOrderCustomerBinding
 import project.xinyuan.sales.model.DataCustomer
 import project.xinyuan.sales.model.DataProduct
+import project.xinyuan.sales.roomdatabase.CartItem
+import project.xinyuan.sales.roomdatabase.CartRoomDatabase
 import project.xinyuan.sales.view.cart.ListCartActivity
 
 class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddOrderCustomerContract {
@@ -22,7 +24,8 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
     private lateinit var binding: ActivityAddOrderCustomerBinding
     private lateinit var presenter: AddOrderCustomerPresenter
     private var broadcaster: LocalBroadcastManager? = null
-    private var totalOrder:Int = 0
+    private var statusAdd:Int = 0
+    private var statusRemove:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,6 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         presenter.getListProduct()
 
         refresh()
-        setStatePlaceOrder()
         binding.toolbarAddOrderCustomer.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarAddOrderCustomer.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarAddOrderCustomer.title = "Add Order Customer"
@@ -55,19 +57,33 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         }
     }
 
+    private fun getListCart(){
+        val database = CartRoomDatabase.getDatabase(applicationContext)
+        val dao = database.getCartDao()
+        val listItem = arrayListOf<CartItem>()
+        listItem.addAll(dao.getAll())
+        binding.btnPlaceOrder.isEnabled = listItem.isNotEmpty()
+    }
+
     override fun onStart() {
         super.onStart()
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("total"))
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("check"))
     }
 
     private val mMessageReceiver : BroadcastReceiver = object:BroadcastReceiver(){
         override fun onReceive(p0: Context?, intent: Intent?) {
             when(intent?.action){
-                "total"-> {
-                    val total = intent.getIntExtra("totalOrder", 0)
-                    totalOrder = total
-                    setStatePlaceOrder()
-                    Log.d("totalOrder", total.toString())
+                "check"-> {
+                    val add = intent.getIntExtra("addProduct", 0)
+                    val remove = intent.getIntExtra("removeProduct", 0)
+                    statusAdd = add
+                    statusRemove = remove
+                    if (statusAdd == 1){
+                        getListCart()
+                    }
+                    if (statusRemove == 1){
+                        getListCart()
+                    }
                 }
             }
         }
@@ -85,14 +101,13 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
     }
 
     private fun setStatePlaceOrder(){
-        binding.btnPlaceOrder.isEnabled = totalOrder != 0
+        binding.btnPlaceOrder.isEnabled = statusAdd != 0
     }
 
     override fun messageGetListProduct(msg: String) {
         Log.d("getListProduct", msg)
         binding.swipeRefresh.isRefreshing = false
-        totalOrder = 0
-        setStatePlaceOrder()
+        statusAdd = 0
     }
 
     override fun getListProduct(data: List<DataProduct?>?) {

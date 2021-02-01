@@ -23,6 +23,7 @@ import project.xinyuan.sales.view.dashboard.DashboardActivity
 class AdapterListProductAddOrder(val context: Context, private val listProduct: List<DataProduct?>?) : RecyclerView.Adapter<AdapterListProductAddOrder.Holder>() {
     private var broadcaster: LocalBroadcastManager? = null
     private var popupAddStock: Dialog? = null
+    private var popupAskDelete: Dialog? = null
     var inputPrice: String = ""
     private lateinit var database: CartRoomDatabase
     private lateinit var dao:CartDao
@@ -96,16 +97,42 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
                         popupAddStock?.dismiss()
                         linearAddStock.isEnabled = true
                         tvTitleChoose.visibility = View.VISIBLE
+                        tvRemove.visibility = View.VISIBLE
                         ivActionAdd.visibility = View.GONE
-                        etInputPrice.isFocusable = false
-                        val intentTotal = Intent("total")
-                                .putExtra("totalOrder", item.id)
+                        tvTitleChoose.text = "Choose ${inputTotal?.text.toString()}"
+                        val intentTotal = Intent("check")
+                                .putExtra("addProduct", 1)
                         broadcaster?.sendBroadcast(intentTotal)
                         saveCart(CartItem(id = item.id, type = item.type, photo = item.photo, price = etInputPrice.text.toString(), total = inputTotal?.text.toString()))
                     }
                     popupAddStock?.show()
                 }
-
+                tvRemove.setOnClickListener {
+                    @SuppressLint("UseCompatLoadingForDrawables")
+                    popupAskDelete = Dialog(context)
+                    popupAskDelete?.setContentView(R.layout.popup_ask)
+                    popupAskDelete?.setCancelable(true)
+                    popupAskDelete?.window?.setBackgroundDrawable(context.getDrawable(android.R.color.transparent))
+                    val window: Window = popupAskDelete?.window!!
+                    window.setGravity(Gravity.CENTER)
+                    popupAskDelete?.show()
+                    val btnYes = popupAskDelete?.findViewById<Button>(R.id.btn_yes)
+                    val btnNo = popupAskDelete?.findViewById<Button>(R.id.btn_no)
+                    btnYes?.setOnClickListener {
+                        deleteCart(CartItem(id = item.id, type = item.type, photo = item.photo, etInputPrice.text.toString(), total = tvTitleChoose.text.toString()))
+                        tvTitleChoose.visibility = View.GONE
+                        tvRemove.visibility = View.GONE
+                        linearAddStock.isEnabled = false
+                        ivActionAdd.visibility = View.VISIBLE
+                        etInputPrice.text.clear()
+                        popupAskDelete?.dismiss()
+                        val intentTotal = Intent("check")
+                                .putExtra("removeProduct", 1)
+                        broadcaster?.sendBroadcast(intentTotal)
+                    }
+                    btnNo?.setOnClickListener { popupAskDelete?.dismiss() }
+                }
+                etInputPrice.isFocusable = etInputPrice.text.isEmpty()
             }
         }
     }
@@ -132,5 +159,9 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
         }else{
             dao.update(cart)
         }
+    }
+
+    private fun deleteCart(cart: CartItem){
+        dao.delete(cart)
     }
 }
