@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import project.xinyuan.sales.R
@@ -100,8 +101,12 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         }
     }
 
-    private fun setStatePlaceOrder(){
-        binding.btnPlaceOrder.isEnabled = statusAdd != 0
+    override fun onBackPressed() {
+        if (!binding.btnPlaceOrder.isEnabled){
+            super.onBackPressed()
+        } else {
+            Toast.makeText(applicationContext, "Finish the order or delete all order", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun messageGetListProduct(msg: String) {
