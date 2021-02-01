@@ -1,42 +1,117 @@
 package project.xinyuan.sales.adapter
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.transition.Hold
-import project.xinyuan.sales.databinding.ListItemProductAddOrderBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import project.xinyuan.sales.R
+import project.xinyuan.sales.databinding.ListItemAddStockOrderBinding
+import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.model.DataProduct
 
-class AdapterListProductAddOrder(val context: Context, private val listProduct:List<DataProduct?>?):RecyclerView.Adapter<AdapterListProductAddOrder.Holder>() {
-    inner class Holder(view:View):RecyclerView.ViewHolder(view){
-        private val binding = ListItemProductAddOrderBinding.bind(view)
-        fun bin(item:DataProduct){
-            with(binding){
+class AdapterListProductAddOrder(val context: Context, private val listProduct: List<DataProduct?>?) : RecyclerView.Adapter<AdapterListProductAddOrder.Holder>() {
+    private var broadcaster: LocalBroadcastManager? = null
+    private var popupAddStock: Dialog? = null
+    var inputPrice: String = ""
+
+    inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = ListItemAddStockOrderBinding.bind(view)
+        fun bin(item: DataProduct) {
+            with(binding) {
+                linearAddStock.isEnabled = false
                 tvProductName.text = item.type
                 tvProductPrice.text = item.cost.toString()
+                Glide.with(context).load(item.photo).skipMemoryCache(false)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).into(ivProduct)
+                etInputPrice.addTextChangedListener(object : TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        false
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        false
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+                        if (p0?.isNotEmpty()!!){
+                            inputPrice = p0.toString()
+                            ivActionAdd.isEnabled = true
+                        }else {
+                            ivActionAdd.isEnabled = false
+                        }
+                        true
+                    }
+
+                })
+                ivActionAdd.setOnClickListener {
+                    @SuppressLint("UseCompatLoadingForDrawables")
+                    popupAddStock = Dialog(context)
+                    popupAddStock?.setContentView(R.layout.list_item_product_add_order)
+                    popupAddStock?.setCancelable(true)
+                    popupAddStock?.window?.setBackgroundDrawable(context.getDrawable(android.R.color.transparent))
+                    val window: Window = popupAddStock?.window!!
+                    window.setGravity(Gravity.CENTER)
+                    val add = popupAddStock?.findViewById<Button>(R.id.iv_action_add)
+                    val inputTotal = popupAddStock?.findViewById<EditText>(R.id.tv_total_order)
+                    val imageProduct = popupAddStock?.findViewById<ImageView>(R.id.iv_product)
+                    val nameProduct = popupAddStock?.findViewById<TextView>(R.id.tv_product_name)
+                    val priceSales = popupAddStock?.findViewById<TextView>(R.id.tv_your_price)
+                    inputTotal?.addTextChangedListener(object : TextWatcher{
+                        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            false
+                        }
+
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            false
+                        }
+
+                        override fun afterTextChanged(p0: Editable?) {
+                            if (p0?.isNotEmpty()!!){
+                                add?.visibility =View.VISIBLE
+                            } else {
+                                add?.visibility =View.GONE
+                            }
+                            true
+                        }
+
+                    })
+                    Glide.with(context).load(item.photo).skipMemoryCache(false).diskCacheStrategy(
+                            DiskCacheStrategy.NONE).into(imageProduct!!)
+                    nameProduct?.text = item.type
+                    priceSales?.text = inputPrice
+                    add?.setOnClickListener {
+                        popupAddStock?.dismiss()
+                        linearAddStock.isEnabled = true
+                        tvTitleChoose.visibility = View.VISIBLE
+                        ivActionAdd.visibility = View.GONE
+                        etInputPrice.isFocusable = false
+                        val intentTotal = Intent("total")
+                                .putExtra("totalOrder", item.id)
+                        broadcaster?.sendBroadcast(intentTotal)
+                    }
+                    popupAddStock?.show()
+                }
+
             }
         }
-
     }
-
-//    override fun getLoadJobCategory(itemHaina: MutableList<DataItemHaina?>?) {
-//        val category = mutableListOf<DataItemHaina?>()
-//        category.addAll(listOf(DataItemHaina("All Category", "All Category", -1)))
-//        category.addAll(itemHaina!!)
-//        val jobCategoryAdapter = AdapterJobCategoryOnJob(this, category)
-//        binding.rvCategoryJob.apply {
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//            adapter = jobCategoryAdapter
-//            jobCategoryAdapter.notifyDataSetChanged()
-//        }
-//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterListProductAddOrder.Holder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ListItemProductAddOrderBinding.inflate(inflater)
+        val binding = ListItemAddStockOrderBinding.inflate(inflater)
+        broadcaster = LocalBroadcastManager.getInstance(context)
         return Holder(binding.root)
     }
 

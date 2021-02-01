@@ -26,6 +26,7 @@ class ChooseCustomerActivity : AppCompatActivity(), ChooseCustomerContract {
         presenter.getListCustomer()
         refresh()
 
+
     }
 
     private fun refresh(){
