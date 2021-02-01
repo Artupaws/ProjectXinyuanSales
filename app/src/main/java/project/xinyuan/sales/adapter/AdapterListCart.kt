@@ -5,20 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.android.material.transition.Hold
 import project.xinyuan.sales.databinding.ListItemCartOrderBinding
 import project.xinyuan.sales.roomdatabase.CartItem
 
-class AdapterListCart(val context: Context, val listCart:List<CartItem?>?):RecyclerView.Adapter<AdapterListCart.Holder>() {
+class AdapterListCart(val context: Context, private val listCart:List<CartItem?>?):RecyclerView.Adapter<AdapterListCart.Holder>() {
     inner class Holder(view:View):RecyclerView.ViewHolder(view) {
         private val binding = ListItemCartOrderBinding.bind(view)
         fun bin(item: CartItem){
             with(binding){
                 tvProductName.text = item.type
                 tvYourPrice.text = item.price
-                tvTotalOrder.setText(item.total)
+                tvTotalOrder.text = item.total
+                tvSubTotalPrice.text = ((item.total.toInt()*item.price.toInt()).toString())
             }
         }
 

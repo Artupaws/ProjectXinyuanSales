@@ -2,118 +2,57 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="5dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_item"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@color/white"
-        android:elevation="5sp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/tv_total_order"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="10dp"
-                android:paddingEnd="5dp"
-                android:gravity="center_vertical|center_horizontal">
-
-                <TextView
-                    android:id="@+id/tv_product_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:textSize="12sp"
-                    tools:text="Tarpaulin"
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:id="@+id/tv_product_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="10sp"
-                    android:text="@string/price_from_you"
-                    tools:ignore="SmallSp" />
-                <TextView
-                    android:id="@+id/tv_your_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    tools:text="Rp30.000"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@color/dark_gray"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:text="@string/input_total"
-                    tools:ignore="SmallSp" />
-                <EditText
-                    android:id="@+id/tv_total_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    tools:text="1"
-                    android:inputType="numberDecimal"
-                    android:digits="0123456789"
-                    android:textAlignment="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"/>
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/iv_action_add"
-                        android:layout_width="60dp"
-                        android:layout_height="35dp"
-                        android:visibility="gone"
-                        android:backgroundTint="@android:color/holo_green_dark"
-                        android:text="@string/add"
-                        android:textSize="10sp"
-                        android:src="@drawable/ic_add_order"
-                        tools:ignore="SmallSp" />
-                    <Button
-                        android:id="@+id/iv_action_remove"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:visibility="gone"
-                        android:backgroundTint="@android:color/holo_red_dark"
-                        android:text="@string/remove"
-                        android:textSize="10sp"
-                        android:src="@drawable/ic_add_order"
-                        tools:ignore="SmallSp" />
-                </FrameLayout>
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+            android:layout_margin="0.8dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="0.7"
+            tools:text="Total"/>
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0.8dp"
+            android:layout_weight="1.5"
+            android:textSize="12sp"
+            android:gravity="center_horizontal"
+            android:background="@color/white"
+            tools:text="Nama"/>
+        <TextView
+            android:id="@+id/tv_your_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0.8dp"
+            android:layout_weight="0.8"
+            android:gravity="center_horizontal"
+            android:background="@color/white"
+            tools:text="Harga"/>
+        <TextView
+            android:id="@+id/tv_sub_total_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0.8dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:background="@color/white"
+            tools:text="Jumlah"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black"
+        android:layout_below="@+id/linear_item"/>
 
 </RelativeLayout>
