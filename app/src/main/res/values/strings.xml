@@ -64,4 +64,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="asking_delete">Are you sure want to delete ?</string>
+    <string name="input_sales_name_here">input sales name here</string>
 </resources>

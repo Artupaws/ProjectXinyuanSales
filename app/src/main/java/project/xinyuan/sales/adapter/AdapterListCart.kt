@@ -18,9 +18,7 @@ class AdapterListCart(val context: Context, val listCart:List<CartItem?>?):Recyc
             with(binding){
                 tvProductName.text = item.type
                 tvYourPrice.text = item.price
-                Glide.with(context).load(item.photo).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .into(ivProduct)
-                tvTotalOrder.setText(item.total.toString())
+                tvTotalOrder.setText(item.total)
             }
         }
 
