@@ -88,4 +88,12 @@ interface NetworkService {
             @Field("paid")paid:String,
             @Field("total_payment")totalPayment:String
     ):Call<ResponseAddTransaction>
+
+    //Add Product Transaction
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("")
+    fun addProductTransaction(
+
+    ):Call<ResponseAddProductTransaction>
 }
