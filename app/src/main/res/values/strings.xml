@@ -64,5 +64,20 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="asking_delete">Are you sure want to delete ?</string>
-    <string name="input_sales_name_here">input sales name here</string>
+    <string name="input_sales_name_here">sales name</string>
+    <string name="invoice_number">no faktur</string>
+    <string name="kepada_yth">KEPADA YTH</string>
+    <string name="tgl">TGL</string>
+    <string name="hint_no_d_o">no d/o</string>
+    <string name="do_title">D/O. No.</string>
+    <string name="factur_title">FAKTUR No.</string>
+    <string name="sales_title">SALES</string>
+    <string name="tempo_title">TEMPO</string>
+    <string name="amount_title">Jumlah</string>
+    <string name="price_title">Harga</string>
+    <string name="name_title">Nama</string>
+    <string name="total_title">Total</string>
+    <string name="total_price">Total Rp.</string>
+    <string name="appove_order">Appove Order</string>
+    <string name="tenor">Tenor</string>
 </resources>

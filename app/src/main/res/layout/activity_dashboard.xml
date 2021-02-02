@@ -38,8 +38,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:text="Hi, Sales" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 

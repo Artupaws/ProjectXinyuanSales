@@ -27,6 +27,7 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
     var inputPrice: String = ""
     private lateinit var database: CartRoomDatabase
     private lateinit var dao:CartDao
+    var nameAndSize:String?=null
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemAddStockOrderBinding.bind(view)
@@ -34,7 +35,8 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
             with(binding) {
                 linearAddStock.isEnabled = false
                 tvProductName.text = item.type
-                tvProductPrice.text = item.cost.toString()
+                tvProductSize.text = item.size.toString()
+                nameAndSize = "${item.type} ${item.size}"
                 Glide.with(context).load(item.photo).skipMemoryCache(false)
                     .diskCacheStrategy(DiskCacheStrategy.NONE).into(ivProduct)
                 etInputPrice.addTextChangedListener(object : TextWatcher {
@@ -91,7 +93,7 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
                     })
                     Glide.with(context).load(item.photo).skipMemoryCache(false).diskCacheStrategy(
                             DiskCacheStrategy.NONE).into(imageProduct!!)
-                    nameProduct?.text = item.type
+                    nameProduct?.text = nameAndSize
                     priceSales?.text = inputPrice
                     add?.setOnClickListener {
                         popupAddStock?.dismiss()
@@ -103,7 +105,7 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
                         val intentTotal = Intent("check")
                                 .putExtra("addProduct", 1)
                         broadcaster?.sendBroadcast(intentTotal)
-                        saveCart(CartItem(id = item.id, type = item.type, photo = item.photo, price = etInputPrice.text.toString(), total = inputTotal?.text.toString()))
+                        saveCart(CartItem(id = item.id, type = nameProduct?.text.toString(), photo = item.photo, price = etInputPrice.text.toString(), total = inputTotal?.text.toString()))
                     }
                     popupAddStock?.show()
                 }

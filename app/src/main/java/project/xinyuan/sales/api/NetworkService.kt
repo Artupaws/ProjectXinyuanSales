@@ -69,7 +69,23 @@ interface NetworkService {
     //Get Customer List
     @Headers("No-Authentication: true")
     @POST("api/customer")
-    fun getListCustomer(
+    fun getListCustomer():Call<ResponseGetListCustomer>
 
-    ):Call<ResponseGetListCustomer>
+    //Get Detail Sales
+    @Headers("No-Authentication: true")
+    @POST("api/sales/detail")
+    fun getDetailSales():Call<ResponseGetDetailSales>
+
+    //Add Data Formal Transaction
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/transaction")
+    fun addDataFormalTransaction(
+            @Field("invoice_number")invoiceNumber:String,
+            @Field("id_customer")idCustomer:Int,
+            @Field("payment")payment:String,
+            @Field("payment_period")paymentPeriod:String,
+            @Field("paid")paid:String,
+            @Field("total_payment")totalPayment:String
+    ):Call<ResponseAddTransaction>
 }

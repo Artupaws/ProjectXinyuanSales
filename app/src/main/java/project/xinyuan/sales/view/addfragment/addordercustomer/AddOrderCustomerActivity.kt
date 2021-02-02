@@ -27,6 +27,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
     private var broadcaster: LocalBroadcastManager? = null
     private var statusAdd:Int = 0
     private var statusRemove:Int = 0
+    private lateinit var detailCustomer:DataCustomer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         binding.toolbarAddOrderCustomer.title = "Add Order Customer"
         binding.btnPlaceOrder.setOnClickListener(this)
 
-        val detailCustomer = intent.getParcelableExtra<DataCustomer>("detailCustomer")
+        detailCustomer = intent.getParcelableExtra("detailCustomer")
         binding.tvCompanyName.text = detailCustomer.companyName
         binding.tvAdminName.text = detailCustomer.administratorName
         binding.tvAdminPhone.text = detailCustomer.administratorPhone
@@ -53,6 +54,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         when(p0?.id){
             R.id.btn_place_order ->{
                 val intent = Intent(applicationContext, ListCartActivity::class.java)
+                intent.putExtra("detailCustomer", detailCustomer)
                 startActivity(intent)
             }
         }

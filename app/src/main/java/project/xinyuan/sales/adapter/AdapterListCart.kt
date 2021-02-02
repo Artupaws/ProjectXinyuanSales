@@ -4,19 +4,22 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.math.MathUtils
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemCartOrderBinding
 import project.xinyuan.sales.roomdatabase.CartItem
 
-class AdapterListCart(val context: Context, private val listCart:List<CartItem?>?):RecyclerView.Adapter<AdapterListCart.Holder>() {
-    inner class Holder(view:View):RecyclerView.ViewHolder(view) {
+class AdapterListCart(val context: Context, private val listCart: List<CartItem?>?):RecyclerView.Adapter<AdapterListCart.Holder>() {
+    var totalPayment:Int?=null
+    inner class Holder(view: View):RecyclerView.ViewHolder(view) {
         private val binding = ListItemCartOrderBinding.bind(view)
         fun bin(item: CartItem){
-            with(binding){
+            with(binding) {
                 tvProductName.text = item.type
                 tvYourPrice.text = item.price
                 tvTotalOrder.text = item.total
-                tvSubTotalPrice.text = ((item.total.toInt()*item.price.toInt()).toString())
+                tvSubTotalPrice.text = ((item.total.toInt() * item.price.toInt()).toString())
+                totalPayment = ((item.total.toInt() * item.price.toInt()))
             }
         }
 

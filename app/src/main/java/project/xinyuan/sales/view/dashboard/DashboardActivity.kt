@@ -3,33 +3,42 @@ package project.xinyuan.sales.view.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityDashboardBinding
+import project.xinyuan.sales.helper.Constants
+import project.xinyuan.sales.helper.SharedPreferencesHelper
+import project.xinyuan.sales.model.DataSales
 import project.xinyuan.sales.view.account.AccountActivity
 import project.xinyuan.sales.view.addfragment.AddFragment
 import project.xinyuan.sales.view.history.HistoryFragment
 import project.xinyuan.sales.view.home.HomeFragment
 
-class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, DashboardContract {
 
     private lateinit var binding:ActivityDashboardBinding
     var doubleTap: Boolean = false
     private val fragmentManager = supportFragmentManager
     private var fragment:Fragment? =null
     private val itemAddFragment:Int = R.id.addFragment
+    private lateinit var presenter: DashboardPresenter
+    private lateinit var sharedPref:SharedPreferencesHelper
+    private var data:DataSales?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadFragment(fragment)
+        presenter = DashboardPresenter(this, this)
+        sharedPref = SharedPreferencesHelper(this)
+        presenter.getDetailSales()
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         binding.linearAccount.setOnClickListener(this)
         fragmentManager.beginTransaction().apply {
@@ -85,9 +94,26 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     override fun onClick(v: View?) {
         when (v?.id){
             R.id.linear_account -> {
-                val intent = Intent(applicationContext, AccountActivity::class.java)
-                startActivity(intent)
+                moveDetailSales(data)
             }
         }
+    }
+
+    private fun moveDetailSales(data:DataSales?){
+        val intent = Intent(applicationContext, AccountActivity::class.java)
+        intent.putExtra("detailSales", data)
+        startActivity(intent)
+    }
+
+    override fun messageGetDetailSales(msg: String) {
+        Log.d("detailSales", msg)
+    }
+
+    override fun getDetailSales(dataSales: DataSales?) {
+        val salesName = dataSales?.name
+        val sayHiSales = "Hi, ${dataSales?.name}"
+        binding.tvSalesName.text = sayHiSales
+        data = dataSales
+        sharedPref.save(Constants.SALES_NAME, salesName!!)
     }
 }
