@@ -81,4 +81,7 @@
     <string name="appove_order">Appove Order</string>
     <string name="tenor">Tenor</string>
     <string name="clear_order">X | Clear</string>
+    <string name="colon">:</string>
+    <string name="customer_name">Customer</string>
+    <string name="detail_order">detail order</string>
 </resources>

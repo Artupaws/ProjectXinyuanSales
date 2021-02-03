@@ -111,7 +111,6 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         }
     }
 
-
     override fun onBackPressed() {
         if (!binding.btnPlaceOrder.isEnabled){
             super.onBackPressed()

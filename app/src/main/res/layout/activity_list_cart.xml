@@ -16,23 +16,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/orange" />
 
-    <TextView
-        android:id="@+id/tv_action_clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/state_button_add_order"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:padding="10dp"
-        android:text="@string/clear_order"
-        android:layout_marginEnd="10dp"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_list_cart"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_list_cart"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_list_cart"
-        tools:ignore="SmallSp" />
-
     <LinearLayout
         android:id="@+id/linear_data_invoice"
         android:layout_width="match_parent"
