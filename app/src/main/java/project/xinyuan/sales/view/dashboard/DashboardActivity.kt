@@ -80,11 +80,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         if (doubleTap) {
             super.onBackPressed()
         } else {
-            Snackbar.make(
-                    binding.viewBotnav,
-                    "Please click once again to exit",
-                    Snackbar.LENGTH_SHORT
-            ).show()
+            Snackbar.make(binding.viewBotnav, "Please click once again to exit", Snackbar.LENGTH_SHORT).show()
             doubleTap = true
             val handler: Handler = Handler()
             handler.postDelayed({ doubleTap = false }, 500)

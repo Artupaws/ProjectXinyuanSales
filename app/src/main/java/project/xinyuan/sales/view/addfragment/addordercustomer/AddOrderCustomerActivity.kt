@@ -27,6 +27,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
     private var broadcaster: LocalBroadcastManager? = null
     private var statusAdd:Int = 0
     private var statusRemove:Int = 0
+    private val listItemCart = arrayListOf<CartItem>()
     private lateinit var detailCustomer:DataCustomer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,10 +44,11 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         binding.toolbarAddOrderCustomer.title = "Add Order Customer"
         binding.btnPlaceOrder.setOnClickListener(this)
 
-        detailCustomer = intent.getParcelableExtra("detailCustomer")
+        detailCustomer = intent.getParcelableExtra("detailCustomer")!!
         binding.tvCompanyName.text = detailCustomer.companyName
         binding.tvAdminName.text = detailCustomer.administratorName
         binding.tvAdminPhone.text = detailCustomer.administratorPhone
+        getListCart()
 
     }
 
@@ -63,9 +65,8 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
     private fun getListCart(){
         val database = CartRoomDatabase.getDatabase(applicationContext)
         val dao = database.getCartDao()
-        val listItem = arrayListOf<CartItem>()
-        listItem.addAll(dao.getAll())
-        binding.btnPlaceOrder.isEnabled = listItem.isNotEmpty()
+        listItemCart.addAll(dao.getAll())
+        binding.btnPlaceOrder.isEnabled = listItemCart.isNotEmpty()
     }
 
     override fun onStart() {
@@ -79,6 +80,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
                 "check"-> {
                     val add = intent.getIntExtra("addProduct", 0)
                     val remove = intent.getIntExtra("removeProduct", 0)
+                    Log.d("removeProduct", remove.toString())
                     statusAdd = add
                     statusRemove = remove
                     if (statusAdd == 1){
@@ -99,7 +101,11 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
 
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener {
-            presenter.getListProduct()
+            if (listItemCart.isNotEmpty()){
+                binding.swipeRefresh.isRefreshing = false
+            } else {
+                presenter.getListProduct()
+            }
         }
     }
 

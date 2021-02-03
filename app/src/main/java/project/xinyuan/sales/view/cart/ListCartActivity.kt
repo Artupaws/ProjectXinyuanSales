@@ -1,5 +1,6 @@
 package project.xinyuan.sales.view.cart
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterListCart
 import project.xinyuan.sales.databinding.ActivityListCartBinding
@@ -17,8 +19,10 @@ import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.model.DataCustomer
 import project.xinyuan.sales.model.DataFormalTransaction
+import project.xinyuan.sales.roomdatabase.CartDao
 import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.roomdatabase.CartRoomDatabase
+import project.xinyuan.sales.view.dashboard.DashboardActivity
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -31,14 +35,20 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     private val spinnerPostpaid = arrayOf("Choose", "30", "45", "60", "70", "90")
     private lateinit var presenter: ListCartPresenter
     private lateinit var sharedPref:SharedPreferencesHelper
+    private lateinit var database: CartRoomDatabase
+    private lateinit var dao: CartDao
     var idCustomer:Int? = null
+    var idTransaction:Int? = null
     var total:Int?=null
+    var quantity:Int?=null
     var isEmptyInvoice = true
     var isEmptyPayment = true
     var isEmptyPaymenPeriod = true
     var isEmptyDoNumber = true
     private var tempo:String? = null
     private var postpaid:String?=null
+    private val valuePaymentCash:String = "0"
+    private lateinit var listItemCart: ArrayList<CartItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +57,8 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         getListCartData()
         presenter = ListCartPresenter(this, this)
         sharedPref = SharedPreferencesHelper(this)
+        database = CartRoomDatabase.getDatabase(this)
+        dao = database.getCartDao()
         binding.toolbarListCart.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarListCart.setNavigationOnClickListener {
             onBackPressed()
@@ -86,10 +98,12 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     }
 
     private fun setupListCart(listItem: ArrayList<CartItem>){
+        listItemCart = listItem
         binding.rvCartOrder.apply {
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = AdapterListCart(applicationContext, listItem)
             total = listItem.map { it.total.toInt()*it.price.toInt() }.sum()
+            quantity = listItem.map { it.total.toInt() }.sum()
             binding.tvTotalPrice.text = total.toString()
         }
     }
@@ -101,11 +115,17 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         binding.spnTempo.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 tempo = binding.spnTempo.selectedItem.toString()
-                Toast.makeText(applicationContext, tempo, Toast.LENGTH_SHORT).show()
-                if (tempo == "postpaid"){
-                    binding.linearTenor.visibility = View.VISIBLE
-                } else {
-                    binding.linearTenor.visibility = View.GONE
+                when (tempo) {
+                    "postpaid" -> {
+                        binding.linearTenor.visibility = View.VISIBLE
+                    }
+                    "cash" -> {
+                        postpaid = "0"
+                        binding.linearTenor.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.linearTenor.visibility = View.GONE
+                    }
                 }
             }
 
@@ -121,7 +141,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         binding.spnPostpaid.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 postpaid = binding.spnPostpaid.selectedItem.toString()
-                Toast.makeText(applicationContext, postpaid, Toast.LENGTH_SHORT).show()
+                binding.btnApprove.isEnabled = postpaid != "Choose"
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -146,6 +166,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
 
         if (paymentFill == "Choose"){
             isEmptyPayment = true
+            Snackbar.make(binding.btnApprove, "please choose tempo", Snackbar.LENGTH_SHORT).show()
         } else {
             isEmptyPayment = false
             paymentFill = tempo
@@ -153,6 +174,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
 
         if (postpaidFill == "Choose"){
             isEmptyPaymenPeriod = true
+            Snackbar.make(binding.btnApprove, "please choose tenor", Snackbar.LENGTH_SHORT).show()
         } else {
             isEmptyPaymenPeriod = false
             postpaidFill = postpaid
@@ -167,17 +189,46 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         }
 
         if (!isEmptyInvoice && !isEmptyPayment && !isEmptyPaymenPeriod && !isEmptyDoNumber){
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!, binding.tvTotalPrice.text.toString(), binding.tvTotalPrice.text.toString())
+            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!,  binding.tvTotalPrice.text.toString(), binding.tvTotalPrice.text.toString())
+        } else if (!isEmptyInvoice && !isEmptyPayment && !isEmptyDoNumber){
+            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!, valuePaymentCash, binding.tvTotalPrice.text.toString())
         } else {
-            Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
+            stateUnloading()
+            Snackbar.make(binding.btnApprove, "please complete form", Snackbar.LENGTH_SHORT).show()
         }
     }
 
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.btn_approve -> {
+                stateLoading()
                 checkAddDataTransaction()
             }
+        }
+    }
+
+    private fun stateLoading(){
+        binding.btnApprove.visibility = View.GONE
+        binding.progressCircular.visibility = View.VISIBLE
+    }
+
+    private fun stateUnloading(){
+        binding.btnApprove.visibility = View.VISIBLE
+        binding.progressCircular.visibility = View.GONE
+    }
+
+    private fun move(){
+        dao.deleteAll()
+        val intent = Intent(applicationContext, DashboardActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    override fun messageAddProductTransaction(msg: String) {
+        Log.d("addProductTransaction", msg)
+        stateUnloading()
+        if (msg.contains("Success")){
+            move()
         }
     }
 
@@ -187,6 +238,10 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
 
     override fun getDataFormalTransaction(data: DataFormalTransaction?) {
         Log.d("idTransaction", data?.id.toString())
+        idTransaction = data?.id
+        for (i in listItemCart){
+            presenter.addProductTransaction(idTransaction!!, i.id, quantity!!, i.price.toInt(), i.total.toInt())
+        }
     }
 
 

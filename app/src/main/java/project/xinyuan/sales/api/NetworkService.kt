@@ -92,8 +92,12 @@ interface NetworkService {
     //Add Product Transaction
     @FormUrlEncoded
     @Headers("No-Authentication: true")
-    @POST("")
+    @POST("api/transaction/details")
     fun addProductTransaction(
-
+            @Field("id_transaction")idTransaction:Int,
+            @Field("id_product")idPorduct:Int,
+            @Field("quantity")quantity:Int,
+            @Field("price")price:Int,
+            @Field("total")total:Int,
     ):Call<ResponseAddProductTransaction>
 }

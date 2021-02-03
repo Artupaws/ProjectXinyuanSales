@@ -304,7 +304,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_approve"
+        app:layout_constraintBottom_toTopOf="@+id/frame_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linear_data_invoice">
@@ -362,17 +362,31 @@
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/btn_approve"
+    <FrameLayout
+        android:id="@+id/frame_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/state_button_add_order"
-        android:enabled="true"
-        android:text="@string/appove_order"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/btn_approve"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/state_button_add_order"
+            android:enabled="true"
+            android:text="@string/appove_order" />
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
