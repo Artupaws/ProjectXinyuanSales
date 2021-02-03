@@ -58,6 +58,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         presenter = ListCartPresenter(this, this)
         sharedPref = SharedPreferencesHelper(this)
         database = CartRoomDatabase.getDatabase(this)
+        binding.tvActionClear.setOnClickListener(this)
         dao = database.getCartDao()
         binding.toolbarListCart.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarListCart.setNavigationOnClickListener {
@@ -203,6 +204,10 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             R.id.btn_approve -> {
                 stateLoading()
                 checkAddDataTransaction()
+            }
+            R.id.tv_action_clear -> {
+                dao.deleteAll()
+                setupListCart(listItemCart)
             }
         }
     }

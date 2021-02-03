@@ -80,4 +80,5 @@
     <string name="total_price">Total Rp.</string>
     <string name="appove_order">Appove Order</string>
     <string name="tenor">Tenor</string>
+    <string name="clear_order">X | Clear</string>
 </resources>

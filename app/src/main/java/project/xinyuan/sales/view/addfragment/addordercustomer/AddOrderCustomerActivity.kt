@@ -27,7 +27,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
     private var broadcaster: LocalBroadcastManager? = null
     private var statusAdd:Int = 0
     private var statusRemove:Int = 0
-    private val listItemCart = arrayListOf<CartItem>()
+    private var listCart:ArrayList<CartItem>? = null
     private lateinit var detailCustomer:DataCustomer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +39,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         presenter.getListProduct()
 
         refresh()
+        getListCart()
         binding.toolbarAddOrderCustomer.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarAddOrderCustomer.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarAddOrderCustomer.title = "Add Order Customer"
@@ -48,7 +49,6 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         binding.tvCompanyName.text = detailCustomer.companyName
         binding.tvAdminName.text = detailCustomer.administratorName
         binding.tvAdminPhone.text = detailCustomer.administratorPhone
-        getListCart()
 
     }
 
@@ -65,7 +65,9 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
     private fun getListCart(){
         val database = CartRoomDatabase.getDatabase(applicationContext)
         val dao = database.getCartDao()
+        val listItemCart = arrayListOf<CartItem>()
         listItemCart.addAll(dao.getAll())
+        listCart = listItemCart
         binding.btnPlaceOrder.isEnabled = listItemCart.isNotEmpty()
     }
 
@@ -101,13 +103,14 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
 
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener {
-            if (listItemCart.isNotEmpty()){
+            if (listCart?.isNotEmpty()!!){
                 binding.swipeRefresh.isRefreshing = false
             } else {
                 presenter.getListProduct()
             }
         }
     }
+
 
     override fun onBackPressed() {
         if (!binding.btnPlaceOrder.isEnabled){
