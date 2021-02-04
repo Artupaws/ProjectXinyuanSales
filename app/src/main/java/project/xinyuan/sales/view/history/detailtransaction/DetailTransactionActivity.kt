@@ -76,6 +76,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
 
     private fun move(){
         val intent = Intent(applicationContext, DashboardActivity::class.java)
+        intent.putExtra("openFragment", 3)
         startActivity(intent)
         finishAffinity()
     }

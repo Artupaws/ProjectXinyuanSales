@@ -6,6 +6,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -19,6 +20,7 @@ import project.xinyuan.sales.view.account.AccountActivity
 import project.xinyuan.sales.view.addfragment.AddFragment
 import project.xinyuan.sales.view.history.HistoryFragment
 import project.xinyuan.sales.view.home.HomeFragment
+import project.xinyuan.sales.view.login.LoginActivity
 
 class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, DashboardContract {
 
@@ -30,6 +32,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     private lateinit var presenter: DashboardPresenter
     private lateinit var sharedPref:SharedPreferencesHelper
     private var data:DataSales?=null
+    private var openFragment:Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,15 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         fragmentManager.beginTransaction().apply {
            replace(R.id.view_botnav, HomeFragment()).commit()
        }
+        stateOpenFragment()
+    }
 
+    private fun stateOpenFragment(){
+        val openFragment = intent
+        if (openFragment.getIntExtra("openFragment", 0) == 3){
+            loadFragment(HistoryFragment())
+            binding.bottomNavigationView.menu.findItem(R.id.historyFragment).isChecked = true
+        }
     }
 
     private fun loadFragment(fragment: Fragment?): Boolean {
@@ -95,14 +106,26 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
-    private fun moveDetailSales(data:DataSales?){
+    private fun moveDetailSales(data: DataSales?){
         val intent = Intent(applicationContext, AccountActivity::class.java)
         intent.putExtra("detailSales", data)
         startActivity(intent)
     }
 
+    private fun tryLogin(){
+        val intent = Intent(applicationContext, LoginActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
+    }
+
     override fun messageGetDetailSales(msg: String) {
         Log.d("detailSales", msg)
+        if (msg.contains("Unauthenticated")){
+            sharedPref.removeValue(Constants.PREF_IS_LOGIN)
+            sharedPref.removeValue(Constants.TOKEN_LOGIN)
+            Toast.makeText(applicationContext, "you have logged in on another device, please log in again", Toast.LENGTH_SHORT).show()
+            tryLogin()
+        }
     }
 
     override fun getDetailSales(dataSales: DataSales?) {

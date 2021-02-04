@@ -45,11 +45,10 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
         binding?.swipeRefresh?.isRefreshing = false
     }
 
-    override fun getDataTransaction(list: List<DataTransaction?>?) {
-        val adapterTransactionDetail = AdapterListTransaction(requireContext(), list)
+    override fun getDataTransaction(data: List<DataTransaction?>?) {
         binding?.rvTransaction?.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = adapterTransactionDetail
+            adapter = AdapterListTransaction(requireContext(), data)
         }
     }
 }
