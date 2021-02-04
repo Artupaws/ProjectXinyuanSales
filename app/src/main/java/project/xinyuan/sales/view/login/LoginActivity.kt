@@ -113,4 +113,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         sharedPref.save(Constants.TOKEN_LOGIN, token)
         Log.d("tokenLogin", token)
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
 }

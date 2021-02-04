@@ -23,7 +23,7 @@ data class DataTransaction(
 	val paymentPeriod:Int? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val idTransaction: Int? = null,
 
 	@field:SerializedName("invoice_number")
 	val invoiceNumber: String? = null,

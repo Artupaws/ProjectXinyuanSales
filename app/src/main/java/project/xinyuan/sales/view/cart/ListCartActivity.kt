@@ -45,7 +45,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     var isEmptyDoNumber = true
     private var tempo:String? = null
     private var postpaid:String?=null
-    private val valuePaymentCash:String = "0"
+    private var valuePaymentCash:String = "0"
     private lateinit var listItemCart: ArrayList<CartItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,9 +115,11 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
                 when (tempo) {
                     "postpaid" -> {
                         binding.linearTenor.visibility = View.VISIBLE
+                        valuePaymentCash="0"
                     }
                     "cash" -> {
                         postpaid = "0"
+                        valuePaymentCash = binding.tvTotalPrice.text.toString()
                         binding.linearTenor.visibility = View.GONE
                     }
                     else -> {
@@ -186,9 +188,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         }
 
         if (!isEmptyInvoice && !isEmptyPayment && !isEmptyPaymenPeriod && !isEmptyDoNumber){
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!,  binding.tvTotalPrice.text.toString(), binding.tvTotalPrice.text.toString())
-        } else if (!isEmptyInvoice && !isEmptyPayment && !isEmptyDoNumber){
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!, valuePaymentCash, binding.tvTotalPrice.text.toString())
+            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!,  valuePaymentCash, binding.tvTotalPrice.text.toString())
         } else {
             stateUnloading()
             Snackbar.make(binding.btnApprove, "please complete form", Snackbar.LENGTH_SHORT).show()

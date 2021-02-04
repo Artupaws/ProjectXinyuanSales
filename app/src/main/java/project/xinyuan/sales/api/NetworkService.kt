@@ -101,7 +101,22 @@ interface NetworkService {
             @Field("total")total:Int,
     ):Call<ResponseAddProductTransaction>
 
+    //Get List Transaction Detail
     @Headers("No-Authentication: true")
     @POST("api/transaction/sales")
     fun getTransactionDetail():Call<ResponseGetTransactionDetail>
+
+    //Make Payment Customer
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/transaction/payment")
+    fun makePaymentCustomer(
+        @Field("id_transaction")idTransaction:Int,
+        @Field("paid")paid:Int
+    ):Call<ResponseMakePayment>
+
+    //Logout
+    @Headers("No-Authentication: true")
+    @POST("api/sales/logout")
+    fun logoutSales():Call<ResponseLogout>
 }
