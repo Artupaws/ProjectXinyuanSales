@@ -18,7 +18,6 @@ import project.xinyuan.sales.model.DataProduct
 import project.xinyuan.sales.roomdatabase.CartDao
 import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.roomdatabase.CartRoomDatabase
-import project.xinyuan.sales.view.dashboard.DashboardActivity
 
 class AdapterListProductAddOrder(val context: Context, private val listProduct: List<DataProduct?>?) : RecyclerView.Adapter<AdapterListProductAddOrder.Holder>() {
     private var broadcaster: LocalBroadcastManager? = null
@@ -105,7 +104,8 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
                         val intentTotal = Intent("check")
                                 .putExtra("addProduct", 1)
                         broadcaster?.sendBroadcast(intentTotal)
-                        saveCart(CartItem(id = item.id, type = nameProduct?.text.toString(), photo = item.photo, price = etInputPrice.text.toString(), total = inputTotal?.text.toString()))
+                        saveCart(CartItem(id = item.id!!, type = nameProduct?.text.toString(), photo = item.photo!!, price = etInputPrice.text.toString(), total = inputTotal?.text.toString(),
+                        subTotal = (inputTotal?.text.toString().toInt()*etInputPrice.text.toString().toInt()).toString()))
                     }
                     popupAddStock?.show()
                 }
@@ -121,7 +121,7 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
                     val btnYes = popupAskDelete?.findViewById<Button>(R.id.btn_yes)
                     val btnNo = popupAskDelete?.findViewById<Button>(R.id.btn_no)
                     btnYes?.setOnClickListener {
-                        deleteCart(CartItem(id = item.id, type = item.type, photo = item.photo, etInputPrice.text.toString(), total = tvTitleChoose.text.toString()))
+                        deleteCart(CartItem(id = item.id!!, type = item.type!!, photo = item.photo!!, etInputPrice.text.toString(), total = tvTitleChoose.text.toString()))
                         tvTitleChoose.visibility = View.GONE
                         tvRemove.visibility = View.GONE
                         linearAddStock.isEnabled = false

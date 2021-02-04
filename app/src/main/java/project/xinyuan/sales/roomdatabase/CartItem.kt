@@ -21,6 +21,9 @@ data class CartItem (
         @ColumnInfo(name = "price")
         var price: String="",
 
+        @ColumnInfo(name = "subTotal")
+        var subTotal: String="",
+
         @ColumnInfo(name = "total")
         var total: String=""
 ):Parcelable

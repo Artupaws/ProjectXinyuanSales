@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -39,8 +38,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     private lateinit var dao: CartDao
     var idCustomer:Int? = null
     var idTransaction:Int? = null
-    var total:Int?=null
-    var quantity:Int?=null
+    var totalPrice:Int?=null
     var isEmptyInvoice = true
     var isEmptyPayment = true
     var isEmptyPaymenPeriod = true
@@ -102,9 +100,8 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         binding.rvCartOrder.apply {
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = AdapterListCart(applicationContext, listItem)
-            total = listItem.map { it.total.toInt()*it.price.toInt() }.sum()
-            quantity = listItem.map { it.total.toInt() }.sum()
-            binding.tvTotalPrice.text = total.toString()
+            totalPrice = listItem.map { it.total.toInt()*it.price.toInt() }.sum()
+            binding.tvTotalPrice.text = totalPrice.toString()
         }
     }
 
@@ -240,7 +237,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         Log.d("idTransaction", data?.id.toString())
         idTransaction = data?.id
         for (i in listItemCart){
-            presenter.addProductTransaction(idTransaction!!, i.id, quantity!!, i.price.toInt(), i.total.toInt())
+            presenter.addProductTransaction(idTransaction!!, i.id, i.total.toInt(), i.price.toInt(), i.subTotal.toInt())
         }
     }
 

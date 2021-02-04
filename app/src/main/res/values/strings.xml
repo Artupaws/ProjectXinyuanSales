@@ -84,4 +84,11 @@
     <string name="colon">:</string>
     <string name="customer_name">Customer</string>
     <string name="detail_order">detail order</string>
+    <string name="postpaid">POSTPAID</string>
+    <string name="due_date">DUE DATE</string>
+    <string name="status">STATUS</string>
+    <string name="product">Product :</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="total_pay">Total Pay</string>
+    <string name="spec_product">Spek Produk</string>
 </resources>

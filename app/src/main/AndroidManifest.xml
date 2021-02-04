@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sales"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.cart.ListCartActivity"></activity>
+        <activity android:name=".view.history.detailtransaction.DetailTransactionActivity"></activity>
+        <activity android:name=".view.cart.ListCartActivity" />
         <activity android:name=".view.addfragment.AddStockOrderActivity" />
         <activity android:name=".view.addfragment.choosecustomer.ChooseCustomerActivity" />
         <activity android:name=".view.addfragment.addordercustomer.AddOrderCustomerActivity" />

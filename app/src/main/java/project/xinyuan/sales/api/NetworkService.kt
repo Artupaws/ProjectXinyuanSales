@@ -100,4 +100,8 @@ interface NetworkService {
             @Field("price")price:Int,
             @Field("total")total:Int,
     ):Call<ResponseAddProductTransaction>
+
+    @Headers("No-Authentication: true")
+    @POST("api/transaction/sales")
+    fun getTransactionDetail():Call<ResponseGetTransactionDetail>
 }

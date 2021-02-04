@@ -18,7 +18,7 @@ class AdapterListCart(val context: Context, private val listCart: List<CartItem?
                 tvProductName.text = item.type
                 tvYourPrice.text = item.price
                 tvTotalOrder.text = item.total
-                tvSubTotalPrice.text = ((item.total.toInt() * item.price.toInt()).toString())
+                tvSubTotalPrice.text = item.subTotal
                 totalPayment = ((item.total.toInt() * item.price.toInt()))
             }
         }
