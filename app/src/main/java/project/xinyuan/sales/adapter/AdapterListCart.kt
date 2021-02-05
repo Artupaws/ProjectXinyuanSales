@@ -1,6 +1,7 @@
 package project.xinyuan.sales.adapter
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,11 @@ import androidx.core.math.MathUtils
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemCartOrderBinding
 import project.xinyuan.sales.roomdatabase.CartItem
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class AdapterListCart(val context: Context, private val listCart: List<CartItem?>?):RecyclerView.Adapter<AdapterListCart.Holder>() {
     var totalPayment:Int?=null

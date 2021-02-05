@@ -50,7 +50,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:weightSum="2">
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:weightSum="2">
 
@@ -98,7 +98,39 @@
                     android:id="@+id/tv_name_customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    tools:text="21-2-2021"
+                    tools:text="Gunawan"
+                    android:layout_weight="1.4"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tempo_title"
+                    android:textColor="@color/black"
+                    android:layout_weight="0.5"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:layout_weight="0.1"/>
+
+                <TextView
+                    android:id="@+id/tv_type_payment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    tools:text="On Time"
+                    android:textStyle="bold"
                     android:layout_weight="1.4"/>
 
             </LinearLayout>

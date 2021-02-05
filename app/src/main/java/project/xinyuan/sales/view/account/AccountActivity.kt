@@ -37,7 +37,10 @@ class AccountActivity : AppCompatActivity(), View.OnClickListener, AccountActivi
         presenter = AccountActivityPresenter(this, this)
         sharedPref = SharedPreferencesHelper(applicationContext)
         val dataSales = intent.getParcelableExtra<DataSales>("detailSales")
-        binding.tvSalesName.text = dataSales?.name
+        binding.tvName.text = dataSales?.name
+        binding.tvPhone.text = dataSales?.phone
+        binding.tvEmail.text = dataSales?.email
+        binding.tvAddress.text = dataSales?.address
         Glide.with(this).load(dataSales?.photo).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.ivProfile)
         binding.ivBack.setOnClickListener(this)
         binding.tvActionLogout.setOnClickListener(this)
@@ -63,7 +66,7 @@ class AccountActivity : AppCompatActivity(), View.OnClickListener, AccountActivi
     private fun move(){
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
-        finish()
+        finishAffinity()
     }
 
     private fun showPopupLogout(){

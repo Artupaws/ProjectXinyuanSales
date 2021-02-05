@@ -92,4 +92,8 @@
     <string name="total_pay">Total Pay</string>
     <string name="spec_product">Spek Produk</string>
     <string name="total_must_pay">Total Must Pay :</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="type_payment">Type Pay</string>
 </resources>

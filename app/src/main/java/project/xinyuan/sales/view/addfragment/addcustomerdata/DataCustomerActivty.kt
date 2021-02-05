@@ -305,7 +305,6 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
                     if (s?.isNotEmpty()!!){
                         placeBirth = binding.etPlaceBirth.text.toString()
                         Log.d("placeBirth", placeBirth)
-                        Toast.makeText(applicationContext, s, Toast.LENGTH_SHORT).show()
                         binding.etDateBirth.isEnabled = true
                     } else {
                         binding.etDateBirth.text = null
@@ -315,7 +314,6 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
                     if (s?.isNotEmpty()!!){
                         dateBirth = binding.etDateBirth.text.toString()
                         Log.d("dateBirth", dateBirth)
-                        Toast.makeText(applicationContext, s, Toast.LENGTH_SHORT).show()
                     }
                 } else if (binding.etArea.text.hashCode() == s.hashCode()){
                     if (s?.isEmpty()!!){

@@ -112,6 +112,8 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         binding.spnTempo.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 tempo = binding.spnTempo.selectedItem.toString()
+                binding.btnApprove.isEnabled = tempo != "Choose"
+                stateUnloading()
                 when (tempo) {
                     "postpaid" -> {
                         binding.linearTenor.visibility = View.VISIBLE
@@ -141,6 +143,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 postpaid = binding.spnPostpaid.selectedItem.toString()
                 binding.btnApprove.isEnabled = postpaid != "Choose"
+                stateUnloading()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

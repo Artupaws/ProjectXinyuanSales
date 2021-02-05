@@ -28,11 +28,9 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     var doubleTap: Boolean = false
     private val fragmentManager = supportFragmentManager
     private var fragment:Fragment? =null
-    private val itemAddFragment:Int = R.id.addFragment
     private lateinit var presenter: DashboardPresenter
     private lateinit var sharedPref:SharedPreferencesHelper
     private var data:DataSales?=null
-    private var openFragment:Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,11 +126,11 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
-    override fun getDetailSales(dataSales: DataSales?) {
-        val salesName = dataSales?.name
-        val sayHiSales = "Hi, ${dataSales?.name}"
+    override fun getDetailSales(data: DataSales?) {
+        val salesName = data?.name
+        val sayHiSales = "Hi, ${data?.name}"
         binding.tvSalesName.text = sayHiSales
-        data = dataSales
+        this.data = data
         sharedPref.save(Constants.SALES_NAME, salesName!!)
     }
 }

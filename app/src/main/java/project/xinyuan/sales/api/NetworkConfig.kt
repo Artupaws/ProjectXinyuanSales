@@ -26,7 +26,7 @@ class NetworkConfig {
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_API_XINYUAN)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(OkHttpClient.Builder().connectTimeout(120, TimeUnit.SECONDS).addInterceptor { chain ->
+                .client(OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS).addInterceptor { chain ->
                     val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPref.getValueString(Constants.TOKEN_LOGIN)}")
                             .addHeader("Accept", "application/json")
                             .addHeader("apikey", Constants.API_KEY)

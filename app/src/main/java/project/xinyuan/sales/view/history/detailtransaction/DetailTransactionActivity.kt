@@ -3,6 +3,7 @@ package project.xinyuan.sales.view.history.detailtransaction
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +24,10 @@ import project.xinyuan.sales.databinding.ActivityDetailTransactionBinding
 import project.xinyuan.sales.model.DataPayment
 import project.xinyuan.sales.model.DataTransaction
 import project.xinyuan.sales.view.dashboard.DashboardActivity
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, DetailTransactionContract {
 
@@ -55,7 +60,6 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         setupStatus(dataTransaction)
         setupListProduct(dataTransaction)
         stateButtonMakePayment()
-
     }
 
     override fun onClick(p0: View?) {
@@ -133,7 +137,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                btnPayment?.isEnabled = (p0?.isNotEmpty()!!) && (p0.toString() == tvTotalpay?.text)
+                btnPayment?.isEnabled = (p0?.isNotEmpty()!!)
             }
 
         })

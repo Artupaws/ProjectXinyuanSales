@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.FragmentAddBinding
+import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.view.addfragment.addcustomerdata.DataCustomerActivty
 import project.xinyuan.sales.view.addfragment.addordercustomer.AddOrderCustomerActivity
 import project.xinyuan.sales.view.addfragment.choosecustomer.ChooseCustomerActivity
@@ -16,19 +17,20 @@ class AddFragment : Fragment(), View.OnClickListener {
 
     private var _binding:FragmentAddBinding? = null
     private val binding get() = _binding
+    private lateinit var sharedPref : SharedPreferencesHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
+        sharedPref = SharedPreferencesHelper(requireContext())
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.linearAddCustomer?.setOnClickListener(this)
+        binding?.cvAddCustomer?.setOnClickListener(this)
         binding?.cvAddOrderCustomer?.setOnClickListener(this)
     }
 
@@ -39,7 +41,7 @@ class AddFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.linear_add_customer -> {
+            R.id.cv_add_customer -> {
                 val intent = Intent(requireContext(), DataCustomerActivty::class.java)
                 startActivity(intent)
             }
