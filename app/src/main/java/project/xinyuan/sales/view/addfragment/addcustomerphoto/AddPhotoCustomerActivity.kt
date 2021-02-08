@@ -211,10 +211,12 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         if (resultCode == RESULT_OK) {
             when (statusCapture) {
                 "shopOne" -> {
-                    val takenImage = data?.extras?.get("data") as Bitmap
-                    binding.ivShopOne.setImageBitmap(takenImage)
-                    takenImage.compress(Bitmap.CompressFormat.JPEG, 30, bytes)
-                    val path = Images.Media.insertImage(contentResolver, takenImage, "Xinyuan-Image", null)
+                    val bitmap = Images.Media.getBitmap(contentResolver, uriPhotoShop)
+                    binding.ivShopOne.setImageBitmap(bitmap)
+//                    val takenImage = data?.extras?.get("data") as Bitmap
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                    binding.ivShopOne.setImageBitmap(bitmap)
+                    val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
                     val filePath = getRealPathFromURIPath(Uri.parse(path))
                     val file = File(filePath)
                     val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
@@ -266,8 +268,8 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
     private fun openCamera(){
         val values = ContentValues()
         val intent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        values.put(MediaStore.Images.Media.TITLE, "Picture")
-        uriPhotoShop = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
+        values.put(Images.Media.TITLE, "Picture")
+        uriPhotoShop = contentResolver.insert(Images.Media.EXTERNAL_CONTENT_URI, values)!!
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhotoShop)
         startActivityForResult(intent, IMAGE_CAPTURE_CODE)
     }
