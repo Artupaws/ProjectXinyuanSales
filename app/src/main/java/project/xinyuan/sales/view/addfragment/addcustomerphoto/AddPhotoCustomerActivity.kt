@@ -4,13 +4,18 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.MediaStore.Images
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -26,6 +31,7 @@ import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityAddPhotoCustomerBinding
 import project.xinyuan.sales.model.DataCustomer
 import project.xinyuan.sales.view.dashboard.DashboardActivity
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 
@@ -115,8 +121,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
             }
             R.id.btn_add_customer -> {
                 popupLoading?.show()
-                presenter.addDataCustomer(idArea,companyName,companyAddress,nameAdmin,idCardAdmin,phoneAdmin,companyPhone,companyNpwp
-                ,addressAdmin,placeAndBirthAdmin,npwpAdmin)
+                presenter.addDataCustomer(idArea, companyName, companyAddress, nameAdmin, idCardAdmin, phoneAdmin, companyPhone, companyNpwp, addressAdmin, placeAndBirthAdmin, npwpAdmin)
             }
         }
     }
@@ -181,13 +186,36 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         }
     }
 
+    private fun compressImageToBitmap(uri: Uri):Bitmap{
+        val stream = ByteArrayOutputStream()
+        val byteArray = stream.toByteArray()
+        if (Build.VERSION.SDK_INT < 28){
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream)
+            getImageUri(bitmap)
+            binding.ivShopOne.setImageBitmap(bitmap)
+        }else {
+            val source = ImageDecoder.createSource(contentResolver, uri)
+            val bitmap = ImageDecoder.decodeBitmap(source)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream)
+            getImageUri(bitmap)
+            binding.ivShopOne.setImageBitmap(bitmap)
+        }
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val bytes = ByteArrayOutputStream()
         if (resultCode == RESULT_OK) {
             when (statusCapture) {
                 "shopOne" -> {
-                    binding.ivShopOne.setImageURI(uriPhotoShop)
-                    val filePath = getRealPathFromURIPath(uriPhotoShop)
+                    val takenImage = data?.extras?.get("data") as Bitmap
+                    binding.ivShopOne.setImageBitmap(takenImage)
+                    takenImage.compress(Bitmap.CompressFormat.JPEG, 30, bytes)
+                    val path = Images.Media.insertImage(contentResolver, takenImage, "Xinyuan-Image", null)
+                    val filePath = getRealPathFromURIPath(Uri.parse(path))
                     val file = File(filePath)
                     val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
                     bodyPhotoShopTwo = createFormData("foto_toko", file.name, mFile)
@@ -226,6 +254,13 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
             val idx: Int = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
             cursor.getString(idx)
         }
+    }
+
+    private fun getImageUri(inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = Images.Media.insertImage(contentResolver, inImage, "Xinyuan-Image", null)
+        return Uri.parse(path)
     }
 
     private fun openCamera(){
@@ -300,7 +335,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         if (idCustomer.isNotEmpty()){
             popupLoading?.show()
             val idCustomerFill: RequestBody = RequestBody.create(MultipartBody.FORM, idCustomer)
-            presenter.addPhotoCustomer(idCustomerFill, bodyPhotoIdCardAdmin, bodyPhotoShopTwo, bodyPhotoNpwpAdmin, bodyPhotoNpwpCompany )
+            presenter.addPhotoCustomer(idCustomerFill, bodyPhotoIdCardAdmin, bodyPhotoShopTwo, bodyPhotoNpwpAdmin, bodyPhotoNpwpCompany)
         }
     }
 
