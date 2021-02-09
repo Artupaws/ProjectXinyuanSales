@@ -7,6 +7,8 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,10 +16,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ListItemAddStockOrderBinding
+import project.xinyuan.sales.helper.Helper
+import project.xinyuan.sales.helper.NumberTextWatcher
 import project.xinyuan.sales.model.DataProduct
 import project.xinyuan.sales.roomdatabase.CartDao
 import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.roomdatabase.CartRoomDatabase
+import java.util.*
 
 class AdapterListProductAddOrder(val context: Context, private val listProduct: List<DataProduct?>?) : RecyclerView.Adapter<AdapterListProductAddOrder.Holder>() {
     private var broadcaster: LocalBroadcastManager? = null
@@ -27,17 +32,22 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
     private lateinit var database: CartRoomDatabase
     private lateinit var dao:CartDao
     var nameAndSize:String?=null
+    private lateinit var helper:Helper
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemAddStockOrderBinding.bind(view)
         fun bin(item: DataProduct) {
             with(binding) {
+                val locale = Locale("es", "IDR")
+                val numDecs = 2 // Let's use 2 decimals
+                val twSalaryFrom: TextWatcher = NumberTextWatcher(etInputPrice, locale, numDecs)
                 linearAddStock.isEnabled = false
                 tvProductName.text = item.type
                 tvProductSize.text = item.size.toString()
                 nameAndSize = "${item.type} ${item.size}"
                 Glide.with(context).load(item.photo).skipMemoryCache(false)
                     .diskCacheStrategy(DiskCacheStrategy.NONE).into(ivProduct)
+                etInputPrice.addTextChangedListener(twSalaryFrom)
                 etInputPrice.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                         false
@@ -144,6 +154,7 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
         val binding = ListItemAddStockOrderBinding.inflate(inflater)
         broadcaster = LocalBroadcastManager.getInstance(context)
         database = CartRoomDatabase.getDatabase(context)
+        helper = Helper()
         dao = database.getCartDao()
         return Holder(binding.root)
     }

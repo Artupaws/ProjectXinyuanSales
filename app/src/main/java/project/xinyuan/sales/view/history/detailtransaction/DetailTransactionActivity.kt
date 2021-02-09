@@ -21,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterListProductDetailTransaction
 import project.xinyuan.sales.databinding.ActivityDetailTransactionBinding
+import project.xinyuan.sales.helper.Helper
+import project.xinyuan.sales.helper.NumberTextWatcher
 import project.xinyuan.sales.model.DataPayment
 import project.xinyuan.sales.model.DataTransaction
 import project.xinyuan.sales.view.dashboard.DashboardActivity
@@ -36,6 +38,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
     private var totalPrice:Int? = null
     private var popupMakePayment: Dialog? = null
     private lateinit var presenter: DetailTransactionPresenter
+    private lateinit var helper: Helper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +46,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         setContentView(binding.root)
 
         presenter = DetailTransactionPresenter(this, this)
+        helper = Helper()
         binding.toolbarDetailTransaction.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailTransaction.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarDetailTransaction.title = "Detail Transaction"
@@ -116,18 +120,22 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         val etMustPay = popupMakePayment?.findViewById<EditText>(R.id.et_total_must_pay)
         val tvTotalpay = popupMakePayment?.findViewById<TextView>(R.id.tv_total_pay)
         val progressBar = popupMakePayment?.findViewById<ProgressBar>(R.id.progress_circular)
-        tvTotalpay?.text = dataTransaction?.debt.toString()
-        etMustPay?.hint = dataTransaction?.debt.toString()
+        val locale = Locale("es", "IDR")
+        val numDecs = 2 // Let's use 2 decimals
+        val twSalaryFrom: TextWatcher = NumberTextWatcher(etMustPay!!, locale, numDecs)
+        tvTotalpay?.text = helper.convertToFormatMoneyIDR(dataTransaction?.debt.toString())
+        etMustPay.hint = helper.convertToFormatMoneyIDR(dataTransaction?.debt.toString())
         btnPayment?.setOnClickListener {
             progressBar?.visibility = View.VISIBLE
             btnNo?.isEnabled = false
             btnPayment.visibility = View.GONE
-            presenter.makePaymentCustomer(dataTransaction?.idTransaction!!, etMustPay?.text.toString().toInt())
+            presenter.makePaymentCustomer(dataTransaction?.idTransaction!!, helper.changeFormatMoneyToValue(etMustPay.text.toString()).toInt())
         }
         btnNo?.setOnClickListener {
             popupMakePayment?.dismiss()
         }
-        etMustPay?.addTextChangedListener(object :TextWatcher{
+        etMustPay?.addTextChangedListener(twSalaryFrom)
+        etMustPay.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 false
             }

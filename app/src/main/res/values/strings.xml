@@ -96,4 +96,7 @@
     <string name="address">Address</string>
     <string name="payment_status">Payment Status</string>
     <string name="type_payment">Type Pay</string>
+    <string name="payment_history">Payment History</string>
+    <string name="date">Date</string>
+    <string name="payment">Payment</string>
 </resources>

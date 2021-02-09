@@ -16,6 +16,9 @@ data class DataTransaction(
 	@field:SerializedName("transactiondetails")
 	val transactiondetails: List<TransactiondetailsItem?>? = null,
 
+	@field:SerializedName("transactionpayment")
+	val transactionpayment: List<DataPayment?>? = null,
+
 	@field:SerializedName("payment")
 	val payment: String? = null,
 
