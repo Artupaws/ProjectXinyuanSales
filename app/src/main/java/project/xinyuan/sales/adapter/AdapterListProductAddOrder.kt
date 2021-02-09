@@ -114,8 +114,8 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
                         val intentTotal = Intent("check")
                                 .putExtra("addProduct", 1)
                         broadcaster?.sendBroadcast(intentTotal)
-                        saveCart(CartItem(id = item.id!!, type = nameProduct?.text.toString(), photo = item.photo!!, price = etInputPrice.text.toString(), total = inputTotal?.text.toString(),
-                        subTotal = (inputTotal?.text.toString().toInt()*etInputPrice.text.toString().toInt()).toString()))
+                        saveCart(CartItem(id = item.id!!, type = nameProduct?.text.toString(), photo = item.photo!!, price = helper.changeFormatMoneyToValue(etInputPrice.text.toString()), total = inputTotal?.text.toString(),
+                        subTotal = (inputTotal?.text.toString().toInt()*helper.changeFormatMoneyToValue(etInputPrice.text.toString()).toInt()).toString()))
                     }
                     popupAddStock?.show()
                 }
