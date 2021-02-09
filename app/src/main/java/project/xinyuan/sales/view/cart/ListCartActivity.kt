@@ -84,12 +84,12 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     private fun setDate(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val currentDate = LocalDateTime.now()
-            val formatDate = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+            val formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             val date = currentDate.format(formatDate)
             binding.tvDate.text = date
         }else{
             val currentDate = Date()
-            val formatter = SimpleDateFormat("dd-MM-yyyy")
+            val formatter = SimpleDateFormat("yyyy-MM-dd")
             val date = formatter.format(currentDate)
             binding.tvDate.text = date
         }
