@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.R
@@ -19,9 +21,15 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
-class AdapterListTransaction(val context: Context, private val listTransaction:List<DataTransaction?>?): RecyclerView.Adapter<AdapterListTransaction.Holder>() {
-    private var dateNow:String?=null
+class AdapterListTransaction(val context: Context, private val listTransaction:List<DataTransaction?>?):
+        RecyclerView.Adapter<AdapterListTransaction.Holder>(), Filterable {
+
+    var listTransactionFilter = ArrayList<DataTransaction?>()
+    init {
+        listTransactionFilter = listTransaction as ArrayList<DataTransaction?>
+    }
 
     private val positionCollapse: Animation by lazy {
         AnimationUtils.loadAnimation(
@@ -68,11 +76,11 @@ class AdapterListTransaction(val context: Context, private val listTransaction:L
     }
 
     override fun onBindViewHolder(holder: AdapterListTransaction.Holder, position: Int) {
-        val transaction: DataTransaction = listTransaction?.get(position)!!
+        val transaction: DataTransaction = listTransactionFilter[position]!!
         holder.bin(transaction)
     }
 
-    override fun getItemCount():Int = listTransaction?.size!!
+    override fun getItemCount():Int = listTransactionFilter.size
 
     private fun onAddPostClicked(binding: ListItemTransactionBinding) {
         setVisibility(clicked, binding)
@@ -95,6 +103,29 @@ class AdapterListTransaction(val context: Context, private val listTransaction:L
         } else {
             binding.linearTitle.visibility = View.VISIBLE
             binding.rvHistoryPayment.visibility = View.VISIBLE
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter(){
+            override fun performFiltering(p0: CharSequence?): FilterResults {
+                val querySearch = p0?.toString()?.toLowerCase()
+                val filterResult = FilterResults()
+                filterResult.values = if (querySearch==null || querySearch.isEmpty()){
+                    listTransaction
+                } else {
+                    listTransaction?.filter {
+                        it?.invoiceNumber?.toLowerCase()!!.contains(querySearch)
+                    }
+                }
+                return filterResult
+            }
+
+            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+                listTransactionFilter = p1?.values as ArrayList<DataTransaction?>
+                notifyDataSetChanged()
+            }
+
         }
     }
 }

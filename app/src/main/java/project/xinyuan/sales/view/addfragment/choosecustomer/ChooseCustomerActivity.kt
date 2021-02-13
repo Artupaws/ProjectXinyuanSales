@@ -3,6 +3,7 @@ package project.xinyuan.sales.view.addfragment.choosecustomer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterChooseCustomer
@@ -25,6 +26,7 @@ class ChooseCustomerActivity : AppCompatActivity(), ChooseCustomerContract {
         binding.toolbarChooseCustomer.title = "Choose Customer"
         presenter.getListCustomer()
         refresh()
+        searchCustomer()
 
 
     }
@@ -33,6 +35,22 @@ class ChooseCustomerActivity : AppCompatActivity(), ChooseCustomerContract {
         binding.swipeRefresh.setOnRefreshListener {
             presenter.getListCustomer()
         }
+    }
+
+    private fun searchCustomer(){
+        binding.svCustomer.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                (binding.rvCustomer.adapter as AdapterChooseCustomer).filter.filter(p0)
+                (binding.rvCustomer.adapter as AdapterChooseCustomer).notifyDataSetChanged()
+                return true
+            }
+
+        })
     }
 
     override fun messageGetListCustomer(msg: String) {

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,6 +39,7 @@ class ProductFragment : Fragment(), ProductContract {
         super.onViewCreated(view, savedInstanceState)
         presenter.getListProduct()
         refresh()
+        searchProduct()
 
     }
 
@@ -45,6 +47,22 @@ class ProductFragment : Fragment(), ProductContract {
         val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
         finishAffinity(activity!!)
+    }
+
+    private fun searchProduct(){
+        binding?.svProduct?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                (binding?.rvProduct?.adapter as AdapterListProduct).filter.filter(p0)
+                (binding?.rvProduct?.adapter as AdapterListProduct).notifyDataSetChanged()
+                return true
+            }
+
+        })
     }
 
     private fun refresh(){

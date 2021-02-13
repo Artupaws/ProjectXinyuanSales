@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +40,7 @@ class CustomerFragment : Fragment(), CustomerContract {
         presenter = CustomerPresenter(this, requireContext())
         presenter.getListCustomer()
         refresh()
+        searchCustomer()
     }
 
     override fun onDestroy() {
@@ -50,6 +52,22 @@ class CustomerFragment : Fragment(), CustomerContract {
         val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
         ActivityCompat.finishAffinity(activity!!)
+    }
+
+    private fun searchCustomer(){
+        binding?.svCustomer?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                (binding?.rvCustomer?.adapter as AdapterListCustomer).filter.filter(p0)
+                (binding?.rvCustomer?.adapter as AdapterListCustomer).notifyDataSetChanged()
+                return true
+            }
+
+        })
     }
 
     private fun refresh(){

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,7 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
         super.onViewCreated(view, savedInstanceState)
         presenter.getTransactionDetail()
         refresh()
+        searchTransaction()
 
     }
 
@@ -47,6 +49,22 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
         binding?.swipeRefresh?.setOnRefreshListener {
             presenter.getTransactionDetail()
         }
+    }
+
+    private fun searchTransaction(){
+        binding?.svTransaction?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                (binding?.rvTransaction?.adapter as AdapterListTransaction).filter.filter(p0)
+                (binding?.rvTransaction?.adapter as AdapterListTransaction).notifyDataSetChanged()
+                return true
+            }
+
+        })
     }
 
     private fun tryLogin(){
