@@ -143,17 +143,15 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     }
 
     private fun setupSpinnerPaymentAccount(listPaymentAccount: List<DataPaymentAccount?>?){
-//        val arrayAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, listPaymentAccount as ArrayList)
         val arrayAdapter = AdapterSpinnerPaymentAccount(this, listPaymentAccount)
         binding.spnPaymentAccount.adapter = arrayAdapter
         binding.spnPaymentAccount.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                arrayAdapter.onItemClick = {
-                    account = it
-                }
-                binding.btnApprove.isEnabled = account != 0
+                account = listPaymentAccount?.get(position)?.id
+                binding.btnApprove.isEnabled = account != null
                 stateUnloading()
             }
+
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 tempo = null

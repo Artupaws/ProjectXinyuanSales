@@ -113,7 +113,8 @@ interface NetworkService {
     @POST("api/transaction/payment")
     fun makePaymentCustomer(
         @Field("id_transaction")idTransaction:Int,
-        @Field("paid")paid:Int
+        @Field("paid")paid:Int,
+        @Field("id_payment_account")idPaymentAccount:Int
     ):Call<ResponseMakePayment>
 
     //Logout

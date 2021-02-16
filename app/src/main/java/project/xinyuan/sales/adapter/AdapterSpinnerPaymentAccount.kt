@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.TextView
 import project.xinyuan.sales.R
 import project.xinyuan.sales.model.DataPaymentAccount
@@ -39,9 +40,9 @@ class AdapterSpinnerPaymentAccount(val context: Context, private val listPayment
         }
         val account = "${listPaymentAccount?.get(p0)?.accountName} - ${listPaymentAccount?.get(p0)?.bank} - ${listPaymentAccount?.get(p0)?.accountNumber} "
         vh.name.text = account
-        vh.name.setOnClickListener {
-            onItemClick(listPaymentAccount?.get(p0)?.id!!)
-        }
+//        vh.name.setOnClickListener {
+//            onItemClick(listPaymentAccount?.get(p0)?.id!!)
+//        }
         return view
     }
 
