@@ -86,7 +86,8 @@ interface NetworkService {
             @Field("payment")payment:String,
             @Field("payment_period")paymentPeriod:String,
             @Field("paid")paid:String,
-            @Field("total_payment")totalPayment:String
+            @Field("total_payment")totalPayment:String,
+            @Field("id_payment_account")idPaymentAccount:Int
     ):Call<ResponseAddTransaction>
 
     //Add Product Transaction
@@ -119,4 +120,9 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("api/sales/logout")
     fun logoutSales():Call<ResponseLogout>
+
+    //Get Payment Account
+    @Headers("No-Authentication: true")
+    @POST("api/transaction/accounts")
+    fun getPaymentAccount():Call<ResponseGetPaymentAccounts>
 }

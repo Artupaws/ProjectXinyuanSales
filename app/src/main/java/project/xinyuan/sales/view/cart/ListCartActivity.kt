@@ -8,16 +8,19 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterListCart
+import project.xinyuan.sales.adapter.AdapterSpinnerPaymentAccount
 import project.xinyuan.sales.databinding.ActivityListCartBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.model.DataCustomer
 import project.xinyuan.sales.model.DataFormalTransaction
+import project.xinyuan.sales.model.DataPaymentAccount
 import project.xinyuan.sales.roomdatabase.CartDao
 import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.roomdatabase.CartRoomDatabase
@@ -45,6 +48,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     var isEmptyDoNumber = true
     private var tempo:String? = null
     private var postpaid:String?=null
+    private var account:Int?=null
     private var valuePaymentCash:String = "0"
     private lateinit var listItemCart: ArrayList<CartItem>
 
@@ -70,6 +74,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         setDate()
         setupSpinnerTempo()
         setupSpinnerPostpaid()
+        presenter.getPaymentAccount()
 
     }
 
@@ -117,12 +122,14 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
                 when (tempo) {
                     "postpaid" -> {
                         binding.linearTenor.visibility = View.VISIBLE
-                        valuePaymentCash="0"
+                        binding.linearPaymentAccount.visibility = View.GONE
+                        valuePaymentCash = "0"
                     }
                     "cash" -> {
                         postpaid = "0"
                         valuePaymentCash = binding.tvTotalPrice.text.toString()
                         binding.linearTenor.visibility = View.GONE
+                        binding.linearPaymentAccount.visibility = View.VISIBLE
                     }
                     else -> {
                         binding.linearTenor.visibility = View.GONE
@@ -131,6 +138,25 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+    }
+
+    private fun setupSpinnerPaymentAccount(listPaymentAccount: List<DataPaymentAccount?>?){
+//        val arrayAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, listPaymentAccount as ArrayList)
+        val arrayAdapter = AdapterSpinnerPaymentAccount(this, listPaymentAccount)
+        binding.spnPaymentAccount.adapter = arrayAdapter
+        binding.spnPaymentAccount.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                arrayAdapter.onItemClick = {
+                    account = it
+                }
+                binding.btnApprove.isEnabled = account != 0
+                stateUnloading()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                tempo = null
             }
         }
     }
@@ -191,7 +217,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         }
 
         if (!isEmptyInvoice && !isEmptyPayment && !isEmptyPaymenPeriod && !isEmptyDoNumber){
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!,  valuePaymentCash, binding.tvTotalPrice.text.toString())
+            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!, valuePaymentCash, binding.tvTotalPrice.text.toString(), account!!)
         } else {
             stateUnloading()
             Snackbar.make(binding.btnApprove, "please complete form", Snackbar.LENGTH_SHORT).show()
@@ -232,6 +258,10 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         }
     }
 
+    override fun messageGetPaymentAccount(msg: String) {
+        Log.d("getPaymentAccount", msg)
+    }
+
     override fun messageAddDataFormalTransaction(msg: String) {
         Log.d("addDataTransaction", msg)
     }
@@ -242,6 +272,10 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         for (i in listItemCart){
             presenter.addProductTransaction(idTransaction!!, i.id, i.total.toInt(), i.price.toInt(), i.subTotal.toInt())
         }
+    }
+
+    override fun getPaymentAccount(data: List<DataPaymentAccount?>?) {
+        setupSpinnerPaymentAccount(data)
     }
 
 
