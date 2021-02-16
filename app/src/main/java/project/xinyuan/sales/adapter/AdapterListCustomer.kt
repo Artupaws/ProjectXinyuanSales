@@ -8,7 +8,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemCustomerBinding
-import project.xinyuan.sales.databinding.ListItemProductBinding
 import project.xinyuan.sales.model.DataCustomer
 
 class AdapterListCustomer(val context: Context, private val listCustomer:List<DataCustomer?>?):

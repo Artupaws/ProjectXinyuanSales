@@ -115,7 +115,6 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
         popupAskDelete?.window?.setBackgroundDrawable(context.getDrawable(android.R.color.transparent))
         val window: Window = popupAskDelete?.window!!
         window.setGravity(Gravity.CENTER)
-        popupAskDelete?.show()
         val btnYes = popupAskDelete?.findViewById<Button>(R.id.btn_yes)
         val btnNo = popupAskDelete?.findViewById<Button>(R.id.btn_no)
         btnYes?.setOnClickListener {

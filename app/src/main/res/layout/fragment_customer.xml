@@ -25,6 +25,7 @@
                 android:id="@+id/sv_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:background="@drawable/background_input"
                 app:iconifiedByDefault="false"
                 app:queryHint="Search customer here"

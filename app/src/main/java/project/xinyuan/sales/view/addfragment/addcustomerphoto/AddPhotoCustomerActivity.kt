@@ -22,6 +22,8 @@ import android.view.View
 import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -193,10 +195,10 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         if (resultCode == RESULT_OK) {
             when (statusCapture) {
                 "shopOne" -> {
-                    binding.ivShopOne.setImageURI(uriPhotoShop)
                     if (Build.VERSION.SDK_INT < 28) {
                         val bitmap = Images.Media.getBitmap(contentResolver, uriPhotoShop)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriPhotoShop).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivShopOne)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
@@ -206,6 +208,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                         val source = ImageDecoder.createSource(contentResolver, uriPhotoShop)
                         val bitmap = ImageDecoder.decodeBitmap(source)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriPhotoShop).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivShopOne)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
@@ -215,12 +218,11 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                 }
 
                 "idCardAdmin" -> {
-                    binding.ivIdCard.setImageURI(uriPhotoIdCard)
                     if (Build.VERSION.SDK_INT < 28) {
                         val bitmap = Images.Media.getBitmap(contentResolver, uriPhotoIdCard)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriPhotoIdCard).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivIdCard)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
-//                    val filePath = getRealPathFromURIPath(uriPhotoIdCard)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
                         val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
@@ -229,8 +231,8 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                         val source = ImageDecoder.createSource(contentResolver, uriPhotoIdCard)
                         val bitmap = ImageDecoder.decodeBitmap(source)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriPhotoIdCard).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivIdCard)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
-//                    val filePath = getRealPathFromURIPath(uriPhotoIdCard)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
                         val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
@@ -239,10 +241,10 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                 }
 
                 "npwpAdmin" -> {
-                    binding.ivNpwpAdmin.setImageURI(uriPhotoNpwpAdmin)
                     if (Build.VERSION.SDK_INT < 28) {
                         val bitmap = Images.Media.getBitmap(contentResolver, uriPhotoNpwpAdmin)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriPhotoNpwpAdmin).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivNpwpAdmin)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
@@ -252,6 +254,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                         val source = ImageDecoder.createSource(contentResolver, uriPhotoNpwpAdmin)
                         val bitmap = ImageDecoder.decodeBitmap(source)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriPhotoNpwpAdmin).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivNpwpAdmin)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
@@ -261,10 +264,10 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                 }
 
                 "npwpCompany" -> {
-                    binding.ivNpwpCompany.setImageURI(uriNpwpCompany)
                     if (Build.VERSION.SDK_INT < 28) {
                         val bitmap = Images.Media.getBitmap(contentResolver, uriNpwpCompany)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriNpwpCompany).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivNpwpCompany)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
@@ -274,6 +277,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
                         val source = ImageDecoder.createSource(contentResolver, uriNpwpCompany)
                         val bitmap = ImageDecoder.decodeBitmap(source)
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
+                        Glide.with(applicationContext).load(uriNpwpCompany).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivNpwpCompany)
                         val path = Images.Media.insertImage(contentResolver, bitmap, "Xinyuan-Image", null)
                         val filePath = getRealPathFromURIPath(Uri.parse(path))
                         val file = File(filePath)
@@ -341,7 +345,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
     private fun loadingUpload() {
         popupLoading = Dialog(this)
         popupLoading?.setContentView(R.layout.popup_loading)
-        popupLoading?.setCancelable(true)
+        popupLoading?.setCancelable(false)
         popupLoading?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
         val window: Window = popupLoading?.window!!
         window.setGravity(Gravity.CENTER)
