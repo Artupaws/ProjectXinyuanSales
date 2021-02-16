@@ -75,7 +75,6 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         binding.toolbar.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
         binding.ivShopOne.setOnClickListener(this)
-        binding.ivShopTwo.setOnClickListener(this)
         binding.ivIdCard.setOnClickListener(this)
         binding.ivNpwpAdmin.setOnClickListener(this)
         binding.ivNpwpCompany.setOnClickListener(this)
@@ -103,10 +102,6 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         when (v?.id) {
             R.id.iv_shop_one -> {
                 statusCapture = "shopOne"
-                checkPermission()
-            }
-            R.id.iv_shop_two -> {
-                statusCapture = "shopTwo"
                 checkPermission()
             }
             R.id.iv_id_card -> {
