@@ -37,7 +37,6 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
         presenter.getTransactionDetail()
         refresh()
         searchTransaction()
-
     }
 
     override fun onDestroy() {

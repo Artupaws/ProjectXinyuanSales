@@ -3,7 +3,6 @@ package project.xinyuan.sales.view.history.detailtransaction
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -24,11 +23,7 @@ import project.xinyuan.sales.helper.NumberTextWatcher
 import project.xinyuan.sales.model.DataPayment
 import project.xinyuan.sales.model.DataPaymentAccount
 import project.xinyuan.sales.model.DataTransaction
-import project.xinyuan.sales.view.cart.ListCartPresenter
 import project.xinyuan.sales.view.dashboard.DashboardActivity
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, DetailTransactionContract {
@@ -39,7 +34,8 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
     private var popupMakePayment: Dialog? = null
     private lateinit var presenter: DetailTransactionPresenter
     private lateinit var helper: Helper
-    private var totalMustPay:String? = null
+    private var totalMustPayIDR:String? = null
+    private var totalMustPayValue:String? = null
     private var idTransaction:Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +50,8 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         binding.toolbarDetailTransaction.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarDetailTransaction.title = "Detail Transaction"
         val dataTransaction = intent.getParcelableExtra<DataTransaction>("dataTransaction")
-        totalMustPay = helper.convertToFormatMoneyIDR(dataTransaction.debt.toString())
+        totalMustPayIDR = helper.convertToFormatMoneyIDR(dataTransaction.debt.toString())
+        totalMustPayValue = dataTransaction?.debt.toString()
         idTransaction = dataTransaction?.idTransaction
         totalPrice = dataTransaction?.transactiondetails?.map { it?.price.toString().toInt()*it?.quantity.toString().toInt() }?.sum()
         binding.tvTempo.text = dataTransaction?.payment
@@ -129,7 +126,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         val twSalaryFrom: TextWatcher = NumberTextWatcher(etMustPay!!, locale, numDecs)
         val spinnerPaymentAccount = popupMakePayment?.findViewById<Spinner>(R.id.spn_payment_account)
         var account:Int? = null
-        tvTotalpay?.text = totalMustPay
+        tvTotalpay?.text = totalMustPayIDR
         btnPayment?.setOnClickListener {
             progressBar?.visibility = View.VISIBLE
             btnNo?.isEnabled = false
@@ -146,27 +143,28 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                false
+                if (p0?.isNotEmpty()!!){
+                    btnPayment?.isEnabled = (totalMustPayValue?.toLong()!!.minus(helper.changeFormatMoneyToValue(p0.toString()).toLong()) >= 0)
+                } else {
+                    btnPayment?.isEnabled = false
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                btnPayment?.isEnabled = p0?.isNotEmpty()!!&&account!=null
+                false
             }
-
         })
+
         spinnerPaymentAccount?.adapter = AdapterSpinnerPaymentAccount(applicationContext, listPaymentAccount)
         spinnerPaymentAccount?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 account = listPaymentAccount?.get(p2)?.id
                 btnPayment?.isEnabled = etMustPay.text.isNotEmpty()&&account!=null
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 false
             }
-
         }
-
     }
 
     override fun messageGetPaymentAccount(msg: String) {
