@@ -186,7 +186,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
     }
 
     override fun getDataPayment(data: DataPayment?) {
-        Log.d("dataPayment", data?.createdAt.toString())
+        Log.d("dataPayment", data?.date.toString())
     }
 
     override fun getPaymentAccount(data: List<DataPaymentAccount?>?) {

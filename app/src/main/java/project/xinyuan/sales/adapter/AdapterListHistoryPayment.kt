@@ -11,6 +11,7 @@ import project.xinyuan.sales.model.DataPayment
 
 class AdapterListHistoryPayment(val context: Context, private val listPayment: List<DataPayment?>?):RecyclerView.Adapter<AdapterListHistoryPayment.Holder>() {
     private lateinit var helper:Helper
+    private var paymentAccount:String? = null
 
     inner class Holder(view: View):RecyclerView.ViewHolder(view) {
         private val binding = ListItemPaymentBinding.bind(view)
@@ -18,6 +19,8 @@ class AdapterListHistoryPayment(val context: Context, private val listPayment: L
             with(binding) {
                 tvDate.text = item.date
                 tvTotalPayment.text = helper.convertToFormatMoneyIDR(item.paid!!)
+                paymentAccount = "${item.paymentAccount?.accountName} - ${item.paymentAccount?.bank} - ${item.paymentAccount?.accountNumber}"
+                tvPaymentAccount.text = paymentAccount
             }
         }
     }
