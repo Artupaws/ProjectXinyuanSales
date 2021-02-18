@@ -27,9 +27,21 @@ class AdapterListProduct(val context: Context, private val listProduct:List<Data
             with(binding){
                 Glide.with(context).load(item.photo.toString()).skipMemoryCache(false).diskCacheStrategy(
                     DiskCacheStrategy.NONE).into(ivProduct)
-                tvTypeProduct.text = item.type
-                tvSizeProduct.text = item.size
-                tvPriceProduct.text = item.cost.toString()
+                val typeProduct = "Type : ${item.type}"
+                val sizeProduct = "Size : ${item.size}"
+                val color = "Color : ${item.colour}"
+                val factoryName = "Factory : ${item.factory}"
+                if(item.grossWeight == null){
+                    tvGrossWeight.text = "Gross Weight (kg): -"
+                }else {
+                    val grossWeight = "Gross Weight (kg): ${item.grossWeight}"
+                    tvGrossWeight.text = grossWeight
+                }
+                tvTypeProduct.text = typeProduct
+                tvSizeProduct.text = sizeProduct
+                tvColorProduct.text = color
+                tvCompanyName.text = factoryName
+
             }
         }
     }

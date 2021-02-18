@@ -21,6 +21,7 @@ import project.xinyuan.sales.view.addfragment.AddFragment
 import project.xinyuan.sales.view.history.HistoryFragment
 import project.xinyuan.sales.view.home.HomeFragment
 import project.xinyuan.sales.view.login.LoginActivity
+import project.xinyuan.sales.view.todolist.TodoListActivity
 
 class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, DashboardContract {
 
@@ -42,6 +43,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         presenter.getDetailSales()
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         binding.linearAccount.setOnClickListener(this)
+        binding.ivActionTodoList.setOnClickListener(this)
         fragmentManager.beginTransaction().apply {
            replace(R.id.view_botnav, HomeFragment()).commit()
        }
@@ -100,6 +102,10 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         when (v?.id){
             R.id.linear_account -> {
                 moveDetailSales(data)
+            }
+            R.id.iv_action_todo_list -> {
+                val intent = Intent(applicationContext, TodoListActivity::class.java)
+                startActivity(intent)
             }
         }
     }

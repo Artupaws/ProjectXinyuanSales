@@ -45,8 +45,10 @@ class ChooseCustomerActivity : AppCompatActivity(), ChooseCustomerContract {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                (binding.rvCustomer.adapter as AdapterChooseCustomer).filter.filter(p0)
-                (binding.rvCustomer.adapter as AdapterChooseCustomer).notifyDataSetChanged()
+                if (p0?.isNotEmpty()!!){
+                    (binding.rvCustomer.adapter as AdapterChooseCustomer).filter.filter(p0)
+                    (binding.rvCustomer.adapter as AdapterChooseCustomer).notifyDataSetChanged()
+                }
                 return true
             }
 

@@ -58,8 +58,10 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                (binding?.rvTransaction?.adapter as AdapterListTransaction).filter.filter(p0)
-                (binding?.rvTransaction?.adapter as AdapterListTransaction).notifyDataSetChanged()
+                if (p0?.isNotEmpty()!!){
+                    (binding?.rvTransaction?.adapter as AdapterListTransaction).filter.filter(p0)
+                    (binding?.rvTransaction?.adapter as AdapterListTransaction).notifyDataSetChanged()
+                }
                 return true
             }
 

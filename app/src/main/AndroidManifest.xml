@@ -16,26 +16,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sales"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.history.detailtransaction.DetailTransactionActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.cart.ListCartActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.addfragment.choosecustomer.ChooseCustomerActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.addfragment.addordercustomer.AddOrderCustomerActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.addfragment.addcustomerphoto.AddPhotoCustomerActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.addfragment.addcustomerdata.DataCustomerActivty"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.account.AccountActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.dashboard.DashboardActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.login.LoginActivity"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".view.slider.SliderActivity"
-            android:screenOrientation="nosensor"/>
+        <activity android:name=".view.todolist.TodoListActivity"></activity>
+        <activity
+            android:name=".view.history.detailtransaction.DetailTransactionActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.cart.ListCartActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.addfragment.choosecustomer.ChooseCustomerActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.addfragment.addordercustomer.AddOrderCustomerActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.addfragment.addcustomerphoto.AddPhotoCustomerActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.addfragment.addcustomerdata.DataCustomerActivty"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.account.AccountActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.dashboard.DashboardActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.slider.SliderActivity"
+            android:screenOrientation="nosensor" />
         <activity android:name=".view.splashscreen.SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

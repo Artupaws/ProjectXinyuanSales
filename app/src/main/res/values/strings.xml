@@ -100,4 +100,5 @@
     <string name="date">Date</string>
     <string name="payment">Payment</string>
     <string name="payment_account">Payment Account </string>
+    <string name="todo">TODO</string>
 </resources>

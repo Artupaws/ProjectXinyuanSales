@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +50,7 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         binding.tvCompanyName.text = detailCustomer.companyName
         binding.tvAdminName.text = detailCustomer.administratorName
         binding.tvAdminPhone.text = detailCustomer.administratorPhone
+        searchProduct()
 
     }
 
@@ -69,6 +71,24 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
         listItemCart.addAll(dao.getAll())
         listCart = listItemCart
         binding.btnPlaceOrder.isEnabled = listItemCart.isNotEmpty()
+    }
+
+    private fun searchProduct(){
+        binding.svProductOrder.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0?.isNotEmpty()!!){
+                    (binding.rvProduct.adapter as AdapterListProductAddOrder).filter.filter(p0)
+                    (binding.rvProduct.adapter as AdapterListProductAddOrder).notifyDataSetChanged()
+                }
+                return true
+            }
+
+        })
     }
 
     override fun onStart() {

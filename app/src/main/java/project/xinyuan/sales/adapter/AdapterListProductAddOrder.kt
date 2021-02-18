@@ -20,12 +20,13 @@ import project.xinyuan.sales.databinding.ListItemAddStockOrderBinding
 import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.helper.NumberTextWatcher
 import project.xinyuan.sales.model.DataProduct
+import project.xinyuan.sales.model.DataTransaction
 import project.xinyuan.sales.roomdatabase.CartDao
 import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.roomdatabase.CartRoomDatabase
 import java.util.*
 
-class AdapterListProductAddOrder(val context: Context, private val listProduct: List<DataProduct?>?) : RecyclerView.Adapter<AdapterListProductAddOrder.Holder>() {
+class AdapterListProductAddOrder(val context: Context, private val listProduct: List<DataProduct?>?) : RecyclerView.Adapter<AdapterListProductAddOrder.Holder>(), Filterable {
     private var broadcaster: LocalBroadcastManager? = null
     private var popupAddStock: Dialog? = null
     private var popupAskDelete: Dialog? = null
@@ -34,6 +35,12 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
     private lateinit var dao:CartDao
     var nameAndSize:String?=null
     private lateinit var helper:Helper
+    private lateinit var listItemCart: java.util.ArrayList<CartItem>
+
+    var listProductFilter = ArrayList<DataProduct?>()
+    init {
+        listProductFilter = listProduct as ArrayList<DataProduct?>
+    }
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemAddStockOrderBinding.bind(view)
@@ -89,11 +96,11 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
     }
 
     override fun onBindViewHolder(holder: AdapterListProductAddOrder.Holder, position: Int) {
-        val product: DataProduct = listProduct?.get(position)!!
+        val product: DataProduct = listProductFilter[position]!!
         holder.bin(product)
     }
 
-    override fun getItemCount(): Int = listProduct?.size!!
+    override fun getItemCount(): Int = listProductFilter.size
 
     private fun saveCart(cart: CartItem){
         if (dao.getById(cart.id).isEmpty()){
@@ -180,6 +187,28 @@ class AdapterListProductAddOrder(val context: Context, private val listProduct: 
             broadcaster?.sendBroadcast(intentTotal)
             saveCart(CartItem(id = item.id!!, type = nameProduct?.text.toString(), photo = item.photo!!, price = helper.changeFormatMoneyToValue(inputPrice!!), total = inputTotal?.text.toString(),
                     subTotal = (inputTotal?.text.toString().toInt()*helper.changeFormatMoneyToValue(inputPrice!!).toInt()).toString()))
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(p0: CharSequence?): FilterResults {
+                val querySearch = p0?.toString()?.toLowerCase()
+                val filterResult = FilterResults()
+                filterResult.values = if (querySearch == null || querySearch.isEmpty()) {
+                    listProduct
+                } else {
+                    listProduct?.filter {
+                        it?.type?.toLowerCase()!!.contains(querySearch)
+                    }
+                }
+                return filterResult
+            }
+
+            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+                listProductFilter = p1?.values as ArrayList<DataProduct?>
+                notifyDataSetChanged()
+            }
         }
     }
 }

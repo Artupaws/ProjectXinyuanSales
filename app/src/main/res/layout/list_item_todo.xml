@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/linear_data_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/tv_todo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Menagih Customer A"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_weight="1.4"/>
+
+        <TextView
+            android:id="@+id/tv_due_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="2021-02-28"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:layout_weight="0.8"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="0.8">
+            <TextView
+                android:id="@+id/btn_status_todo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:clickable="false"
+                android:enabled="true"
+                tools:text="Done"
+                android:textColor="@color/white"
+                android:background="@drawable/state_background_todo"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@id/linear_data_todo"/>
+
+</RelativeLayout>

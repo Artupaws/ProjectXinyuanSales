@@ -126,4 +126,9 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("api/transaction/accounts")
     fun getPaymentAccount():Call<ResponseGetPaymentAccounts>
+
+    //Get Todo List
+    @Headers("No-Authenticaiton: true")
+    @POST("api/sales/todo")
+    fun getTodoList():Call<ResponseGetTodoList>
 }

@@ -62,8 +62,10 @@ class CustomerFragment : Fragment(), CustomerContract {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                (binding?.rvCustomer?.adapter as AdapterListCustomer).filter.filter(p0)
-                (binding?.rvCustomer?.adapter as AdapterListCustomer).notifyDataSetChanged()
+                if (p0?.isNotEmpty()!!){
+                    (binding?.rvCustomer?.adapter as AdapterListCustomer).filter.filter(p0)
+                    (binding?.rvCustomer?.adapter as AdapterListCustomer).notifyDataSetChanged()
+                }
                 return true
             }
 
