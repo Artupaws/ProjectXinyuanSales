@@ -13,7 +13,7 @@ import java.util.ArrayList
 
 class ListCartPresenter(val view:ListCartContract, val context: Context) {
 
-    fun addDataFormalTransaction(invoiceNumber:String, idCustomer:Int, payment:String, paymentPeriod:String, paid:String, totalPayment:String, idPaymentAccount:Int){
+    fun addDataFormalTransaction(invoiceNumber:String, idCustomer:Int, payment:String, paymentPeriod:Int, paid:Int, totalPayment:Int, idPaymentAccount:Int){
         val addDataFormalTransaction = NetworkConfig().getConnectionXinyuanBearer(context).addDataFormalTransaction(invoiceNumber, idCustomer, payment, paymentPeriod, paid, totalPayment, idPaymentAccount)
         addDataFormalTransaction.enqueue(object : retrofit2.Callback<ResponseAddTransaction>{
             override fun onResponse(call: Call<ResponseAddTransaction>, response: Response<ResponseAddTransaction>) {

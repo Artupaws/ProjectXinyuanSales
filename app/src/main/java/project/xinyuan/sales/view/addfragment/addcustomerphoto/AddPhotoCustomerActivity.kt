@@ -52,6 +52,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
     private var addressAdmin: String = ""
     private var npwpAdmin: String = ""
     private var placeAndBirthAdmin: String = ""
+    private var idLevel:Int = 0
     private var uriPhotoShop: Uri = Uri.EMPTY
     private var uriPhotoIdCard: Uri = Uri.EMPTY
     private var uriPhotoNpwpAdmin: Uri = Uri.EMPTY
@@ -91,9 +92,11 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         addressAdmin = intent.getStringExtra("addressAdmin")
         npwpAdmin = intent.getStringExtra("npwpAdmin")
         placeAndBirthAdmin = intent.getStringExtra("placeAndBirthAdmin")
+        idLevel = intent.getIntExtra("idLevel", 0)
+
 
         Log.d("checkData", "$idArea$companyName$companyAddress$nameAdmin$idCardAdmin" +
-                "$phoneAdmin$companyPhone$companyNpwp$addressAdmin$npwpAdmin$placeAndBirthAdmin")
+                "$phoneAdmin$companyPhone$companyNpwp$addressAdmin$npwpAdmin$placeAndBirthAdmin$idLevel")
         loadingUpload()
 
     }
@@ -118,7 +121,7 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
             }
             R.id.btn_add_customer -> {
                 popupLoading?.show()
-                presenter.addDataCustomer(idArea, companyName, companyAddress, nameAdmin, idCardAdmin, phoneAdmin, companyPhone, companyNpwp, addressAdmin, placeAndBirthAdmin, npwpAdmin)
+                presenter.addDataCustomer(idArea, companyName, companyAddress, nameAdmin, idCardAdmin, phoneAdmin, companyPhone, companyNpwp, addressAdmin, placeAndBirthAdmin, npwpAdmin, idLevel)
             }
         }
     }

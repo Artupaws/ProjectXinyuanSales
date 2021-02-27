@@ -242,6 +242,24 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/set_level_sales"
+                        android:textColor="@color/black" />
+
+                    <Spinner
+                        android:id="@+id/spn_level_sales"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/place_date_birth_of_admin"
                         android:textColor="@color/black" />
 
@@ -360,8 +378,9 @@
                         android:id="@+id/btn_register_customer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:backgroundTint="@color/orange"
+                        android:background="@drawable/state_button_add_order"
                         android:text="@string/next"
                         android:textColor="@color/white" />
                 </FrameLayout>

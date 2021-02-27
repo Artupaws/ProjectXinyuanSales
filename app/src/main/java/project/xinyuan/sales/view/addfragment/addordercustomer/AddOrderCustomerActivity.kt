@@ -84,6 +84,9 @@ class AddOrderCustomerActivity : AppCompatActivity(), View.OnClickListener, AddO
                 if (p0?.isNotEmpty()!!){
                     (binding.rvProduct.adapter as AdapterListProductAddOrder).filter.filter(p0)
                     (binding.rvProduct.adapter as AdapterListProductAddOrder).notifyDataSetChanged()
+                }else {
+                    (binding.rvProduct.adapter as AdapterListProductAddOrder).filter.filter("")
+                    (binding.rvProduct.adapter as AdapterListProductAddOrder).notifyDataSetChanged()
                 }
                 return true
             }

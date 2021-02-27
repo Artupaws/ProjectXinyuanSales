@@ -43,7 +43,8 @@ interface NetworkService {
         @Field("company_npwp")companyNpwp:String,
         @Field("administrator_address")administratorAddress:String,
         @Field("administrator_birthdate")administratorBirthdate:String,
-        @Field("administrator_npwp")administratorNpwp:String
+        @Field("administrator_npwp")administratorNpwp:String,
+        @Field("id_level")idLevel:Int
     ):Call<ResponseRegisterDataCustomer>
 
     //Check ID Customer
@@ -84,9 +85,9 @@ interface NetworkService {
             @Field("invoice_number")invoiceNumber:String,
             @Field("id_customer")idCustomer:Int,
             @Field("payment")payment:String,
-            @Field("payment_period")paymentPeriod:String,
-            @Field("paid")paid:String,
-            @Field("total_payment")totalPayment:String,
+            @Field("payment_period")paymentPeriod:Int,
+            @Field("paid")paid:Int,
+            @Field("total_payment")totalPayment:Int,
             @Field("id_payment_account")idPaymentAccount:Int
     ):Call<ResponseAddTransaction>
 
@@ -127,8 +128,13 @@ interface NetworkService {
     @POST("api/transaction/accounts")
     fun getPaymentAccount():Call<ResponseGetPaymentAccounts>
 
-    //Get Todo List
+    //GetTodo List
     @Headers("No-Authenticaiton: true")
     @POST("api/sales/todo")
     fun getTodoList():Call<ResponseGetTodoList>
+
+    //Get Customer Level
+    @Headers("No-Authentication: true")
+    @POST("api/customer/level")
+    fun getCustomerLevel():Call<ResponseGetCustomerLevel>
 }

@@ -13,9 +13,9 @@ import retrofit2.Response
 class AddPhotoCustomerPresenter(val view:AddPhotoCustomerContract, val context: Context) {
 
     fun addDataCustomer(idArea:Int, companyName:String,companyAddress:String,administratorName:String,administratorId:String,administratorPhone:String,
-                        companyPhone:String,companyNpwp:String,administratorAddress:String,administratorBirthdate:String,administratorNpwp:String){
+                        companyPhone:String,companyNpwp:String,administratorAddress:String,administratorBirthdate:String,administratorNpwp:String, idLevel:Int){
         val addDataCustomer = NetworkConfig().getConnectionXinyuanBearer(context).registerDataCustomer(idArea, companyName, companyAddress, administratorName, administratorId, administratorPhone,
-            companyPhone, companyNpwp, administratorAddress, administratorBirthdate, administratorNpwp)
+            companyPhone, companyNpwp, administratorAddress, administratorBirthdate, administratorNpwp, idLevel)
         addDataCustomer.enqueue(object :retrofit2.Callback<ResponseRegisterDataCustomer>{
             override fun onResponse(call: Call<ResponseRegisterDataCustomer>, response: Response<ResponseRegisterDataCustomer>) {
                 if (response.isSuccessful && response.body()?.value == 1){

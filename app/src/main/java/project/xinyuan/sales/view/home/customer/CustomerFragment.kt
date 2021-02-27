@@ -65,6 +65,9 @@ class CustomerFragment : Fragment(), CustomerContract {
                 if (p0?.isNotEmpty()!!){
                     (binding?.rvCustomer?.adapter as AdapterListCustomer).filter.filter(p0)
                     (binding?.rvCustomer?.adapter as AdapterListCustomer).notifyDataSetChanged()
+                } else {
+                    (binding?.rvCustomer?.adapter as AdapterListCustomer).filter.filter("")
+                    (binding?.rvCustomer?.adapter as AdapterListCustomer).notifyDataSetChanged()
                 }
                 return true
             }

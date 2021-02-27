@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -46,10 +45,10 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     var isEmptyPayment = true
     var isEmptyPaymenPeriod = true
     var isEmptyDoNumber = true
-    private var tempo:String? = null
-    private var postpaid:String?=null
-    private var account:Int?=null
-    private var valuePaymentCash:String = "0"
+    private var paymentType:String? = null
+    private var paymentPeriod:String?=null
+    private var account:Int = 0
+    private var valuePaymentCash:Int = 0
     private lateinit var listItemCart: ArrayList<CartItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,7 +105,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = AdapterListCart(applicationContext, listItem)
             totalPrice = listItem.map { it.total.toInt()*it.price.toInt() }.sum()
-            binding.tvTotalPrice.text = totalPrice.toString()
+            binding.tvTotalPrice.text = totalPrice?.toLong().toString()
         }
     }
 
@@ -116,18 +115,19 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         binding.spnTempo.adapter = arrayAdapter
         binding.spnTempo.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                tempo = binding.spnTempo.selectedItem.toString()
-                binding.btnApprove.isEnabled = tempo != "Choose"
+                paymentType = binding.spnTempo.selectedItem.toString()
+                Log.d("tempo", paymentType)
+                binding.btnApprove.isEnabled = paymentType != "Choose"
                 stateUnloading()
-                when (tempo) {
+                when (paymentType) {
                     "postpaid" -> {
                         binding.linearTenor.visibility = View.VISIBLE
                         binding.linearPaymentAccount.visibility = View.GONE
-                        valuePaymentCash = "0"
+                        valuePaymentCash = 0
                     }
                     "cash" -> {
-                        postpaid = "0"
-                        valuePaymentCash = binding.tvTotalPrice.text.toString()
+                        paymentPeriod = "0"
+                        valuePaymentCash = binding.tvTotalPrice.text.toString().toInt()
                         binding.linearTenor.visibility = View.GONE
                         binding.linearPaymentAccount.visibility = View.VISIBLE
                     }
@@ -147,14 +147,14 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         binding.spnPaymentAccount.adapter = arrayAdapter
         binding.spnPaymentAccount.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                account = listPaymentAccount?.get(position)?.id
+                account = listPaymentAccount?.get(position)?.id!!
                 binding.btnApprove.isEnabled = account != null
                 stateUnloading()
             }
 
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                tempo = null
+                paymentType = null
             }
         }
     }
@@ -165,21 +165,27 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         binding.spnPostpaid.adapter = arrayAdapter
         binding.spnPostpaid.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                postpaid = binding.spnPostpaid.selectedItem.toString()
-                binding.btnApprove.isEnabled = postpaid != "Choose"
+                paymentPeriod = binding.spnPostpaid.selectedItem.toString()
+                Log.d("postpaid", paymentPeriod)
+                if (paymentPeriod != "Choose"){
+                    binding.btnApprove.isEnabled = true
+                    account = 0
+                }else{
+                    binding.btnApprove.isEnabled = false
+                }
                 stateUnloading()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                tempo = null
+                paymentType = null
             }
         }
     }
 
     private fun checkAddDataTransaction(){
         var invoiceNumber = binding.etNumberInvoice.text.toString()
-        var paymentFill = tempo
-        var postpaidFill = postpaid
+        var paymentFill = paymentType
+        var postpaidFill = paymentPeriod
         var doNumber = binding.etNumberDo.text.toString()
 
         if (invoiceNumber.isEmpty()){
@@ -195,7 +201,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             Snackbar.make(binding.btnApprove, "please choose tempo", Snackbar.LENGTH_SHORT).show()
         } else {
             isEmptyPayment = false
-            paymentFill = tempo
+            paymentFill = paymentType
         }
 
         if (postpaidFill == "Choose"){
@@ -203,7 +209,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             Snackbar.make(binding.btnApprove, "please choose tenor", Snackbar.LENGTH_SHORT).show()
         } else {
             isEmptyPaymenPeriod = false
-            postpaidFill = postpaid
+            postpaidFill = paymentPeriod
         }
 
         if (doNumber.isEmpty()){
@@ -215,7 +221,8 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         }
 
         if (!isEmptyInvoice && !isEmptyPayment && !isEmptyPaymenPeriod && !isEmptyDoNumber){
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentFill!!, postpaidFill!!, valuePaymentCash, binding.tvTotalPrice.text.toString(), account!!)
+            Log.d("data", "$invoiceNumber $idCustomer $paymentType $paymentPeriod $valuePaymentCash ${binding.tvTotalPrice.text.toString().toInt()} $account")
+            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentType!!, paymentPeriod!!.toInt(), valuePaymentCash, binding.tvTotalPrice.text.toString().toInt(), account)
         } else {
             stateUnloading()
             Snackbar.make(binding.btnApprove, "please complete form", Snackbar.LENGTH_SHORT).show()

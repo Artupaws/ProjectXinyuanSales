@@ -17,20 +17,18 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterListArea
+import project.xinyuan.sales.adapter.AdapterSpinnerLevelCustomer
 import project.xinyuan.sales.databinding.ActivityDataCustomerActivtyBinding
+import project.xinyuan.sales.model.CustomerLevel
 import project.xinyuan.sales.model.DataArea
 import project.xinyuan.sales.model.DataCustomer
 import project.xinyuan.sales.view.addfragment.addcustomerphoto.AddPhotoCustomerActivity
@@ -54,9 +52,11 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
     private var isEmptyAdminPhone = true
     private var isEmptyCompanyPhone = true
     private var isEmptyCompanyNpwp = true
+    private var isEmptyLevelCustomer = true
     private var isEmptyAreaId = true
     private var placeBirth:String?=null
     private var dateBirth:String?=null
+    private var idLevelCustomer:Int=0
     private var dateSetListener: DatePickerDialog.OnDateSetListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +77,7 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
         binding.etArea.addTextChangedListener(getTextWatcher(binding.etArea))
 
         presenter.getListDataArea()
+        presenter.getCustomerLevel()
         popupLoading()
         popupLoading?.show()
         refresh()
@@ -151,7 +152,7 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
     }
 
     private fun checkDataCustomer(){
-        var area:String = binding.etArea.text.toString()
+        val area:String = binding.etArea.text.toString()
         var companyName = binding.etCompanyName.text.toString()
         var companyAddress = binding.etCompanyAddress.text.toString()
         var companyNpwp = binding.etCompanyNpwp.text.toString()
@@ -159,6 +160,7 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
         var nameAdmin = binding.etNameAdminCompany.text.toString()
         var idCardAdmin = binding.etIdcardAdmin.text.toString()
         var phoneAdmin = binding.etPhoneNumber.text.toString()
+        var levelCustomer = idLevelCustomer
         val npwpAdmin:String? = null
         val addressAdmin:String? = null
 
@@ -225,9 +227,16 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
             phoneAdmin = binding.etPhoneNumber.text.toString()
         }
 
+        if (levelCustomer == 0){
+            isEmptyLevelCustomer = true
+        }else {
+            isEmptyLevelCustomer = false
+            levelCustomer = idLevelCustomer
+        }
+
         if (!isEmptyIdArea && !isEmptyCompanyName && !isEmptyCompanyAddress && !isEmptyCompanyNpwp && !isEmptyCompanyPhone
-                && !isEmptyAdminName && !isEmptyAdminId && !isEmptyAdminPhone){
-            move(idArea, companyName, companyAddress, nameAdmin, idCardAdmin, phoneAdmin, companyPhone, companyNpwp, addressAdmin.toString(), "$placeBirth, $dateBirth", npwpAdmin.toString())
+                && !isEmptyAdminName && !isEmptyAdminId && !isEmptyAdminPhone && !isEmptyLevelCustomer){
+            move(idArea, companyName, companyAddress, nameAdmin, idCardAdmin, phoneAdmin, companyPhone, companyNpwp, addressAdmin.toString(), "$placeBirth, $dateBirth", npwpAdmin.toString(), idLevelCustomer)
         } else {
             popupLoading?.dismiss()
             Snackbar.make(binding.btnRegisterCustomer, "Please complete form", Snackbar.LENGTH_SHORT).show()
@@ -235,7 +244,7 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
     }
 
     private fun move(idArea:Int, companyName:String, companyAddress:String, nameAdmin:String, idCardAdmin:String,
-                     phoneAdmin:String, companyPhone:String, companyNpwp:String, addressAdmin:String, placeAndBirthAdmin:String, npwpAdmin:String){
+                     phoneAdmin:String, companyPhone:String, companyNpwp:String, addressAdmin:String, placeAndBirthAdmin:String, npwpAdmin:String, idLevel:Int){
         val intent = Intent(applicationContext, AddPhotoCustomerActivity::class.java)
         intent.putExtra("idArea", idArea)
         intent.putExtra("companyName", companyName)
@@ -248,12 +257,14 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
         intent.putExtra("placeAndBirthAdmin", placeAndBirthAdmin)
         intent.putExtra("nameAdmin", nameAdmin)
         intent.putExtra("npwpAdmin", npwpAdmin)
+        intent.putExtra("idLevel", idLevel)
         startActivity(intent)
     }
 
     private fun refresh(){
         binding.refresh.setOnRefreshListener {
             presenter.getListDataArea()
+            presenter.getCustomerLevel()
         }
     }
 
@@ -325,6 +336,23 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
         }
     }
 
+    private fun setupSpinnerLevel(dataLevel: List<CustomerLevel?>?){
+        val arrayAdapter = AdapterSpinnerLevelCustomer(this, dataLevel)
+        binding.spnLevelSales.adapter = arrayAdapter
+        binding.spnLevelSales.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                idLevelCustomer = dataLevel?.get(position)?.id!!
+                binding.btnRegisterCustomer.isEnabled = idLevelCustomer != 0
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                isEmptyLevelCustomer = true
+                idLevelCustomer = 0
+            }
+
+        }
+    }
+
     override fun messageCheckIdCustomer(msg: String) {
         if (msg.contains("Available")){
             idCardAvailable = true
@@ -351,6 +379,10 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
         binding.refresh.isRefreshing = false
     }
 
+    override fun messageGetCustomerLevel(msg: String) {
+        Log.d("getLevelCustomer", msg)
+    }
+
     override fun getIdCustomer(idCustomer: DataCustomer?) {
         idCustomerRegistered = idCustomer?.id
     }
@@ -371,6 +403,13 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = adapterListArea
         }
+    }
+
+    override fun getCustomerLevel(dataLevel: MutableList<CustomerLevel?>?) {
+        val level = mutableListOf<CustomerLevel?>()
+        level.addAll(listOf(CustomerLevel(null, null, "Choose", "", null, 0, null)))
+        level.addAll(dataLevel!!)
+        setupSpinnerLevel(level)
     }
 
 }

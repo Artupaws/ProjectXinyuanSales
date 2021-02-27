@@ -58,7 +58,7 @@
     <string name="dash_line">-</string>
     <string name="add">add</string>
     <string name="remove">Remove</string>
-    <string name="input_total">Input total</string>
+    <string name="input_total">Input total order</string>
     <string name="price_from_you">Price from you</string>
     <string name="choose">Choose</string>
     <string name="yes">Yes</string>
@@ -101,4 +101,6 @@
     <string name="payment">Payment</string>
     <string name="payment_account">Payment Account </string>
     <string name="todo">TODO</string>
+    <string name="set_level_sales">Set level sales</string>
+    <string name="detail_profile"><u>detail profile</u></string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
 import project.xinyuan.sales.model.ResponseCheckIdCustomer
+import project.xinyuan.sales.model.ResponseGetCustomerLevel
 import project.xinyuan.sales.model.ResponseGetListArea
 import project.xinyuan.sales.model.ResponseRegisterDataCustomer
 import retrofit2.Call
@@ -52,9 +53,9 @@ class DataCustomerPresenter(val view:DataCustomerContract, val context: Context)
     }
 
     fun addDataCustomer(idArea:Int, companyName:String,companyAddress:String,administratorName:String,administratorId:String,administratorPhone:String,
-                        companyPhone:String,companyNpwp:String,administratorAddress:String,administratorBirthdate:String,administratorNpwp:String){
+                        companyPhone:String,companyNpwp:String,administratorAddress:String,administratorBirthdate:String,administratorNpwp:String, idLevel:Int){
         val addDataCustomer = NetworkConfig().getConnectionXinyuanBearer(context).registerDataCustomer(idArea, companyName, companyAddress, administratorName, administratorId, administratorPhone,
-            companyPhone, companyNpwp, administratorAddress, administratorBirthdate, administratorNpwp)
+            companyPhone, companyNpwp, administratorAddress, administratorBirthdate, administratorNpwp, idLevel)
         addDataCustomer.enqueue(object :retrofit2.Callback<ResponseRegisterDataCustomer>{
             override fun onResponse(call: Call<ResponseRegisterDataCustomer>, response: Response<ResponseRegisterDataCustomer>) {
                 if (response.isSuccessful && response.body()?.value == 1){
@@ -72,7 +73,27 @@ class DataCustomerPresenter(val view:DataCustomerContract, val context: Context)
             }
 
         })
+    }
 
+    fun getCustomerLevel(){
+        val getCustomerLevel = NetworkConfig().getConnectionXinyuanBearer(context).getCustomerLevel()
+        getCustomerLevel.enqueue(object : retrofit2.Callback<ResponseGetCustomerLevel>{
+            override fun onResponse(call: Call<ResponseGetCustomerLevel>, response: Response<ResponseGetCustomerLevel>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.data
+                    view.getCustomerLevel(data)
+                    view.messageGetCustomerLevel(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageGetCustomerLevel(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetCustomerLevel>, t: Throwable) {
+                view.messageGetCustomerLevel(t.localizedMessage.toString())
+            }
+
+        })
     }
 
 }

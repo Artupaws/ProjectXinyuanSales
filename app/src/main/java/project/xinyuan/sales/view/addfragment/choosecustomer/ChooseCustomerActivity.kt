@@ -48,6 +48,9 @@ class ChooseCustomerActivity : AppCompatActivity(), ChooseCustomerContract {
                 if (p0?.isNotEmpty()!!){
                     (binding.rvCustomer.adapter as AdapterChooseCustomer).filter.filter(p0)
                     (binding.rvCustomer.adapter as AdapterChooseCustomer).notifyDataSetChanged()
+                } else {
+                    (binding.rvCustomer.adapter as AdapterChooseCustomer).filter.filter("")
+                    (binding.rvCustomer.adapter as AdapterChooseCustomer).notifyDataSetChanged()
                 }
                 return true
             }
