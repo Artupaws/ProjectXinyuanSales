@@ -31,18 +31,25 @@
                 app:queryHint="Search transaction here"
                 app:searchIcon="@drawable/ic_search_orange" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_transaction"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                tools:listitem="@layout/list_item_transaction" />
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_transaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    tools:listitem="@layout/list_item_transaction" />
 
+                <include
+                    android:id="@+id/include_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    layout="@layout/layout_empty"/>
+            </FrameLayout>
 
         </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,9 +17,11 @@ import project.xinyuan.sales.databinding.FragmentCustomerBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.model.DataTransaction
+import project.xinyuan.sales.view.addfragment.addcustomerdata.DataCustomerActivty
 import project.xinyuan.sales.view.login.LoginActivity
 
-class CustomerFragment : Fragment(), CustomerContract {
+class CustomerFragment : Fragment(), CustomerContract, View.OnClickListener {
 
     private var _binding:FragmentCustomerBinding? =null
     private val binding get() = _binding
@@ -37,6 +39,7 @@ class CustomerFragment : Fragment(), CustomerContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.includeEmpty?.relativeActionAdd?.setOnClickListener(this)
         presenter = CustomerPresenter(this, requireContext())
         presenter.getListCustomer()
         refresh()
@@ -81,6 +84,18 @@ class CustomerFragment : Fragment(), CustomerContract {
         }
     }
 
+    private fun setEmptyLayout(data:List<DataCustomer?>?){
+        if (data?.size == 0){
+            binding?.rvCustomer?.visibility = View.GONE
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.includeEmpty?.tvEmpty?.text = requireContext().getString(R.string.empty_customer)
+            binding?.includeEmpty?.tvTitleButton?.text = requireContext().getString(R.string.add_customer_button)
+        } else {
+            binding?.rvCustomer?.visibility = View.VISIBLE
+            binding?.includeEmpty?.linearEmpty?.visibility = View.GONE
+        }
+    }
+
     override fun messageGetListCustomer(msg: String) {
         Log.d("listCustomer", msg)
         binding?.swipeRefresh?.isRefreshing = false
@@ -93,10 +108,20 @@ class CustomerFragment : Fragment(), CustomerContract {
     }
 
     override fun getListCustomer(data: List<DataCustomer?>?) {
+        setEmptyLayout(data)
         val adapterCustomer = AdapterListCustomer(requireContext(), data)
         binding?.rvCustomer?.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = adapterCustomer
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id){
+            R.id.relative_action_add -> {
+                val intent = Intent(requireContext(), DataCustomerActivty::class.java)
+                startActivity(intent)
+            }
         }
     }
 

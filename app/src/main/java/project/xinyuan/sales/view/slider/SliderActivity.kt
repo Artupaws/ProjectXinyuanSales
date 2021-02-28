@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterSlideFirstLaunch
 import project.xinyuan.sales.databinding.ActivitySliderBinding
+import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.view.login.LoginActivity
 
@@ -56,6 +57,7 @@ class SliderActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun move(){
+        sharedPref.save(Constants.FINISH_SLIDER, true)
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
         finish()

@@ -103,4 +103,11 @@
     <string name="todo">TODO</string>
     <string name="set_level_sales">Set level sales</string>
     <string name="detail_profile"><u>detail profile</u></string>
+    <string name="logout">Logout</string>
+    <string name="reload">tap to reload</string>
+    <string name="load_profile_failed">Load Profile Failed</string>
+    <string name="empty_transaction">Empty Transaction</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="empty_customer">Empty Customer</string>
+    <string name="add_customer_button">Add Customer</string>
 </resources>

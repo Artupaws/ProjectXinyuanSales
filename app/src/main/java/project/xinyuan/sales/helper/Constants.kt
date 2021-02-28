@@ -9,6 +9,7 @@ class Constants {
         const val API_KEY = "XinyuanSales"
         const val TOKEN_LOGIN = "TOKEN_LOGIN"
         const val SALES_NAME = "SALES_NAME"
+        const val FINISH_SLIDER = "FINISH_SLIDER"
         const val URI_SHOP_PHOTO_ONE = "URI_SHOP_PHOTO_ONE"
         const val URI_SHOP_PHOTO_TWO = "URI_SHOP_PHOTO_TWO"
     }

@@ -5,7 +5,7 @@ import project.xinyuan.sales.model.DataSales
 interface DashboardContract {
 
     fun messageGetDetailSales(msg:String)
+    fun messageLogoutSales(msg:String)
     fun getDetailSales(data:DataSales?)
-
 
 }

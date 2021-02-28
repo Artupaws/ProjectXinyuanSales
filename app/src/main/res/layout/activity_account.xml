@@ -207,7 +207,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textColor="@android:color/holo_red_dark"/>
 
     </LinearLayout>

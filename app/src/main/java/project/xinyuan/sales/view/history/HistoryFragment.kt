@@ -11,14 +11,17 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterListTransaction
 import project.xinyuan.sales.databinding.FragmentHistoryBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.model.DataTransaction
+import project.xinyuan.sales.view.addfragment.addordercustomer.AddOrderCustomerActivity
+import project.xinyuan.sales.view.addfragment.choosecustomer.ChooseCustomerActivity
 import project.xinyuan.sales.view.login.LoginActivity
 
-class HistoryFragment : Fragment(), HistoryTransactionContract {
+class HistoryFragment : Fragment(), HistoryTransactionContract, View.OnClickListener {
 
     private var _binding:FragmentHistoryBinding? = null
     private val binding get() = _binding
@@ -34,6 +37,7 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.includeEmpty?.relativeActionAdd?.setOnClickListener(this)
         presenter.getTransactionDetail()
         refresh()
         searchTransaction()
@@ -77,6 +81,18 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
         ActivityCompat.finishAffinity(activity!!)
     }
 
+    private fun setEmptyLayout(data:List<DataTransaction?>?){
+        if (data?.size == 0){
+            binding?.rvTransaction?.visibility = View.GONE
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.includeEmpty?.tvEmpty?.text = requireContext().getString(R.string.empty_transaction)
+            binding?.includeEmpty?.tvTitleButton?.text = requireContext().getString(R.string.add_transaction)
+        } else {
+            binding?.rvTransaction?.visibility = View.VISIBLE
+            binding?.includeEmpty?.linearEmpty?.visibility = View.GONE
+        }
+    }
+
     override fun messageGetTransactionDetail(msg: String) {
         Log.d("getTransactionDetail", msg)
         binding?.swipeRefresh?.isRefreshing = false
@@ -89,9 +105,19 @@ class HistoryFragment : Fragment(), HistoryTransactionContract {
     }
 
     override fun getDataTransaction(data: List<DataTransaction?>?) {
+        setEmptyLayout(data)
         binding?.rvTransaction?.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = AdapterListTransaction(requireContext(), data)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id){
+            R.id.relative_action_add -> {
+                val intent = Intent(requireContext(), ChooseCustomerActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }

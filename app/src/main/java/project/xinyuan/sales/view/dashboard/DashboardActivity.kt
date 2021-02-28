@@ -1,16 +1,29 @@
 package project.xinyuan.sales.view.dashboard
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityDashboardBinding
 import project.xinyuan.sales.helper.Constants
@@ -32,22 +45,56 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     private lateinit var presenter: DashboardPresenter
     private lateinit var sharedPref:SharedPreferencesHelper
     private var data:DataSales?=null
+    private var popupLogout:Dialog? = null
+    private lateinit var appUpdateManager: AppUpdateManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadFragment(fragment)
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
         presenter = DashboardPresenter(this, this)
         sharedPref = SharedPreferencesHelper(this)
         presenter.getDetailSales()
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         binding.linearAccount.setOnClickListener(this)
         binding.ivActionTodoList.setOnClickListener(this)
+        binding.ivActionSetting.setOnClickListener(this)
+        binding.linearReload.setOnClickListener(this)
         fragmentManager.beginTransaction().apply {
-           replace(R.id.view_botnav, HomeFragment()).commit()
-       }
+            replace(R.id.view_botnav, HomeFragment()).commit()
+        }
         stateOpenFragment()
+        showPopupLogout()
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) {
+                appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo, AppUpdateType.FLEXIBLE, this, 999
+                )
+            }
+        }
+    }
+
+    override fun onResume() {
+        appUpdateManager.appUpdateInfo.addOnSuccessListener {
+            if (it.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
+                appUpdateManager.startUpdateFlowForResult(it, AppUpdateType.IMMEDIATE, this, 999)
+            }
+        }
+        super.onResume()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 999 && resultCode == Activity.RESULT_OK){
+            presenter.getDetailSales()
+        }else {
+            Toast.makeText(applicationContext, "Update Failed", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun stateOpenFragment(){
@@ -107,8 +154,51 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
                 val intent = Intent(applicationContext, TodoListActivity::class.java)
                 startActivity(intent)
             }
+            R.id.iv_action_setting -> {
+                val popMenu = PopupMenu(applicationContext, binding.ivActionSetting)
+                popMenu.inflate(R.menu.menu_logout)
+                popMenu.setOnMenuItemClickListener {item ->
+                    when (item.itemId){
+                        R.id.option_logout ->{
+                            popupLogout?.show()
+                            true
+                        }else -> false
+                    }
+                }
+                popMenu.show()
+            }
+            R.id.linear_reload -> {
+                presenter.getDetailSales()
+            }
         }
     }
+
+    private fun reloadProfile(){
+        if (binding.tvSalesName.text == ""){
+            binding.linearProfile.visibility = View.GONE
+            binding.linearReload.visibility = View.VISIBLE
+        } else {
+            binding.linearProfile.visibility = View.VISIBLE
+            binding.linearReload.visibility = View.GONE
+        }
+    }
+
+    private fun showPopupLogout(){
+        @SuppressLint("UserCompatLoadingForDrawables")
+        popupLogout = Dialog(this)
+        popupLogout?.setContentView(R.layout.popup_ask)
+        popupLogout?.setCancelable(true)
+        popupLogout?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
+        val window : Window = popupLogout?.window!!
+        window.setGravity(Gravity.CENTER)
+        val tvQuestion = popupLogout?.findViewById<TextView>(R.id.tv_question)
+        val btnYes = popupLogout?.findViewById<Button>(R.id.btn_yes)
+        val btnNo = popupLogout?.findViewById<Button>(R.id.btn_no)
+        tvQuestion?.text = "Are you sure want to logout?"
+        btnYes?.setOnClickListener { presenter.logoutSales() }
+        btnNo?.setOnClickListener { popupLogout?.dismiss() }
+    }
+
 
     private fun moveDetailSales(data: DataSales?){
         val intent = Intent(applicationContext, AccountActivity::class.java)
@@ -117,6 +207,12 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     }
 
     private fun tryLogin(){
+        val intent = Intent(applicationContext, LoginActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
+    }
+
+    private fun move(){
         val intent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(intent)
         finishAffinity()
@@ -132,10 +228,23 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
+    override fun messageLogoutSales(msg: String) {
+        Log.d("logoutSales", msg)
+        popupLogout?.dismiss()
+        if (msg.contains("Success")){
+            sharedPref.removeValue(Constants.PREF_IS_LOGIN)
+            sharedPref.removeValue(Constants.TOKEN_LOGIN)
+            move()
+        }else{
+            Snackbar.make(binding.ivActionSetting, "Logout Failed.", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
     override fun getDetailSales(data: DataSales?) {
         val salesName = data?.name
         val sayHiSales = "Hi, ${data?.name}"
         binding.tvSalesName.text = sayHiSales
+        reloadProfile()
         this.data = data
         sharedPref.save(Constants.SALES_NAME, salesName!!)
     }

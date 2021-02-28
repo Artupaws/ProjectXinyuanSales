@@ -25,4 +25,8 @@
         <item name="drawableEndCompat">@drawable/ic_remove</item>
     </style>
 
+    <style name="roundedBotNav" parent="Widget.Design.BottomNavigationView">
+        <item name="background">@drawable/background_bottom_navigation</item>
+    </style>
+
 </resources>
