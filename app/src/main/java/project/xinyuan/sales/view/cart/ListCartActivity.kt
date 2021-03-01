@@ -16,6 +16,7 @@ import project.xinyuan.sales.adapter.AdapterListCart
 import project.xinyuan.sales.adapter.AdapterSpinnerPaymentAccount
 import project.xinyuan.sales.databinding.ActivityListCartBinding
 import project.xinyuan.sales.helper.Constants
+import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.model.DataCustomer
 import project.xinyuan.sales.model.DataFormalTransaction
@@ -50,6 +51,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
     private var account:Int = 0
     private var valuePaymentCash:Int = 0
     private lateinit var listItemCart: ArrayList<CartItem>
+    private val helper: Helper = Helper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +107,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = AdapterListCart(applicationContext, listItem)
             totalPrice = listItem.map { it.total.toInt()*it.price.toInt() }.sum()
-            binding.tvTotalPrice.text = totalPrice?.toLong().toString()
+            binding.tvTotalPrice.text = helper.convertToFormatMoneyIDR(totalPrice?.toLong().toString())
         }
     }
 

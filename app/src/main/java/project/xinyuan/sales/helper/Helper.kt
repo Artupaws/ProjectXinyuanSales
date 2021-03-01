@@ -19,4 +19,11 @@ class Helper {
         return valueRupiah.replace(" ".toRegex(), "")
     }
 
+    fun changeFormatMoney(formatRupiah: String?): String? {
+        val xRupiah = formatRupiah?.substring(1)
+        val doubleRupiah = xRupiah?.substring(2)
+        val valueRupiah = doubleRupiah?.replace("[-+.^:,]".toRegex(), "")
+        return valueRupiah?.replace(" ".toRegex(), "")
+    }
+
 }

@@ -32,16 +32,17 @@
             android:text="@string/create_order_for" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:weightSum="3"
             android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_company_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1.5"
                 android:textColor="@color/black"
                 tools:text="PT MAJU MUNDUR" />
 
@@ -54,8 +55,9 @@
 
             <TextView
                 android:id="@+id/tv_admin_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.75"
                 android:textColor="@color/black"
                 tools:text="Hermansyah" />
 
@@ -68,8 +70,9 @@
 
             <TextView
                 android:id="@+id/tv_admin_phone"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.75"
                 android:textColor="@color/black"
                 tools:text="083886195842" />
 

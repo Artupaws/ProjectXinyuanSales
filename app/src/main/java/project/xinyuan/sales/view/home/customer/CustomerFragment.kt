@@ -66,11 +66,11 @@ class CustomerFragment : Fragment(), CustomerContract, View.OnClickListener {
 
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0?.isNotEmpty()!!){
-                    (binding?.rvCustomer?.adapter as AdapterListCustomer).filter.filter(p0)
-                    (binding?.rvCustomer?.adapter as AdapterListCustomer).notifyDataSetChanged()
+                    (binding?.rvCustomer?.adapter as? AdapterListCustomer)?.filter?.filter(p0)
+                    (binding?.rvCustomer?.adapter as? AdapterListCustomer)?.notifyDataSetChanged()
                 } else {
-                    (binding?.rvCustomer?.adapter as AdapterListCustomer).filter.filter("")
-                    (binding?.rvCustomer?.adapter as AdapterListCustomer).notifyDataSetChanged()
+                    (binding?.rvCustomer?.adapter as? AdapterListCustomer)?.filter?.filter("")
+                    (binding?.rvCustomer?.adapter as? AdapterListCustomer)?.notifyDataSetChanged()
                 }
                 return true
             }
@@ -84,8 +84,9 @@ class CustomerFragment : Fragment(), CustomerContract, View.OnClickListener {
         }
     }
 
-    private fun setEmptyLayout(data:List<DataCustomer?>?){
-        if (data?.size == 0){
+    private fun setEmptyLayout(msg:String){
+        Log.d("listCustomer", msg)
+        if (!msg.contains("Get Customer Success!")){
             binding?.rvCustomer?.visibility = View.GONE
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
             binding?.includeEmpty?.tvEmpty?.text = requireContext().getString(R.string.empty_customer)
@@ -98,6 +99,7 @@ class CustomerFragment : Fragment(), CustomerContract, View.OnClickListener {
 
     override fun messageGetListCustomer(msg: String) {
         Log.d("listCustomer", msg)
+        setEmptyLayout(msg)
         binding?.swipeRefresh?.isRefreshing = false
         if (msg.contains("Unauthenticated")){
             sharedPref.removeValue(Constants.PREF_IS_LOGIN)
@@ -108,11 +110,9 @@ class CustomerFragment : Fragment(), CustomerContract, View.OnClickListener {
     }
 
     override fun getListCustomer(data: List<DataCustomer?>?) {
-        setEmptyLayout(data)
-        val adapterCustomer = AdapterListCustomer(requireContext(), data)
         binding?.rvCustomer?.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = adapterCustomer
+            adapter = AdapterListCustomer(requireContext(), data)
         }
     }
 

@@ -77,7 +77,7 @@
     <string name="price_title">Harga</string>
     <string name="name_title">Nama</string>
     <string name="total_title">Total</string>
-    <string name="total_price">Total Rp.</string>
+    <string name="total_price">Total</string>
     <string name="appove_order">Appove Order</string>
     <string name="tenor">Tenor :</string>
     <string name="clear_order">X | Clear</string>
@@ -110,4 +110,7 @@
     <string name="add_transaction">Add Transaction</string>
     <string name="empty_customer">Empty Customer</string>
     <string name="add_customer_button">Add Customer</string>
+    <string name="remaining_debt">Remaining Debt :</string>
+    <string name="paid_off">Lunas</string>
+    <string name="not_paid_off">Belum Lunas</string>
 </resources>

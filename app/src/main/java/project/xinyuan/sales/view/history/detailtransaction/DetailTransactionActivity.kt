@@ -77,9 +77,14 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
 
     private fun setupStatus(dataTransaction: DataTransaction?){
         if (dataTransaction?.debt == 0 ){
-            binding.tvStatusPayment.text = "Paid Off"
+            binding.linearRemainingDebt.visibility = View.GONE
+            binding.tvStatusPayment.text = getString(R.string.paid_off)
+            binding.tvStatusPayment.isEnabled = true
         } else {
-            binding.tvStatusPayment.text = dataTransaction?.debt.toString()
+            binding.linearRemainingDebt.visibility = View.VISIBLE
+            binding.tvStatusPayment.text = getString(R.string.not_paid_off)
+            binding.tvStatusPayment.isEnabled = false
+            binding.tvRemainingDebt.text = helper.convertToFormatMoneyIDR(dataTransaction?.debt.toString())
         }
     }
 

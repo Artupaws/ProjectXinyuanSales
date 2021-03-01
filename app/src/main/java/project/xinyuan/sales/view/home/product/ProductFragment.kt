@@ -58,11 +58,11 @@ class ProductFragment : Fragment(), ProductContract {
 
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0?.isNotEmpty()!!){
-                    (binding?.rvProduct?.adapter as AdapterListProduct).filter.filter(p0)
-                    (binding?.rvProduct?.adapter as AdapterListProduct).notifyDataSetChanged()
+                    (binding?.rvProduct?.adapter as? AdapterListProduct)?.filter?.filter(p0)
+                    (binding?.rvProduct?.adapter as? AdapterListProduct)?.notifyDataSetChanged()
                 } else {
-                    (binding?.rvProduct?.adapter as AdapterListProduct).filter.filter("")
-                    (binding?.rvProduct?.adapter as AdapterListProduct).notifyDataSetChanged()
+                    (binding?.rvProduct?.adapter as? AdapterListProduct)?.filter?.filter("")
+                    (binding?.rvProduct?.adapter as? AdapterListProduct)?.notifyDataSetChanged()
                 }
                 return true
             }
