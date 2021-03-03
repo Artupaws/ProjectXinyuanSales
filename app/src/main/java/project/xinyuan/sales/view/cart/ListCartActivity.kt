@@ -107,7 +107,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = AdapterListCart(applicationContext, listItem)
             totalPrice = listItem.map { it.total.toInt()*it.price.toInt() }.sum()
-            binding.tvTotalPrice.text = helper.convertToFormatMoneyIDR(totalPrice?.toLong().toString())
+            binding.tvTotalPrice.text = helper.changeFormatMoney(totalPrice.toString())
         }
     }
 
@@ -129,7 +129,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
                     }
                     "cash" -> {
                         paymentPeriod = "0"
-                        valuePaymentCash = binding.tvTotalPrice.text.toString().toInt()
+                        valuePaymentCash = helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt()
                         binding.linearTenor.visibility = View.GONE
                         binding.linearPaymentAccount.visibility = View.VISIBLE
                     }
@@ -223,8 +223,8 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         }
 
         if (!isEmptyInvoice && !isEmptyPayment && !isEmptyPaymenPeriod && !isEmptyDoNumber){
-            Log.d("data", "$invoiceNumber $idCustomer $paymentType $paymentPeriod $valuePaymentCash ${binding.tvTotalPrice.text.toString().toInt()} $account")
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentType!!, paymentPeriod!!.toInt(), valuePaymentCash, binding.tvTotalPrice.text.toString().toInt(), account)
+            Log.d("data", "$invoiceNumber $idCustomer $paymentType $paymentPeriod $valuePaymentCash ${helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt()} $account")
+            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentType!!, paymentPeriod!!.toInt(), valuePaymentCash, helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt(), account)
         } else {
             stateUnloading()
             Snackbar.make(binding.btnApprove, "please complete form", Snackbar.LENGTH_SHORT).show()

@@ -57,14 +57,13 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         binding.tvTempo.text = dataTransaction?.payment
         binding.tvPostpaid.text = dataTransaction?.paymentPeriod.toString()
         binding.tvDuedate.text = dataTransaction?.paymentDeadline
-        binding.tvTotalPrice.text = totalPrice.toString()
-        binding.tvTotalPay.text = dataTransaction?.paid.toString()
+        binding.tvTotalPrice.text = helper.convertToFormatMoneyIDR(totalPrice.toString())
+        binding.tvTotalPay.text = helper.convertToFormatMoneyIDR(dataTransaction?.paid.toString())
         debt = dataTransaction?.debt
         binding.btnMakePayment.setOnClickListener(this)
         refresh()
         setupStatus(dataTransaction)
         setupListProduct(dataTransaction)
-        stateButtonMakePayment()
     }
 
     override fun onClick(p0: View?) {
@@ -86,6 +85,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
             binding.tvStatusPayment.isEnabled = false
             binding.tvRemainingDebt.text = helper.convertToFormatMoneyIDR(dataTransaction?.debt.toString())
         }
+        stateButtonMakePayment()
     }
 
     private fun move(){
@@ -96,7 +96,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
     }
 
     private fun stateButtonMakePayment(){
-        binding.btnMakePayment.isEnabled = binding.tvStatusPayment.text != "Paid Off"
+        binding.btnMakePayment.isEnabled = binding.tvStatusPayment.text != getString(R.string.paid_off)
     }
 
     private fun setupListProduct(dataTransaction: DataTransaction?){

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemCartOrderBinding
+import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.model.TransactiondetailsItem
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -14,8 +15,9 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AdapterListProductDetailTransaction(val context: Context, private val listProduct: List<TransactiondetailsItem?>?):RecyclerView.Adapter<AdapterListProductDetailTransaction.Holder>() {
-    var totalPayment:Int?=null
+//    var totalPayment:Int?=null
     var productName:String = ""
+    val helper: Helper = Helper()
     private var dateNow:String?=null
     inner class Holder(view: View):RecyclerView.ViewHolder(view) {
         private val binding = ListItemCartOrderBinding.bind(view)
@@ -24,8 +26,8 @@ class AdapterListProductDetailTransaction(val context: Context, private val list
                 productName = "${item.dataProduct?.type} ${item.dataProduct?.colour} ${item.dataProduct?.size}"
                 tvProductName.text = productName
                 tvTotalOrder.text = item.quantity.toString()
-                tvYourPrice.text = item.price.toString()
-                tvSubTotalPrice.text = item.subTotal.toString()
+                tvYourPrice.text = helper.convertToFormatMoneyIDR(item.price.toString())
+                tvSubTotalPrice.text = helper.convertToFormatMoneyIDR(item.subTotal.toString())
             }
         }
 
