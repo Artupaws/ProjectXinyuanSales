@@ -80,6 +80,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     }
 
     override fun onResume() {
+        presenter.getDetailSales()
         appUpdateManager.appUpdateInfo.addOnSuccessListener {
             if (it.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
                 appUpdateManager.startUpdateFlowForResult(it, AppUpdateType.IMMEDIATE, this, 999)

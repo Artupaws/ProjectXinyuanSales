@@ -80,19 +80,19 @@
             android:layout_margin="10dp"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/btn_payment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_marginEnd="10dp"
                     android:enabled="false"
                     android:background="@drawable/state_button_add_order"
                     android:textSize="12sp"
@@ -109,12 +109,45 @@
                 android:id="@+id/btn_no"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:visibility="gone"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="@color/dark_gray"
                 android:textSize="12sp"
                 android:text="@string/no"/>
-
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/or"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"/>
+
+        <RelativeLayout
+            android:id="@+id/relative_action_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:background="@drawable/background_button_rounded_enabled"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_title_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_giro"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_add_white" />
+        </RelativeLayout>
 
 
     </LinearLayout>

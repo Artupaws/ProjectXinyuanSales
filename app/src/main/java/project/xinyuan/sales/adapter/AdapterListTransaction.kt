@@ -2,7 +2,6 @@ package project.xinyuan.sales.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ListItemTransactionBinding
-import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.model.DataTransaction
 import project.xinyuan.sales.view.history.detailtransaction.DetailTransactionActivity
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
 
 class AdapterListTransaction(val context: Context, private val listTransaction:List<DataTransaction?>?):
@@ -59,12 +53,20 @@ class AdapterListTransaction(val context: Context, private val listTransaction:L
                     context.startActivity(intent)
                 }
                 linearHistoryPayment.setOnClickListener {
-                    onAddPostClicked(binding)
+                    clickPayment(binding)
+                }
+                linearHistoryPaymentGiro.setOnClickListener {
+                    clickedPaymentGiro(binding)
                 }
                 rvHistoryPayment.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     adapter = AdapterListHistoryPayment(context, item.transactionpayment)
                 }
+                rvHistoryPaymentGiro.apply {
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    adapter = AdapterListHistoryPaymentGiro(context, item.giropayment)
+                }
+                setStatusLoan(item.debt!!, binding)
             }
         }
     }
@@ -82,7 +84,13 @@ class AdapterListTransaction(val context: Context, private val listTransaction:L
 
     override fun getItemCount():Int = listTransactionFilter.size
 
-    private fun onAddPostClicked(binding: ListItemTransactionBinding) {
+    private fun clickedPaymentGiro(binding: ListItemTransactionBinding){
+        setVisibilityGiro(clicked, binding)
+        setAnimationGiro(clicked, binding)
+        clicked = !clicked
+    }
+
+    private fun clickPayment(binding: ListItemTransactionBinding) {
         setVisibility(clicked, binding)
         setAnimation(clicked, binding)
         clicked = !clicked
@@ -96,13 +104,41 @@ class AdapterListTransaction(val context: Context, private val listTransaction:L
         }
     }
 
+    private fun setAnimationGiro(clicked:Boolean, binding:ListItemTransactionBinding){
+        if (!clicked){
+            binding.ivExpandGiro.startAnimation(positionCollapse)
+        } else {
+            binding.ivExpandGiro.startAnimation(positionExpand)
+        }
+    }
+
+    private fun setStatusLoan(debt:Int, binding: ListItemTransactionBinding){
+        if (debt == 0){
+            binding.tvStatusPayment.text = context.getString(R.string.paid_off)
+            binding.tvStatusPayment.isEnabled = true
+        } else {
+            binding.tvStatusPayment.text = context.getString(R.string.not_paid_off)
+            binding.tvStatusPayment.isEnabled = false
+        }
+    }
+
     private fun setVisibility(clicked: Boolean, binding: ListItemTransactionBinding){
         if (!clicked){
-            binding.linearTitle.visibility = View.GONE
+            binding.linearTitlePayment.visibility = View.GONE
             binding.rvHistoryPayment.visibility = View.GONE
         } else {
-            binding.linearTitle.visibility = View.VISIBLE
+            binding.linearTitlePayment.visibility = View.VISIBLE
             binding.rvHistoryPayment.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setVisibilityGiro(clicked: Boolean, binding: ListItemTransactionBinding){
+        if (!clicked){
+            binding.linearPaymentGiro.visibility = View.GONE
+            binding.rvHistoryPaymentGiro.visibility = View.GONE
+        } else {
+            binding.linearPaymentGiro.visibility = View.VISIBLE
+            binding.rvHistoryPaymentGiro.visibility = View.VISIBLE
         }
     }
 

@@ -88,7 +88,8 @@ interface NetworkService {
             @Field("payment_period")paymentPeriod:Int,
             @Field("paid")paid:Int,
             @Field("total_payment")totalPayment:Int,
-            @Field("id_payment_account")idPaymentAccount:Int
+            @Field("id_payment_account")idPaymentAccount:Int,
+            @Field("date")dateTransaction:String
     ):Call<ResponseAddTransaction>
 
     //Add Product Transaction
@@ -115,7 +116,8 @@ interface NetworkService {
     fun makePaymentCustomer(
         @Field("id_transaction")idTransaction:Int,
         @Field("paid")paid:Int,
-        @Field("id_payment_account")idPaymentAccount:Int
+        @Field("id_payment_account")idPaymentAccount:Int,
+        @Field("date")datePayment:String
     ):Call<ResponseMakePayment>
 
     //Logout
@@ -137,4 +139,44 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("api/customer/level")
     fun getCustomerLevel():Call<ResponseGetCustomerLevel>
+
+    //Update Photo Sales
+    @Multipart
+    @Headers("No-Authentication: true")
+    @POST("api/sales/photo")
+    fun updatePhotoSales(
+            @Part photo:MultipartBody.Part?,
+    ):Call<ResponseUpdateProfileSales>
+
+    //Update Profile Sales
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/sales/edit")
+    fun updateProfileSales(
+            @Field("name")name:String,
+            @Field("email")email: String,
+            @Field("phone")phone: String,
+            @Field("address")address: String,
+            @Field("gender")photo:String,
+            @Field("id_area")idArea:Int
+    ):Call<ResponseUpdateProfileSales>
+
+    //Get List Bank
+    @Headers("No-Authentication: true")
+    @POST("api/transaction/giro/bank")
+    fun getListBank():Call<ResponseGetListBank>
+
+    //Add Transaction Giro
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/transaction/giro")
+    fun addTransactionGiro(
+            @Field("id_transaction")idTransaction:Int,
+            @Field("id_bank")idBank:Int,
+            @Field("giro_number")giroNumber:String,
+            @Field("balance")balance:Long,
+            @Field("date_received")dateReceived:String
+    ):Call<ResponseAddTransactionGiro>
+
+
 }

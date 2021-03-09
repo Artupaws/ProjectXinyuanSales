@@ -19,6 +19,9 @@ data class DataTransaction(
 	@field:SerializedName("transactionpayment")
 	val transactionpayment: List<DataPayment?>? = null,
 
+	@field:SerializedName("giro")
+	val giropayment: List<DataGiro?>? = null,
+
 	@field:SerializedName("payment")
 	val payment: String? = null,
 

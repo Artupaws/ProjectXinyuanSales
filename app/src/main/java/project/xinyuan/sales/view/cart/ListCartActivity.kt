@@ -107,7 +107,7 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = AdapterListCart(applicationContext, listItem)
             totalPrice = listItem.map { it.total.toInt()*it.price.toInt() }.sum()
-            binding.tvTotalPrice.text = helper.changeFormatMoney(totalPrice.toString())
+            binding.tvTotalPrice.text = totalPrice.toString()
         }
     }
 
@@ -224,7 +224,8 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
 
         if (!isEmptyInvoice && !isEmptyPayment && !isEmptyPaymenPeriod && !isEmptyDoNumber){
             Log.d("data", "$invoiceNumber $idCustomer $paymentType $paymentPeriod $valuePaymentCash ${helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt()} $account")
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentType!!, paymentPeriod!!.toInt(), valuePaymentCash, helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt(), account)
+            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentType!!, paymentPeriod!!.toInt(), valuePaymentCash,
+                    helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt(), account, binding.tvDate.text.toString())
         } else {
             stateUnloading()
             Snackbar.make(binding.btnApprove, "please complete form", Snackbar.LENGTH_SHORT).show()
@@ -256,12 +257,13 @@ class ListCartActivity : AppCompatActivity(), ListCartContract, View.OnClickList
         startActivity(intent)
     }
 
-
     override fun messageAddProductTransaction(msg: String) {
         Log.d("addProductTransaction", msg)
-        stateUnloading()
         if (msg.contains("Success")){
             move()
+            stateUnloading()
+        }else {
+            stateUnloading()
         }
     }
 

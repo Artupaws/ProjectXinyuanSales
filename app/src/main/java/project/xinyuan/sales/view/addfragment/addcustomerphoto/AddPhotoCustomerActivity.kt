@@ -355,6 +355,9 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         if (msg.contains("Success")) {
             Snackbar.make(binding.btnAddCustomer, "Add Customer Success", Snackbar.LENGTH_SHORT).show()
             move()
+        } else if (msg != "Success" || msg != "Error"){
+            popupLoading?.dismiss()
+            Snackbar.make(binding.btnAddCustomer, msg, Snackbar.LENGTH_SHORT).show()
         } else {
             Snackbar.make(binding.btnAddCustomer, "Add Customer Failed", Snackbar.LENGTH_SHORT).show()
         }

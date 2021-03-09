@@ -3,6 +3,8 @@ package project.xinyuan.sales.view.history.detailtransaction
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
+import project.xinyuan.sales.model.ResponseAddTransactionGiro
+import project.xinyuan.sales.model.ResponseGetListBank
 import project.xinyuan.sales.model.ResponseGetPaymentAccounts
 import project.xinyuan.sales.model.ResponseMakePayment
 import retrofit2.Call
@@ -10,8 +12,8 @@ import retrofit2.Response
 
 class DetailTransactionPresenter(val view:DetailTransactionContract, val context: Context) {
 
-    fun makePaymentCustomer(idTransaction:Int, paid:Int, idPaymentAccount:Int){
-        val makePaymentCustomer = NetworkConfig().getConnectionXinyuanBearer(context).makePaymentCustomer(idTransaction, paid, idPaymentAccount)
+    fun makePaymentCustomer(idTransaction:Int, paid:Int, idPaymentAccount:Int, datePayment:String){
+        val makePaymentCustomer = NetworkConfig().getConnectionXinyuanBearer(context).makePaymentCustomer(idTransaction, paid, idPaymentAccount,datePayment)
         makePaymentCustomer.enqueue(object : retrofit2.Callback<ResponseMakePayment>{
             override fun onResponse(call: Call<ResponseMakePayment>, response: Response<ResponseMakePayment>) {
                 if (response.isSuccessful && response.body()?.value == 1){
@@ -50,6 +52,47 @@ class DetailTransactionPresenter(val view:DetailTransactionContract, val context
             }
 
         })
+    }
+
+    fun getBankName(){
+        val getBankName = NetworkConfig().getConnectionXinyuanBearer(context).getListBank()
+        getBankName.enqueue(object : retrofit2.Callback<ResponseGetListBank>{
+            override fun onResponse(call: Call<ResponseGetListBank>, response: Response<ResponseGetListBank>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetBankName(response.body()?.message.toString())
+                    val data = response.body()?.data
+                    view.getBankName(data)
+                }else {
+                    val error = JSONObject(response.message().toString())
+                    view.messageGetBankName(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetListBank>, t: Throwable) {
+                view.messageGetBankName(t.localizedMessage.toString())
+            }
+
+        })
+    }
+
+    fun addTransactionGiro(idTransaction:Int, idBank:Int, giroNumber:String, balance:Long, dateReceived:String){
+        val addTransactionGiro = NetworkConfig().getConnectionXinyuanBearer(context).addTransactionGiro(idTransaction, idBank, giroNumber, balance, dateReceived)
+        addTransactionGiro.enqueue(object : retrofit2.Callback<ResponseAddTransactionGiro>{
+            override fun onResponse(call: Call<ResponseAddTransactionGiro>, response: Response<ResponseAddTransactionGiro>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageAddTransactionGiro(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageAddTransactionGiro(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseAddTransactionGiro>, t: Throwable) {
+                view.messageAddTransactionGiro(t.localizedMessage.toString())
+            }
+
+        })
+
     }
 
 }

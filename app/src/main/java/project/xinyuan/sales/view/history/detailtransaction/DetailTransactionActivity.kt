@@ -1,8 +1,10 @@
 package project.xinyuan.sales.view.history.detailtransaction
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -16,14 +18,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterListProductDetailTransaction
+import project.xinyuan.sales.adapter.AdapterSpinnerBankName
 import project.xinyuan.sales.adapter.AdapterSpinnerPaymentAccount
 import project.xinyuan.sales.databinding.ActivityDetailTransactionBinding
 import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.helper.NumberTextWatcher
-import project.xinyuan.sales.model.DataPayment
-import project.xinyuan.sales.model.DataPaymentAccount
-import project.xinyuan.sales.model.DataTransaction
+import project.xinyuan.sales.model.*
 import project.xinyuan.sales.view.dashboard.DashboardActivity
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, DetailTransactionContract {
@@ -32,11 +36,14 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
     private var debt:Int? =null
     private var totalPrice:Int? = null
     private var popupMakePayment: Dialog? = null
+    private var popupPayWithGiro: Dialog? = null
     private lateinit var presenter: DetailTransactionPresenter
     private lateinit var helper: Helper
     private var totalMustPayIDR:String? = null
     private var totalMustPayValue:String? = null
     private var idTransaction:Int? = null
+    private var idBank:Int? = null
+    private var datePayment:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
 
         presenter = DetailTransactionPresenter(this, this)
         presenter.getPaymentAccount()
+        presenter.getBankName()
         helper = Helper()
         binding.toolbarDetailTransaction.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailTransaction.setNavigationOnClickListener { onBackPressed() }
@@ -64,6 +72,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         refresh()
         setupStatus(dataTransaction)
         setupListProduct(dataTransaction)
+        setDate()
     }
 
     override fun onClick(p0: View?) {
@@ -109,7 +118,8 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
 
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener {
-            binding.swipeRefresh.isRefreshing = false
+            presenter.getPaymentAccount()
+            presenter.getBankName()
         }
     }
 
@@ -122,10 +132,10 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         val window: Window = popupMakePayment?.window!!
         window.setGravity(Gravity.CENTER)
         val btnPayment = popupMakePayment?.findViewById<Button>(R.id.btn_payment)
-        val btnNo = popupMakePayment?.findViewById<Button>(R.id.btn_no)
         val etMustPay = popupMakePayment?.findViewById<EditText>(R.id.et_total_must_pay)
         val tvTotalpay = popupMakePayment?.findViewById<TextView>(R.id.tv_total_pay)
         val progressBar = popupMakePayment?.findViewById<ProgressBar>(R.id.progress_circular)
+        val addGiro = popupMakePayment?.findViewById<RelativeLayout>(R.id.relative_action_add)
         val locale = Locale("es", "IDR")
         val numDecs = 2 // Let's use 2 decimals
         val twSalaryFrom: TextWatcher = NumberTextWatcher(etMustPay!!, locale, numDecs)
@@ -134,13 +144,10 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         tvTotalpay?.text = totalMustPayIDR
         btnPayment?.setOnClickListener {
             progressBar?.visibility = View.VISIBLE
-            btnNo?.isEnabled = false
             btnPayment.visibility = View.GONE
-            presenter.makePaymentCustomer(idTransaction!!, helper.changeFormatMoneyToValue(etMustPay.text.toString()).toInt(), account!!)
+            presenter.makePaymentCustomer(idTransaction!!, helper.changeFormatMoneyToValue(etMustPay.text.toString()).toInt(), account!!, datePayment!!)
         }
-        btnNo?.setOnClickListener {
-            popupMakePayment?.dismiss()
-        }
+
         etMustPay.addTextChangedListener(twSalaryFrom)
         etMustPay.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -167,7 +174,79 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
                 btnPayment?.isEnabled = etMustPay.text.isNotEmpty()&&account!=null
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                false
+            }
+        }
+
+        addGiro?.setOnClickListener {
+//            Snackbar.make(addGiro, "Sorry, this feature under development", Snackbar.LENGTH_SHORT).show()
+            popupMakePayment?.dismiss()
+            popupPayWithGiro?.show()
+        }
+    }
+
+    private fun setDate(){
+        datePayment = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val currentDate = LocalDateTime.now()
+            val formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val date = currentDate.format(formatDate)
+            date
+        }else{
+            val currentDate = Date()
+            val formatter = SimpleDateFormat("yyyy-MM-dd")
+            val date = formatter.format(currentDate)
+            date
+        }
+    }
+
+    private fun dialogPaymentGiro(dataBank: List<DataBank?>?){
+        @SuppressLint("UseCompatLoadingForDrawables")
+        popupPayWithGiro = Dialog(this)
+        popupPayWithGiro?.setContentView(R.layout.popup_payment_giro)
+        popupPayWithGiro?.setCancelable(true)
+        popupPayWithGiro?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
+        val window: Window = popupPayWithGiro?.window!!
+        window.setGravity(Gravity.CENTER)
+        val spinnerBankName = popupPayWithGiro?.findViewById<Spinner>(R.id.spn_bank_name)
+        val giroNumber = popupPayWithGiro?.findViewById<EditText>(R.id.et_giro_number)
+        val balance = popupPayWithGiro?.findViewById<EditText>(R.id.et_balance)
+        val addGiro = popupPayWithGiro?.findViewById<Button>(R.id.btn_add_giro)
+        val loading = popupPayWithGiro?.findViewById<ProgressBar>(R.id.progress_circular)
+        val error = popupPayWithGiro?.findViewById<TextView>(R.id.tv_empty)
+        val date = popupPayWithGiro?.findViewById<EditText>(R.id.et_day)
+        val month = popupPayWithGiro?.findViewById<EditText>(R.id.et_month)
+        val year = popupPayWithGiro?.findViewById<EditText>(R.id.et_year)
+        val locale = Locale("es", "IDR")
+        val numDecs = 2 // Let's use 2 decimals
+        val formatMoney: TextWatcher = NumberTextWatcher(balance!!, locale, numDecs)
+
+        spinnerBankName?.adapter = AdapterSpinnerBankName(applicationContext, dataBank)
+        spinnerBankName?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                idBank = dataBank?.get(position)?.id!!
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                idBank = 0
+            }
+        }
+
+        balance.addTextChangedListener(formatMoney)
+
+        addGiro?.setOnClickListener {
+            val giro = giroNumber?.text.toString()
+            val saldo = balance.text.toString()
+            val bankName = idBank
+            val day = date?.text.toString()
+            val monthh = month?.text.toString()
+            val yearr = year?.text.toString()
+            val dateReceive = "$day-$monthh-$yearr"
+
+            if (giro.isEmpty() || saldo.isEmpty() || dateReceive.isEmpty() || bankName==0 || day.isEmpty() || monthh.isEmpty() || yearr.isEmpty()){
+                error?.visibility = View.VISIBLE
+                error?.text = "Please complete all field"
+            } else {
+                presenter.addTransactionGiro(idTransaction!!, idBank!!, giroNumber?.text.toString(), helper.changeFormatMoneyToValue(balance.text.toString()).toLong(), dateReceive)
+                addGiro.visibility = View.GONE
+                loading?.visibility = View.VISIBLE
             }
         }
     }
@@ -188,11 +267,33 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         }
     }
 
+    override fun messageGetBankName(msg: String) {
+        Log.d("bank", msg)
+    }
+
+    override fun messageAddTransactionGiro(msg: String) {
+        Log.d("addGiro", msg)
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        if (msg.contains("Success")){
+            popupPayWithGiro?.dismiss()
+            onBackPressed()
+        } else {
+            popupPayWithGiro?.dismiss()
+        }
+    }
+
     override fun getDataPayment(data: DataPayment?) {
         Log.d("dataPayment", data?.date.toString())
     }
 
     override fun getPaymentAccount(data: List<DataPaymentAccount?>?) {
         dialogPayment(data)
+    }
+
+    override fun getBankName(data: MutableList<DataBank?>?) {
+        val bankName = mutableListOf<DataBank?>()
+        bankName.addAll(listOf(DataBank("", "Choose", "", 0)))
+        bankName.addAll(data!!)
+        dialogPaymentGiro(bankName)
     }
 }

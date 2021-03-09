@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/background_input">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_giro"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/giro_number"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_giro_number"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:inputType="numberDecimal"
+            android:background="@drawable/background_input"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bank_name"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <Spinner
+            android:id="@+id/spn_bank_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_balance"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:inputType="numberDecimal"
+            android:background="@drawable/background_input"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_receive"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="3">
+
+            <EditText
+                android:id="@+id/et_day"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:maxLength="2"
+                android:inputType="numberDecimal"
+                android:hint="@string/hint_date"
+                android:background="@drawable/background_input"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_dash_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:textAlignment="center"
+                android:text="@string/dash"/>
+
+            <EditText
+                android:id="@+id/et_month"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.5"
+                android:maxLength="2"
+                android:inputType="numberDecimal"
+                android:hint="@string/hint_month"
+                android:background="@drawable/background_input"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_dash_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:textAlignment="center"
+                android:text="@string/dash"/>
+
+            <EditText
+                android:id="@+id/et_year"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:maxLength="4"
+                android:background="@drawable/background_input"
+                android:hint="@string/hint_year"
+                android:inputType="numberDecimal"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_add_giro"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:enabled="true"
+                    android:background="@drawable/state_button_add_order"
+                    android:textSize="12sp"
+                    android:text="@string/add_giro"/>
+                <ProgressBar
+                    android:id="@+id/progress_circular"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,5 +50,20 @@ data class DataCustomer(
 	val companyName: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null
+	val id: Int? = null,
+
+	@field:SerializedName("level")
+	val level: String? = null,
+
+	@field:SerializedName("tempo")
+	val tempo: Int? = null,
+
+	@field:SerializedName("loan_limit")
+	val loanLimit: Long? = null,
+
+	@field:SerializedName("id_level")
+	val idLevel: Int? = null,
+
+	@field:SerializedName("photo_url")
+	val photoUrl:String? = null
 ):Parcelable
