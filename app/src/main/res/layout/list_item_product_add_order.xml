@@ -42,6 +42,7 @@
                     android:ellipsize="end"
                     android:textSize="12sp"
                     tools:text="Tarpaulin"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:textColor="@color/black"/>
                 <TextView
                     android:id="@+id/tv_product_size"
@@ -49,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="10sp"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:text="@string/price_from_you"
                     tools:ignore="SmallSp" />
                 <TextView
@@ -56,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    style="@style/TextAppearance.Typography.Body2"
                     tools:text="Rp30.000"/>
             </LinearLayout>
 
@@ -75,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="10sp"
                     android:text="@string/input_total"
+                    style="@style/TextAppearance.Typography.Body2"
                     tools:ignore="SmallSp" />
                 <EditText
                     android:id="@+id/tv_total_order"
@@ -84,6 +88,7 @@
                     tools:text="1"
                     android:inputType="numberDecimal"
                     android:digits="0123456789"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:textAlignment="center"
                     android:textSize="12sp"
                     android:textColor="@color/black"

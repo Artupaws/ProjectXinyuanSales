@@ -44,15 +44,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/todo"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:layout_weight="1.4"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/due_date"
-                    android:textColor="@color/black"
-                    android:textAllCaps="true"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:textAlignment="center"
                     android:layout_weight="0.8"/>
 
@@ -60,7 +59,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/status"
-                    android:textColor="@color/black"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:textAlignment="center"
                     android:layout_weight="0.8"/>
             </LinearLayout>

@@ -20,89 +20,92 @@
             android:layout_height="wrap_content"
             android:background="@drawable/state_list_product"
             android:orientation="vertical">
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_product"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="15dp"
-                    android:src="@color/orange"/>
+                    android:src="@color/orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_product_name"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="5dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/tv_product_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        tools:text="Tarpaulin"/>
-                    <TextView
-                        android:id="@+id/tv_product_size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        tools:text="Tarpaulin"/>
-                    <EditText
-                        android:id="@+id/et_input_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/state_background_input_optional"
-                        android:textSize="12sp"
-                        android:inputType="numberDecimal"
-                        android:focusableInTouchMode="true"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:digits="0123456789"
-                        android:hint="@string/input_price"
-                        android:padding="5dp"
-                        android:layout_marginTop="10dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:layout_margin="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/iv_product"
+                    app:layout_constraintTop_toTopOf="@+id/iv_product"
+                    tools:text="Tarpaulin" />
 
-                    <TextView
-                        android:id="@+id/tv_title_choose"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:visibility="gone"
-                        android:layout_margin="5dp"
-                        android:text="@string/choose"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp"
-                        app:drawableEndCompat="@drawable/ic_checklist_green" />
-                    <TextView
-                        android:id="@+id/tv_remove"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:visibility="gone"
-                        android:layout_margin="5dp"
-                        android:text="@string/remove"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp"
-                        app:drawableEndCompat="@drawable/ic_remove" />
+                <TextView
+                    android:id="@+id/tv_product_size"
+                    style="@style/TextAppearance.Typography.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@+id/tv_product_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
+                    tools:text="Tarpaulin" />
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_title_choose"
+                    style="@style/TextAppearance.Typography.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical|end"
+                    android:text="@string/choose"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:drawableEndCompat="@drawable/ic_checklist_green"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SmallSp" />
 
+                <TextView
+                    android:id="@+id/tv_remove"
+                    style="@style/TextAppearance.Typography.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical|end"
+                    android:text="@string/remove"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:textSize="10sp"
+                    app:drawableEndCompat="@drawable/ic_remove"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_choose"
+                    tools:ignore="SmallSp" />
 
-
-            </LinearLayout>
+                <EditText
+                    android:id="@+id/et_input_price"
+                    style="@style/TextAppearance.Typography.Body1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/state_background_input_optional"
+                    android:digits="0123456789"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/input_price"
+                    android:inputType="numberDecimal"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_product"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_product_size" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -124,6 +127,8 @@
                         android:text="@string/add"
                         android:enabled="false"
                         android:textSize="10sp"
+                        style="@style/TextAppearance.Typography.Button"
+                        android:textColor="@color/white"
                         android:src="@drawable/ic_add_order"
                         tools:ignore="SmallSp" />
                 </FrameLayout>

@@ -26,12 +26,9 @@ class NumberTextWatcher(et: EditText, locale: Locale?, numDecimals: Int) : TextW
     }
 
     override fun afterTextChanged(s: Editable) {
-        Log.d(TAG, "afterTextChanged")
         et.removeTextChangedListener(this)
         try {
-            val inilen: Int
-            val endlen: Int
-            inilen = et.text.length
+            val inilen: Int = et.text.length
             var v = value!!.replace(groupingSep, "")
             val n = df.parse(v)
             val cp = et.selectionStart
@@ -50,7 +47,7 @@ class NumberTextWatcher(et: EditText, locale: Locale?, numDecimals: Int) : TextW
             } else {
                 et.setText(dfnd.format(n))
             }
-            endlen = et.text.length
+            val endlen: Int = et.text.length
             val sel = cp + (endlen - inilen)
             if (sel > 0 && sel <= et.text.length) {
                 et.setSelection(sel)

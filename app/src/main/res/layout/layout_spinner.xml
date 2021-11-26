@@ -26,6 +26,7 @@
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="12sp"
+            style="@style/TextAppearance.Typography.Body2"
             tools:text="Bank ABC" />
     </LinearLayout>
 

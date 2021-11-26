@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import project.xinyuan.sales.databinding.ListItemPaymentBinding
 import project.xinyuan.sales.databinding.ListItemPaymentGiroBinding
 import project.xinyuan.sales.helper.Helper
-import project.xinyuan.sales.model.DataGiro
-import project.xinyuan.sales.model.DataPayment
+import project.xinyuan.sales.model.giro.master.DataGiro
 
 class AdapterListHistoryPaymentGiro(val context: Context, private val listGiro: List<DataGiro?>?):RecyclerView.Adapter<AdapterListHistoryPaymentGiro.Holder>() {
     private lateinit var helper:Helper

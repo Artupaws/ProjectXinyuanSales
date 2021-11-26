@@ -3,7 +3,7 @@ package project.xinyuan.sales.view.todolist
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseGetTodoList
+import project.xinyuan.sales.model.sales.ResponseGetTodoList
 import retrofit2.Call
 import retrofit2.Response
 

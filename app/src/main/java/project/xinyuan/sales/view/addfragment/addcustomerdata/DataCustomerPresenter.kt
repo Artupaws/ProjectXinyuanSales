@@ -3,10 +3,10 @@ package project.xinyuan.sales.view.addfragment.addcustomerdata
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseCheckIdCustomer
-import project.xinyuan.sales.model.ResponseGetCustomerLevel
-import project.xinyuan.sales.model.ResponseGetListArea
-import project.xinyuan.sales.model.ResponseRegisterDataCustomer
+import project.xinyuan.sales.model.customer.ResponseCheckIdCustomer
+import project.xinyuan.sales.model.customer.ResponseGetCustomerLevel
+import project.xinyuan.sales.model.area.ResponseGetListArea
+import project.xinyuan.sales.model.customer.ResponseRegisterDataCustomer
 import retrofit2.Call
 import retrofit2.Response
 

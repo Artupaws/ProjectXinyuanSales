@@ -22,6 +22,7 @@
             android:layout_marginTop="5dp"
             android:textAlignment="center"
             android:textColor="@color/black"
+            style="@style/TextAppearance.Typography.Body2"
             tools:text="Ajibarang" />
 
         <View

@@ -21,7 +21,7 @@
             android:layout_height="190dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:scaleType="fitXY"
-            android:src="@drawable/xinyuan_logo" />
+            android:src="@color/secondaryDarkColor" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -114,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/edit"
+                    style="@style/TextAppearance.Typography.Button"
                     android:textColor="@color/black" />
 
                 <View
@@ -146,6 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/save"
+                    style="@style/TextAppearance.Typography.Button"
                     android:textColor="@color/black" />
 
                 <View
@@ -178,6 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="@string/name_title"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <TextView
@@ -185,6 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:text="@string/colon"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <FrameLayout
@@ -197,6 +201,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    style="@style/TextAppearance.Typography.Body2"
                     tools:text="Waluyo" />
 
                 <EditText
@@ -205,6 +210,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_input_profile"
                     android:hint="@string/name_title"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:inputType="textPersonName"
                     android:padding="5dp"
                     android:visibility="gone" />
@@ -225,6 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="@string/e_mail"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <TextView
@@ -232,6 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:text="@string/colon"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <FrameLayout
@@ -244,6 +252,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    style="@style/TextAppearance.Typography.Body2"
                     tools:text="Waluyo@gmail.com" />
 
                 <EditText
@@ -252,6 +261,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_input_profile"
                     android:hint="@string/e_mail"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:inputType="textEmailAddress"
                     android:padding="5dp"
                     android:visibility="gone" />
@@ -271,6 +281,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
+                style="@style/TextAppearance.Typography.Body2"
                 android:text="@string/phone"
                 android:textColor="@color/black" />
 
@@ -279,6 +290,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:text="@string/colon"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <FrameLayout
@@ -290,6 +302,7 @@
                     android:id="@+id/tv_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:textColor="@color/black"
                     tools:text="08381891" />
 
@@ -299,6 +312,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_input_profile"
                     android:hint="@string/phone"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:inputType="phone"
                     android:padding="5dp"
                     android:visibility="gone" />
@@ -319,6 +333,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="@string/address"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <TextView
@@ -326,6 +341,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:text="@string/colon"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <FrameLayout
@@ -338,6 +354,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    style="@style/TextAppearance.Typography.Body2"
                     tools:text="Address" />
 
                 <EditText
@@ -346,6 +363,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_input_profile"
                     android:hint="@string/address"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:inputType="textPostalAddress"
                     android:padding="5dp"
                     android:visibility="gone" />
@@ -366,6 +384,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="@string/gender"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <TextView
@@ -373,6 +392,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:text="@string/colon"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black" />
 
             <FrameLayout
@@ -385,6 +405,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:textColor="@color/black"
                     tools:text="male"/>
 
@@ -399,12 +420,14 @@
                         android:id="@+id/rb_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/TextAppearance.Typography.Body2"
                         android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/rb_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/TextAppearance.Typography.Body2"
                         android:layout_marginStart="10dp"
                         android:text="@string/female" />
 
@@ -421,6 +444,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:text="@string/logout"
+            style="@style/TextAppearance.Typography.Button"
             android:textColor="@android:color/holo_red_dark" />
 
     </LinearLayout>

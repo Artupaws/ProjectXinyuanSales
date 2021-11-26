@@ -42,12 +42,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="@string/tempo_title"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:text="@string/colon" />
 
                 <TextView
@@ -55,6 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
+                    style="@style/TextAppearance.Typography.Body2"
                     tools:text="21-2-2021" />
 
             </LinearLayout>
@@ -72,18 +75,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="@string/postpaid"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:text="@string/colon" />
 
                 <TextView
                     android:id="@+id/tv_postpaid"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:layout_weight="1.4"
                     tools:text="30" />
 
@@ -101,12 +107,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:text="@string/due_date"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:layout_weight="0.1"
                     android:text="@string/colon" />
 
@@ -114,6 +122,7 @@
                     android:id="@+id/tv_duedate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:layout_weight="1.4"
                     tools:text="21-3-2021" />
 
@@ -130,6 +139,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:layout_weight="0.5"
                     android:text="@string/status"
                     android:textColor="@color/black" />
@@ -137,6 +147,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:layout_weight="0.1"
                     android:text="@string/colon" />
 
@@ -148,6 +159,7 @@
                     android:textAlignment="center"
                     android:enabled="true"
                     tools:text="@string/paid_off"
+                    style="@style/TextAppearance.Typography.Body2"
                     android:textColor="@color/white"
                     android:background="@drawable/state_background_todo"/>
 
@@ -158,8 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/product"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                style="@style/TextAppearance.Typography.Headline6"
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -176,6 +188,7 @@
                     android:layout_weight="0.7"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:text="@string/total_title" />
 
                 <TextView
@@ -185,6 +198,7 @@
                     android:layout_weight="1.5"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:text="@string/spec_product" />
 
                 <TextView
@@ -194,6 +208,7 @@
                     android:layout_weight="0.8"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:text="@string/price_title" />
 
                 <TextView
@@ -203,6 +218,7 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:text="@string/amount_title" />
             </LinearLayout>
 
@@ -242,6 +258,7 @@
                     android:layout_weight="0.8"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:text="@string/total_price" />
 
                 <TextView
@@ -254,7 +271,8 @@
                     android:gravity="end"
                     android:padding="3dp"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    style="@style/TextAppearance.Typography.Caption"
+                    android:textSize="11sp"
                     tools:text="Rp.140.000.000" />
             </LinearLayout>
 
@@ -288,6 +306,7 @@
                     android:layout_weight="0.8"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    style="@style/TextAppearance.Typography.Overline"
                     android:text="@string/total_pay" />
 
                 <TextView
@@ -300,7 +319,8 @@
                     android:gravity="end"
                     android:padding="3dp"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    style="@style/TextAppearance.Typography.Caption"
+                    android:textSize="11sp"
                     tools:text="Rp.140.000.000" />
             </LinearLayout>
 
@@ -361,6 +381,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/state_button_add_order"
+        style="@style/TextAppearance.Typography.Button"
+        android:textColor="@color/white"
         android:enabled="true"
         android:text="@string/make_payment"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterTodoList
 import project.xinyuan.sales.databinding.ActivityTodoListBinding
-import project.xinyuan.sales.model.DataTodo
+import project.xinyuan.sales.model.sales.master.DataTodo
 
 class TodoListActivity : AppCompatActivity(), TodoListContract {
 

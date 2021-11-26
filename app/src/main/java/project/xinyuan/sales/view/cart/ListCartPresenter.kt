@@ -3,13 +3,11 @@ package project.xinyuan.sales.view.cart
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseAddProductTransaction
-import project.xinyuan.sales.model.ResponseAddTransaction
-import project.xinyuan.sales.model.ResponseGetPaymentAccounts
-import project.xinyuan.sales.roomdatabase.CartItem
+import project.xinyuan.sales.model.transaction.ResponseAddProductTransaction
+import project.xinyuan.sales.model.transaction.ResponseAddTransaction
+import project.xinyuan.sales.model.paymentaccount.ResponseGetPaymentAccounts
 import retrofit2.Call
 import retrofit2.Response
-import java.util.ArrayList
 
 class ListCartPresenter(val view:ListCartContract, val context: Context) {
 

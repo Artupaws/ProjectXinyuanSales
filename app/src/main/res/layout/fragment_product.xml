@@ -28,6 +28,7 @@
                 android:background="@drawable/background_input"
                 android:focusableInTouchMode="true"
                 app:iconifiedByDefault="false"
+                style="@style/TextAppearance.Typography.Body1"
                 app:queryHint="Search product here"
                 app:searchIcon="@drawable/ic_search_orange" />
 

@@ -3,8 +3,8 @@ package project.xinyuan.sales.view.dashboard
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseGetDetailSales
-import project.xinyuan.sales.model.ResponseLogout
+import project.xinyuan.sales.model.sales.ResponseGetDetailSales
+import project.xinyuan.sales.model.sales.ResponseLogout
 import retrofit2.Call
 import retrofit2.Response
 

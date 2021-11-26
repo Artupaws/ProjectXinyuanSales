@@ -1,6 +1,6 @@
 package project.xinyuan.sales.view.history
 
-import project.xinyuan.sales.model.DataTransaction
+import project.xinyuan.sales.model.transaction.master.DataTransaction
 
 interface HistoryTransactionContract {
 

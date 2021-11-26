@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ListItemTransactionBinding
-import project.xinyuan.sales.model.DataTransaction
+import project.xinyuan.sales.model.transaction.master.DataTransaction
 import project.xinyuan.sales.view.history.detailtransaction.DetailTransactionActivity
 import kotlin.collections.ArrayList
 
@@ -47,6 +47,7 @@ class AdapterListTransaction(val context: Context, private val listTransaction:L
                 tvInvoiceNumber.text = item.invoiceNumber
                 tvNameCustomer.text = item.customer
                 tvTypePayment.text = item.payment
+                tvCompany.text = item.company
                 btnDetail.setOnClickListener {
                     val intent = Intent(context, DetailTransactionActivity::class.java)
                     intent.putExtra("dataTransaction", item)

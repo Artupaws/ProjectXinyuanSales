@@ -4,12 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -31,7 +29,7 @@ import okhttp3.MultipartBody.Part.createFormData
 import okhttp3.RequestBody
 import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityAddPhotoCustomerBinding
-import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.model.customer.master.DataCustomer
 import project.xinyuan.sales.view.dashboard.DashboardActivity
 import java.io.ByteArrayOutputStream
 import java.io.File

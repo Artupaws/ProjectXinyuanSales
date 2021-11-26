@@ -18,8 +18,11 @@ interface CartDao {
     fun getAll() : List<CartItem>
 
     @Query("SELECT * FROM carts WHERE id = :id")
-    fun getById(id: Int) : List<CartItem>
+    fun getById(id: Int) : CartItem
 
     @Query("DELETE FROM carts")
     fun deleteAll()
+
+    @Query("SELECT EXISTS (SELECT 1 FROM carts WHERE id = :id)")
+    fun exists(id: Int): Boolean
 }

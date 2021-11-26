@@ -3,7 +3,7 @@ package project.xinyuan.sales.view.addfragment.addordercustomer
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseGetListProduct
+import project.xinyuan.sales.model.product.ResponseGetListProduct
 import retrofit2.Call
 import retrofit2.Response
 

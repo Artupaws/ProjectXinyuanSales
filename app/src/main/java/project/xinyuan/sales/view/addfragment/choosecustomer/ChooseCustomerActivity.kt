@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterChooseCustomer
 import project.xinyuan.sales.databinding.ActivityChooseCustomerBinding
-import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.model.customer.master.DataCustomer
 import project.xinyuan.sales.view.addfragment.addcustomerdata.DataCustomerActivty
 
 class ChooseCustomerActivity : AppCompatActivity(), ChooseCustomerContract, View.OnClickListener {

@@ -5,8 +5,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseRegisterDataCustomer
-import project.xinyuan.sales.model.ResponseUploadImageCustomer
+import project.xinyuan.sales.model.customer.ResponseRegisterDataCustomer
+import project.xinyuan.sales.model.customer.ResponseUploadImageCustomer
 import retrofit2.Call
 import retrofit2.Response
 

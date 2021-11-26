@@ -2,7 +2,6 @@ package project.xinyuan.sales.view.home.product
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import project.xinyuan.sales.adapter.AdapterListProduct
 import project.xinyuan.sales.databinding.FragmentProductBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
-import project.xinyuan.sales.model.DataProduct
+import project.xinyuan.sales.model.product.master.DataProduct
 import project.xinyuan.sales.view.login.LoginActivity
 
 class ProductFragment : Fragment(), ProductContract {
@@ -40,7 +39,6 @@ class ProductFragment : Fragment(), ProductContract {
         presenter.getListProduct()
         refresh()
         searchProduct()
-
     }
 
     private fun tryLogin(){
@@ -81,10 +79,9 @@ class ProductFragment : Fragment(), ProductContract {
         _binding = null
     }
 
-    override fun messageGetListProduct(msg: String) {
-        Log.d("listProduct", msg)
+    override fun messageGetListProduct(code:Int,msg: String) {
         binding?.swipeRefresh?.isRefreshing = false
-        if (msg.contains("Unauthenticated")){
+        if (code == 401){
             sharedPref.removeValue(Constants.PREF_IS_LOGIN)
             sharedPref.removeValue(Constants.TOKEN_LOGIN)
             Toast.makeText(requireContext(), "you have logged in on another device, please log in again", Toast.LENGTH_SHORT).show()

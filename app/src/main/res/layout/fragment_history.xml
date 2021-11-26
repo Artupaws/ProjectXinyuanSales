@@ -28,6 +28,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background_input"
                 app:iconifiedByDefault="false"
+                style="@style/TextAppearance.Typography.Body1"
                 app:queryHint="Search transaction here"
                 app:searchIcon="@drawable/ic_search_orange" />
 

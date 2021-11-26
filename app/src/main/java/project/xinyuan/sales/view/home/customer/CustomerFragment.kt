@@ -16,8 +16,7 @@ import project.xinyuan.sales.adapter.AdapterListCustomer
 import project.xinyuan.sales.databinding.FragmentCustomerBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
-import project.xinyuan.sales.model.DataCustomer
-import project.xinyuan.sales.model.DataTransaction
+import project.xinyuan.sales.model.customer.master.DataCustomer
 import project.xinyuan.sales.view.addfragment.addcustomerdata.DataCustomerActivty
 import project.xinyuan.sales.view.login.LoginActivity
 

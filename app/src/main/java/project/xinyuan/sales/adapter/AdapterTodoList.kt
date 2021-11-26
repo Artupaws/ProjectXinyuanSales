@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemTodoBinding
-import project.xinyuan.sales.model.DataArea
-import project.xinyuan.sales.model.DataTodo
+import project.xinyuan.sales.model.sales.master.DataTodo
 
 class AdapterTodoList(val context: Context, private val listTodo:List<DataTodo?>?): RecyclerView.Adapter<AdapterTodoList.Holder>() {
     private var status:Int? = null
 
     inner class Holder(view:View):RecyclerView.ViewHolder(view) {
         private val binding = ListItemTodoBinding.bind(view)
-        fun bin(item:DataTodo){
+        fun bin(item: DataTodo){
             with(binding){
                 tvTodo.text = item.message
                 tvDueDate.text = item.doneDate

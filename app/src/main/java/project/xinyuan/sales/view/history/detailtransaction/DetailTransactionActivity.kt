@@ -1,7 +1,6 @@
 package project.xinyuan.sales.view.history.detailtransaction
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Build
@@ -23,7 +22,10 @@ import project.xinyuan.sales.adapter.AdapterSpinnerPaymentAccount
 import project.xinyuan.sales.databinding.ActivityDetailTransactionBinding
 import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.helper.NumberTextWatcher
-import project.xinyuan.sales.model.*
+import project.xinyuan.sales.model.bank.master.DataBank
+import project.xinyuan.sales.model.paymentaccount.master.DataPaymentAccount
+import project.xinyuan.sales.model.payment.master.DataPayment
+import project.xinyuan.sales.model.transaction.master.DataTransaction
 import project.xinyuan.sales.view.dashboard.DashboardActivity
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime

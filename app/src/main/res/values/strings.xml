@@ -8,8 +8,8 @@
     <string name="next">NEXT</string>
     <string name="login">LOGIN</string>
     <string name="three">3</string>
-    <string name="e_mail">e-mail</string>
-    <string name="password">password</string>
+    <string name="e_mail">Email</string>
+    <string name="password">Password</string>
     <string name="forgot_password"><u>Forgot Password?</u></string>
     <string name="title_on_login">Login and feel the ease</string>
     <string name="home">Home</string>
@@ -50,7 +50,7 @@
     <string name="photo_2">Photo 2</string>
     <string name="sample_name">Good Sales</string>
     <string name="title_add_customer">Add Customer</string>
-    <string name="add_order_customer">Add Order Customer</string>
+    <string name="add_order_customer">Add Transaction</string>
     <string name="place_order">Place Order</string>
     <string name="input_your_price_here">Input your price here</string>
     <string name="input_price">Input your price here</string>
@@ -78,7 +78,7 @@
     <string name="name_title">Nama</string>
     <string name="total_title">Total</string>
     <string name="total_price">Total</string>
-    <string name="appove_order">Appove Order</string>
+    <string name="approve_order">Approve Order</string>
     <string name="tenor">Tenor :</string>
     <string name="clear_order">X | Clear</string>
     <string name="colon">:</string>

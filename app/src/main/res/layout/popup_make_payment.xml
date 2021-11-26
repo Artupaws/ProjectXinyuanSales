@@ -22,6 +22,7 @@
             android:layout_margin="10dp"
             android:text="@string/make_payment"
             android:textColor="@color/black"
+            style="@style/TextAppearance.Typography.Body2"
             android:textStyle="bold"/>
 
         <LinearLayout
@@ -36,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/payment_account"
+                style="@style/TextAppearance.Typography.Body2"
                 android:textColor="@color/black"
                 android:textSize="12sp"/>
             <Spinner
@@ -52,21 +54,22 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:gravity="center_horizontal">
-        <TextView
-            android:id="@+id/tv_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/total_must_pay"/>
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                style="@style/TextAppearance.Typography.Body2"
+                android:text="@string/total_must_pay"/>
             <TextView
                 android:id="@+id/tv_total_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                style="@style/TextAppearance.Typography.Body2"
                 android:layout_gravity="center_horizontal"
                 tools:text="Rp 500.000"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textColor="@color/black"/>
         </LinearLayout>
 
         <EditText
@@ -76,6 +79,7 @@
             android:background="@drawable/background_input"
             android:paddingStart="20dp"
             android:textSize="12sp"
+            style="@style/TextAppearance.Typography.Body2"
             android:paddingEnd="10dp"
             android:layout_margin="10dp"/>
 
@@ -94,6 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:enabled="false"
+                    style="@style/TextAppearance.Typography.Button"
                     android:background="@drawable/state_button_add_order"
                     android:textSize="12sp"
                     android:text="@string/make_payment"/>
@@ -121,6 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="@string/or"
+            style="@style/TextAppearance.Typography.Body2"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/black"/>
 
@@ -141,11 +147,11 @@
                 android:id="@+id/tv_title_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_giro"
                 android:gravity="center"
-                android:textSize="12sp"
+                android:text="@string/add_giro"
+                style="@style/TextAppearance.Typography.Button"
                 android:textColor="@color/white"
-                android:textStyle="bold"
+                android:textSize="12sp"
                 app:drawableStartCompat="@drawable/ic_add_white" />
         </RelativeLayout>
 

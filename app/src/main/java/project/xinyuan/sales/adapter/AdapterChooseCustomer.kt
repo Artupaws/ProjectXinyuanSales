@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import project.xinyuan.sales.databinding.ListItemCustomerBinding
-import project.xinyuan.sales.databinding.ListItemProductBinding
-import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.model.customer.master.DataCustomer
 import project.xinyuan.sales.view.addfragment.addordercustomer.AddOrderCustomerActivity
 
 class AdapterChooseCustomer(val context: Context, private val listCustomer:List<DataCustomer?>?):

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import project.xinyuan.sales.databinding.ListItemCustomerBinding
-import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.model.customer.master.DataCustomer
 
 class AdapterListCustomer(val context: Context, private val listCustomer:List<DataCustomer?>?):
         RecyclerView.Adapter<AdapterListCustomer.Holder>(), Filterable {

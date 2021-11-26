@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import project.xinyuan.sales.databinding.ListItemProductBinding
-import project.xinyuan.sales.model.DataProduct
+import project.xinyuan.sales.model.product.master.DataProduct
 import java.util.ArrayList
 
 class AdapterListProduct(val context: Context, private val listProduct:List<DataProduct?>?):
@@ -23,24 +23,20 @@ class AdapterListProduct(val context: Context, private val listProduct:List<Data
 
     inner class Holder(view:View):RecyclerView.ViewHolder(view) {
         private val binding = ListItemProductBinding.bind(view)
-        fun bin(item:DataProduct){
+        fun bin(item: DataProduct){
             with(binding){
                 Glide.with(context).load(item.photo.toString()).skipMemoryCache(false).diskCacheStrategy(
                     DiskCacheStrategy.NONE).into(ivProduct)
-                val typeProduct = "Type : ${item.type}"
-                val sizeProduct = "Size : ${item.size}"
-                val color = "Color : ${item.colour}"
-                val factoryName = "Factory : ${item.factory}"
-                if(item.grossWeight == null){
-                    tvGrossWeight.text = "Gross Weight (kg): -"
-                }else {
-                    val grossWeight = "Gross Weight (kg): ${item.grossWeight}"
-                    tvGrossWeight.text = grossWeight
-                }
+                val typeProduct = "${item.type}"
+                val sizeProduct = "${item.size}"
+                val color = "${item.colour}"
+                val factoryName = "${item.factory}"
+                val logo = "${item.logo}"
                 tvTypeProduct.text = typeProduct
                 tvSizeProduct.text = sizeProduct
                 tvColorProduct.text = color
                 tvCompanyName.text = factoryName
+                tvLogo.text = logo
 
             }
         }

@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            style="@style/TextAppearance.Typography.Body1"
             tools:text="Empty Customer" />
 
         <RelativeLayout
@@ -42,11 +43,11 @@
 
             <TextView
                 android:id="@+id/tv_title_button"
+                style="@style/TextAppearance.Typography.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Add Customer"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                tools:text="Add Customer" />
         </RelativeLayout>
 
     </LinearLayout>

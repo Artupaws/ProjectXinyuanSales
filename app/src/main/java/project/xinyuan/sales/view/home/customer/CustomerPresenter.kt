@@ -3,7 +3,7 @@ package project.xinyuan.sales.view.home.customer
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseGetListCustomer
+import project.xinyuan.sales.model.customer.ResponseGetListCustomer
 import retrofit2.Call
 import retrofit2.Response
 

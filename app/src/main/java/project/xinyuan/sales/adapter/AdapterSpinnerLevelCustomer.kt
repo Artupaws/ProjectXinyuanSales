@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import project.xinyuan.sales.R
-import project.xinyuan.sales.model.CustomerLevel
+import project.xinyuan.sales.model.customer.master.CustomerLevel
 
 class AdapterSpinnerLevelCustomer(val context: Context, private val listCustomerLevel:List<CustomerLevel?>?):BaseAdapter() {
 

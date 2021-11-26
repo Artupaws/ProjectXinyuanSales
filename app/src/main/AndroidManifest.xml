@@ -24,6 +24,9 @@
             android:name=".view.cart.ListCartActivity"
             android:screenOrientation="nosensor" />
         <activity
+            android:name=".view.cartalt.ListCartAlternateActivity"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".view.addfragment.choosecustomer.ChooseCustomerActivity"
             android:screenOrientation="nosensor" />
         <activity
@@ -44,10 +47,7 @@
         <activity
             android:name=".view.login.LoginActivity"
             android:screenOrientation="nosensor" />
-        <activity
-            android:name=".view.slider.SliderActivity"
-            android:screenOrientation="nosensor" />
-        <activity android:name=".view.splashscreen.SplashscreenActivity">
+        <activity android:name=".view.splashscreen.SplashscreenActivity" android:theme="@style/Theme.WhiteStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

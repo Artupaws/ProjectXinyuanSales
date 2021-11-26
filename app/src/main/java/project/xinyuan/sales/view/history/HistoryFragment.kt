@@ -16,8 +16,7 @@ import project.xinyuan.sales.adapter.AdapterListTransaction
 import project.xinyuan.sales.databinding.FragmentHistoryBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
-import project.xinyuan.sales.model.DataTransaction
-import project.xinyuan.sales.view.addfragment.addordercustomer.AddOrderCustomerActivity
+import project.xinyuan.sales.model.transaction.master.DataTransaction
 import project.xinyuan.sales.view.addfragment.choosecustomer.ChooseCustomerActivity
 import project.xinyuan.sales.view.login.LoginActivity
 

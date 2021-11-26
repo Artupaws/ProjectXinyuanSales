@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Button
 import android.widget.TextView
 import project.xinyuan.sales.R
-import project.xinyuan.sales.model.DataPaymentAccount
+import project.xinyuan.sales.model.paymentaccount.master.DataPaymentAccount
 
 class AdapterSpinnerPaymentAccount(val context: Context, private val listPaymentAccount:List<DataPaymentAccount?>?):BaseAdapter() {
 

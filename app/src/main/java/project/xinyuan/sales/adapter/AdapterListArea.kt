@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemAreaBinding
-import project.xinyuan.sales.model.DataArea
+import project.xinyuan.sales.model.area.master.DataArea
 
 class AdapterListArea(val context: Context, private val listArea:List<DataArea?>?): RecyclerView.Adapter<AdapterListArea.Holder>() {
     private var broadcaster: LocalBroadcastManager? = null
 
     inner class Holder(view:View):RecyclerView.ViewHolder(view) {
         private val binding = ListItemAreaBinding.bind(view)
-        fun bin(item:DataArea){
+        fun bin(item: DataArea){
             with(binding){
              tvAreaName.text = item.name
                 tvAreaName.setOnClickListener {

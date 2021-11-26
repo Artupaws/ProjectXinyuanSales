@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemCartOrderBinding
 import project.xinyuan.sales.helper.Helper
-import project.xinyuan.sales.model.TransactiondetailsItem
+import project.xinyuan.sales.model.transaction.master.TransactiondetailsItem
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

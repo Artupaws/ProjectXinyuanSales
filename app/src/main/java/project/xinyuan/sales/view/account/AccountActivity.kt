@@ -1,7 +1,6 @@
 package project.xinyuan.sales.view.account
 
 import android.Manifest
-import android.accounts.Account
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
@@ -29,7 +28,7 @@ import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityAccountBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
-import project.xinyuan.sales.model.DataSales
+import project.xinyuan.sales.model.sales.master.DataSales
 import project.xinyuan.sales.view.login.LoginActivity
 import java.io.File
 

@@ -3,10 +3,10 @@ package project.xinyuan.sales.view.history.detailtransaction
 import android.content.Context
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseAddTransactionGiro
-import project.xinyuan.sales.model.ResponseGetListBank
-import project.xinyuan.sales.model.ResponseGetPaymentAccounts
-import project.xinyuan.sales.model.ResponseMakePayment
+import project.xinyuan.sales.model.giro.ResponseAddTransactionGiro
+import project.xinyuan.sales.model.bank.ResponseGetListBank
+import project.xinyuan.sales.model.paymentaccount.ResponseGetPaymentAccounts
+import project.xinyuan.sales.model.payment.ResponseMakePayment
 import retrofit2.Call
 import retrofit2.Response
 

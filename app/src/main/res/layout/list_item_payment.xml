@@ -20,6 +20,7 @@
             android:layout_weight="0.6"
             android:textSize="10sp"
             tools:text="Total"
+            style="@style/TextAppearance.Typography.Body2"
             tools:ignore="SmallSp" />
         <TextView
             android:id="@+id/tv_total_payment"
@@ -27,6 +28,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="10sp"
+            style="@style/TextAppearance.Typography.Body2"
             android:gravity="center_horizontal"
             android:background="@color/white"
             tools:text="Nama"
@@ -37,6 +39,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.4"
             android:textSize="10sp"
+            style="@style/TextAppearance.Typography.Body2"
             android:ellipsize="end"
             android:maxLines="1"
             android:gravity="center_horizontal"

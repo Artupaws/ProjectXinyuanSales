@@ -16,7 +16,7 @@ import project.xinyuan.sales.helper.SharedPreferencesHelper
 import project.xinyuan.sales.view.dashboard.DashboardActivity
 import java.util.regex.Pattern
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
+class LoginActivity : AppCompatActivity(), LoginContract {
 
     private lateinit var binding: ActivityLoginBinding
     private var isEmptyEmail = true
@@ -31,22 +31,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         setContentView(binding.root)
         presenter = LoginPresenter(this)
         sharedPref = SharedPreferencesHelper(this)
-        getDeviceName()
-        binding.btnLogin.setOnClickListener(this)
-    }
 
-    override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btn_login -> {
-                stateButtonLoading()
-                checkLogin()
-            }
+        getDeviceName()
+
+        binding.btnLogin.setOnClickListener{
+            checkLogin()
         }
     }
 
     private fun getDeviceName(){
         deviceName = Build.MANUFACTURER+" "+Build.MODEL
-        Log.d("deviceName", deviceName)
     }
 
     private fun checkLogin(){
@@ -75,43 +69,33 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         if (!isEmptyEmail && !isEmptyPassword){
             presenter.loginSales(deviceName, email, password)
         } else{
-            stateButtonUnloading()
             Snackbar.make(binding.btnLogin, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
         }
-
     }
 
-    private fun stateButtonLoading(){
-        binding.btnLogin.visibility = View.INVISIBLE
-        binding.progressCircular.visibility = View.VISIBLE
-    }
-
-    private fun stateButtonUnloading(){
-        binding.btnLogin.visibility = View.VISIBLE
-        binding.progressCircular.visibility = View.INVISIBLE
-    }
-
-    private fun move(){
-        val intent = Intent(applicationContext, DashboardActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    override fun messageLogin(msg: String) {
-        if (msg.contains("Success")){
-            sharedPref.save(Constants.PREF_IS_LOGIN, true)
-            move()
-            stateButtonUnloading()
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
-        } else {
-            stateButtonUnloading()
+    override fun messageLogin(code:Int, msg: String) {
+        if(code == 401){
             Snackbar.make(binding.btnLogin, msg, Snackbar.LENGTH_SHORT).show()
         }
     }
 
     override fun getTokenLogin(token: String) {
+        sharedPref.save(Constants.PREF_IS_LOGIN, true)
         sharedPref.save(Constants.TOKEN_LOGIN, token)
-        Log.d("tokenLogin", token)
+
+        val intent = Intent(applicationContext, DashboardActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun showLoading() {
+        binding.btnLogin.visibility = View.INVISIBLE
+        binding.progressCircular.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        binding.btnLogin.visibility = View.VISIBLE
+        binding.progressCircular.visibility = View.INVISIBLE
     }
 
     override fun onBackPressed() {

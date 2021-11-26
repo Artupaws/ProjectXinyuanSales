@@ -19,6 +19,7 @@
             android:layout_margin="0.8dp"
             android:gravity="center_horizontal"
             android:layout_weight="0.7"
+            style="@style/TextAppearance.Typography.Caption"
             tools:text="Total"/>
         <TextView
             android:id="@+id/tv_product_name"
@@ -28,6 +29,7 @@
             android:layout_weight="1.5"
             android:textSize="12sp"
             android:gravity="center_horizontal"
+            style="@style/TextAppearance.Typography.Caption"
             android:background="@color/white"
             tools:text="Nama"/>
         <TextView
@@ -37,6 +39,7 @@
             android:layout_margin="0.8dp"
             android:layout_weight="0.8"
             android:gravity="center_horizontal"
+            style="@style/TextAppearance.Typography.Caption"
             android:background="@color/white"
             tools:text="Harga"/>
         <TextView
@@ -46,6 +49,7 @@
             android:layout_margin="0.8dp"
             android:gravity="center_horizontal"
             android:layout_weight="1"
+            style="@style/TextAppearance.Typography.Caption"
             android:background="@color/white"
             tools:text="Jumlah"/>
     </LinearLayout>

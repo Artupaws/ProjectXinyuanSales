@@ -12,14 +12,14 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.Button
-import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -28,7 +28,7 @@ import project.xinyuan.sales.R
 import project.xinyuan.sales.databinding.ActivityDashboardBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.SharedPreferencesHelper
-import project.xinyuan.sales.model.DataSales
+import project.xinyuan.sales.model.sales.master.DataSales
 import project.xinyuan.sales.view.account.AccountActivity
 import project.xinyuan.sales.view.addfragment.AddFragment
 import project.xinyuan.sales.view.history.HistoryFragment
@@ -44,7 +44,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     private var fragment:Fragment? =null
     private lateinit var presenter: DashboardPresenter
     private lateinit var sharedPref:SharedPreferencesHelper
-    private var data:DataSales?=null
+    private var data: DataSales?=null
     private var popupLogout:Dialog? = null
     private lateinit var appUpdateManager: AppUpdateManager
 
@@ -52,8 +52,11 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         loadFragment(fragment)
+
         appUpdateManager = AppUpdateManagerFactory.create(this)
+
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
         presenter = DashboardPresenter(this, this)
         sharedPref = SharedPreferencesHelper(this)
@@ -68,6 +71,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
         stateOpenFragment()
         showPopupLogout()
+
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
@@ -156,17 +160,7 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
                 startActivity(intent)
             }
             R.id.iv_action_setting -> {
-                val popMenu = PopupMenu(applicationContext, binding.ivActionSetting)
-                popMenu.inflate(R.menu.menu_logout)
-                popMenu.setOnMenuItemClickListener {item ->
-                    when (item.itemId){
-                        R.id.option_logout ->{
-                            popupLogout?.show()
-                            true
-                        }else -> false
-                    }
-                }
-                popMenu.show()
+                popupLogout?.show()
             }
             R.id.linear_reload -> {
                 presenter.getDetailSales()
@@ -247,6 +241,9 @@ class DashboardActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         binding.tvSalesName.text = sayHiSales
         reloadProfile()
         this.data = data
+        Glide.with(applicationContext).load(data?.photo).skipMemoryCache(false).diskCacheStrategy(
+            DiskCacheStrategy.NONE).into(binding.ivSales)
+
         sharedPref.save(Constants.SALES_NAME, salesName!!)
     }
 }

@@ -27,16 +27,16 @@ import com.google.android.material.snackbar.Snackbar
 import project.xinyuan.sales.R
 import project.xinyuan.sales.adapter.AdapterListArea
 import project.xinyuan.sales.adapter.AdapterSpinnerLevelCustomer
-import project.xinyuan.sales.databinding.ActivityDataCustomerActivtyBinding
-import project.xinyuan.sales.model.CustomerLevel
-import project.xinyuan.sales.model.DataArea
-import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.databinding.ActivityRegisterCustomerBinding
+import project.xinyuan.sales.model.customer.master.CustomerLevel
+import project.xinyuan.sales.model.area.master.DataArea
+import project.xinyuan.sales.model.customer.master.DataCustomer
 import project.xinyuan.sales.view.addfragment.addcustomerphoto.AddPhotoCustomerActivity
 import java.util.*
 
 class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCustomerContract {
 
-    private lateinit var binding:ActivityDataCustomerActivtyBinding
+    private lateinit var binding:ActivityRegisterCustomerBinding
     private lateinit var presenter:DataCustomerPresenter
     private var broadcaster: LocalBroadcastManager? = null
     private var idArea:Int = 0
@@ -61,7 +61,7 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDataCustomerActivtyBinding.inflate(layoutInflater)
+        binding = ActivityRegisterCustomerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter = DataCustomerPresenter(this, this)
         broadcaster = LocalBroadcastManager.getInstance(this)

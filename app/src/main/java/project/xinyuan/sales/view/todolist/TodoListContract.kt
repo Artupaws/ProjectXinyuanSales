@@ -1,6 +1,6 @@
 package project.xinyuan.sales.view.todolist
 
-import project.xinyuan.sales.model.DataTodo
+import project.xinyuan.sales.model.sales.master.DataTodo
 
 interface TodoListContract {
 

@@ -4,8 +4,8 @@ import android.content.Context
 import okhttp3.MultipartBody
 import org.json.JSONObject
 import project.xinyuan.sales.api.NetworkConfig
-import project.xinyuan.sales.model.ResponseLogout
-import project.xinyuan.sales.model.ResponseUpdateProfileSales
+import project.xinyuan.sales.model.sales.ResponseLogout
+import project.xinyuan.sales.model.sales.ResponseUpdateProfileSales
 import retrofit2.Call
 import retrofit2.Response
 

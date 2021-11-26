@@ -18,9 +18,9 @@ import project.xinyuan.sales.databinding.ActivityListCartBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.helper.SharedPreferencesHelper
-import project.xinyuan.sales.model.DataCustomer
-import project.xinyuan.sales.model.DataFormalTransaction
-import project.xinyuan.sales.model.DataPaymentAccount
+import project.xinyuan.sales.model.customer.master.DataCustomer
+import project.xinyuan.sales.model.transaction.master.DataFormalTransaction
+import project.xinyuan.sales.model.paymentaccount.master.DataPaymentAccount
 import project.xinyuan.sales.roomdatabase.CartDao
 import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.roomdatabase.CartRoomDatabase

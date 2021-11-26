@@ -21,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_giro"
+            style="@style/TextAppearance.Typography.Body2"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
@@ -28,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/giro_number"
+            style="@style/TextAppearance.Typography.Body2"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:textSize="12sp" />
@@ -38,6 +40,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:inputType="numberDecimal"
+            style="@style/TextAppearance.Typography.Body2"
             android:background="@drawable/background_input"
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
@@ -47,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bank_name"
+            style="@style/TextAppearance.Typography.Body2"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:textSize="12sp" />
@@ -61,6 +65,7 @@
             android:layout_height="wrap_content"
             android:text="@string/balance"
             android:layout_marginTop="10dp"
+            style="@style/TextAppearance.Typography.Body2"
             android:textColor="@color/black"
             android:textSize="12sp" />
 
@@ -70,6 +75,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:inputType="numberDecimal"
+            style="@style/TextAppearance.Typography.Body2"
             android:background="@drawable/background_input"
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
@@ -80,6 +86,7 @@
             android:layout_height="wrap_content"
             android:text="@string/date_receive"
             android:layout_marginTop="10dp"
+            style="@style/TextAppearance.Typography.Body2"
             android:textColor="@color/black"
             android:textSize="12sp" />
 
@@ -97,6 +104,7 @@
                 android:layout_height="30dp"
                 android:layout_weight="0.5"
                 android:maxLength="2"
+                style="@style/TextAppearance.Typography.Body2"
                 android:inputType="numberDecimal"
                 android:hint="@string/hint_date"
                 android:background="@drawable/background_input"
@@ -108,6 +116,7 @@
                 android:id="@+id/tv_dash_one"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                style="@style/TextAppearance.Typography.Body2"
                 android:layout_weight="0.2"
                 android:textAlignment="center"
                 android:text="@string/dash"/>
@@ -116,6 +125,7 @@
                 android:id="@+id/et_month"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
+                style="@style/TextAppearance.Typography.Body2"
                 android:layout_weight="0.5"
                 android:maxLength="2"
                 android:inputType="numberDecimal"
@@ -128,6 +138,7 @@
             <TextView
                 android:id="@+id/tv_dash_two"
                 android:layout_width="0dp"
+                style="@style/TextAppearance.Typography.Body2"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:textAlignment="center"
@@ -136,6 +147,7 @@
             <EditText
                 android:id="@+id/et_year"
                 android:layout_width="0dp"
+                style="@style/TextAppearance.Typography.Body2"
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:maxLength="4"
@@ -172,6 +184,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:enabled="true"
+                    style="@style/TextAppearance.Typography.Button"
+                    android:textColor="@color/white"
                     android:background="@drawable/state_button_add_order"
                     android:textSize="12sp"
                     android:text="@string/add_giro"/>

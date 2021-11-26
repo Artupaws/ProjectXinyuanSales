@@ -1,6 +1,6 @@
 package project.xinyuan.sales.view.addfragment.choosecustomer
 
-import project.xinyuan.sales.model.DataCustomer
+import project.xinyuan.sales.model.customer.master.DataCustomer
 
 interface ChooseCustomerContract {
 

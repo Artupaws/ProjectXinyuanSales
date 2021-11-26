@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import project.xinyuan.sales.databinding.ListItemPaymentBinding
 import project.xinyuan.sales.helper.Helper
-import project.xinyuan.sales.model.DataPayment
+import project.xinyuan.sales.model.payment.master.DataPayment
 
 class AdapterListHistoryPayment(val context: Context, private val listPayment: List<DataPayment?>?):RecyclerView.Adapter<AdapterListHistoryPayment.Holder>() {
     private lateinit var helper:Helper

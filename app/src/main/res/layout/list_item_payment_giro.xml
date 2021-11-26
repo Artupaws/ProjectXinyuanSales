@@ -20,6 +20,7 @@
             android:layout_weight="0.6"
             android:textSize="10sp"
             tools:text="21-02-2021"
+            style="@style/TextAppearance.Typography.Body2"
             tools:ignore="SmallSp" />
         <TextView
             android:id="@+id/tv_bank_name"
@@ -28,6 +29,7 @@
             android:layout_weight="0.6"
             android:textSize="10sp"
             android:gravity="center_horizontal"
+            style="@style/TextAppearance.Typography.Body2"
             android:background="@color/white"
             tools:text="BCA"
             tools:ignore="SmallSp" />
@@ -37,6 +39,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="10sp"
+            style="@style/TextAppearance.Typography.Body2"
             android:ellipsize="end"
             android:maxLines="1"
             android:gravity="center_horizontal"
@@ -48,6 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
+            style="@style/TextAppearance.Typography.Body2"
             android:background="@drawable/state_background_todo"
             android:textSize="10sp"
             android:textColor="@color/white"
@@ -61,6 +65,7 @@
             android:layout_weight="1"
             android:textSize="10sp"
             android:ellipsize="end"
+            style="@style/TextAppearance.Typography.Body2"
             android:maxLines="1"
             android:gravity="center_horizontal"
             android:background="@color/white"

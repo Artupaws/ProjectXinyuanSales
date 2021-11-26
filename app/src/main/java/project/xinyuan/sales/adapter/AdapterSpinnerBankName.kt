@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import project.xinyuan.sales.R
-import project.xinyuan.sales.model.DataBank
+import project.xinyuan.sales.model.bank.master.DataBank
 
 class AdapterSpinnerBankName(val context: Context, private val listBankName:List<DataBank?>?):BaseAdapter() {
 
