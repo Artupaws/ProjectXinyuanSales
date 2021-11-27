@@ -20,9 +20,13 @@ import project.xinyuan.sales.databinding.ActivityListCartBinding
 import project.xinyuan.sales.helper.Constants
 import project.xinyuan.sales.helper.Helper
 import project.xinyuan.sales.helper.SharedPreferencesHelper
+import project.xinyuan.sales.model.company.master.CompanyItem
 import project.xinyuan.sales.model.customer.master.DataCustomer
 import project.xinyuan.sales.model.transaction.master.DataFormalTransaction
 import project.xinyuan.sales.model.paymentaccount.master.DataPaymentAccount
+import project.xinyuan.sales.model.transaction.ProductItem
+import project.xinyuan.sales.model.transaction.RequestCreateTransaction
+import project.xinyuan.sales.model.warehouse.master.DataWarehouse
 import project.xinyuan.sales.roomdatabase.CartDao
 import project.xinyuan.sales.roomdatabase.CartItem
 import project.xinyuan.sales.roomdatabase.CartRoomDatabase
@@ -31,6 +35,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ListCartAlternateActivity : AppCompatActivity(), ListCartAlternateContract, View.OnClickListener {
 
@@ -197,7 +202,6 @@ class ListCartAlternateActivity : AppCompatActivity(), ListCartAlternateContract
     private fun checkAddDataTransaction(){
         var invoiceNumber = binding.etNumberInvoice.text.toString()
         var paymentFill = paymentType
-        var postpaidFill = paymentPeriod
 
         if (invoiceNumber.isEmpty()){
             isEmptyInvoice = true
@@ -215,18 +219,15 @@ class ListCartAlternateActivity : AppCompatActivity(), ListCartAlternateContract
             paymentFill = paymentType
         }
 
-        if (postpaidFill == "Choose"){
-            isEmptyPaymenPeriod = true
-            Snackbar.make(binding.btnApprove, "please choose tenor", Snackbar.LENGTH_SHORT).show()
-        } else {
-            isEmptyPaymenPeriod = false
-            postpaidFill = paymentPeriod
-        }
-
-        if (!isEmptyInvoice && !isEmptyPayment && !isEmptyPaymenPeriod && !isEmptyDoNumber){
+        if (!isEmptyInvoice && !isEmptyPayment){
             Log.d("data", "$invoiceNumber $idCustomer $paymentType $paymentPeriod $valuePaymentCash ${helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt()} $account")
-            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentType!!, paymentPeriod!!.toInt(), valuePaymentCash,
-                helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt(), account, binding.tvTransactionDate.text.toString())
+//            presenter.addDataFormalTransaction(invoiceNumber, idCustomer!!, paymentType!!, paymentPeriod!!.toInt(), valuePaymentCash, helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt(), account, binding.tvTransactionDate.text.toString())
+            var listProduct:ArrayList<ProductItem?>? = ArrayList()
+            for (i in listItemCart){
+                listProduct!!.add(ProductItem(i.subTotal.toInt(),i.id,i.total.toInt(),i.price.toInt()))
+            }
+            val request = RequestCreateTransaction(invoiceNumber,idCustomer,binding.tvTransactionDate.text.toString(),4,1,paymentPeriod!!.toInt(),paymentType,helper.changeFormatMoneyToValue(binding.tvTotalPrice.text.toString()).toInt(),listProduct,account)
+            presenter.addTransaction(request)
         } else {
             stateUnloading()
             Snackbar.make(binding.btnApprove, "please complete form", Snackbar.LENGTH_SHORT).show()
@@ -279,13 +280,20 @@ class ListCartAlternateActivity : AppCompatActivity(), ListCartAlternateContract
     override fun getDataFormalTransaction(data: DataFormalTransaction?) {
         Log.d("idTransaction", data?.id.toString())
         idTransaction = data?.id
-        for (i in listItemCart){
-            presenter.addProductTransaction(idTransaction!!, i.id, i.total.toInt(), i.price.toInt(), i.subTotal.toInt())
-        }
+
+        move()
+        stateUnloading()
     }
 
     override fun getPaymentAccount(data: List<DataPaymentAccount?>?) {
         setupSpinnerPaymentAccount(data)
+    }
+
+    override fun getWarehouse(data: List<DataWarehouse?>?) {
+
+    }
+
+    override fun getCompany(data: List<CompanyItem?>?) {
     }
 
 

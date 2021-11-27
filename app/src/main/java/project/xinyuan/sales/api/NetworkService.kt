@@ -138,8 +138,6 @@ interface NetworkService {
         @Field("date")dateTransaction:String
     ):Call<ResponseAddTransaction>
 
-    @FormUrlEncoded
-    @Headers("No-Authentication: true")
     @POST("api/transaction")
     fun addTransaction(
         @Body transactionData:RequestCreateTransaction
