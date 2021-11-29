@@ -80,16 +80,16 @@ class AddPhotoCustomerActivity : AppCompatActivity(), View.OnClickListener, AddP
         binding.btnAddCustomer.setOnClickListener(this)
 
         idArea = intent.getIntExtra("idArea", 0)
-        companyName = intent.getStringExtra("companyName")
-        companyAddress = intent.getStringExtra("companyAddress")
-        nameAdmin = intent.getStringExtra("nameAdmin")
-        idCardAdmin = intent.getStringExtra("idCardAdmin")
-        phoneAdmin = intent.getStringExtra("phoneAdmin")
-        companyPhone = intent.getStringExtra("companyPhone")
-        companyNpwp = intent.getStringExtra("companyNpwp")
-        addressAdmin = intent.getStringExtra("addressAdmin")
-        npwpAdmin = intent.getStringExtra("npwpAdmin")
-        placeAndBirthAdmin = intent.getStringExtra("placeAndBirthAdmin")
+        companyName = intent.getStringExtra("companyName")!!
+        companyAddress = intent.getStringExtra("companyAddress")!!
+        nameAdmin = intent.getStringExtra("nameAdmin")!!
+        idCardAdmin = intent.getStringExtra("idCardAdmin")!!
+        phoneAdmin = intent.getStringExtra("phoneAdmin")!!
+        companyPhone = intent.getStringExtra("companyPhone")!!
+        companyNpwp = intent.getStringExtra("companyNpwp")!!
+        addressAdmin = intent.getStringExtra("addressAdmin")!!
+        npwpAdmin = intent.getStringExtra("npwpAdmin")!!
+        placeAndBirthAdmin = intent.getStringExtra("placeAndBirthAdmin")!!
         idLevel = intent.getIntExtra("idLevel", 0)
 
 

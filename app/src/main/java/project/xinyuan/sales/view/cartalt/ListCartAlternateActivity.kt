@@ -77,7 +77,7 @@ class ListCartAlternateActivity : AppCompatActivity(), ListCartAlternateContract
         binding.toolbarListCart.title = "Customer Order"
 
 
-        val detailCustomer = intent.getParcelableExtra<DataCustomer>("detailCustomer")
+        val detailCustomer = intent.getParcelableExtra<DataCustomer>("detailCustomer")!!
         idCustomer = detailCustomer?.id
         setCustomerData(detailCustomer)
 
@@ -132,7 +132,6 @@ class ListCartAlternateActivity : AppCompatActivity(), ListCartAlternateContract
         binding.spnTempo.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 paymentType = binding.spnTempo.selectedItem.toString()
-                Log.d("tempo", paymentType)
                 binding.btnApprove.isEnabled = paymentType != "Choose"
                 stateUnloading()
                 when (paymentType) {
@@ -183,7 +182,6 @@ class ListCartAlternateActivity : AppCompatActivity(), ListCartAlternateContract
         binding.spnPostpaid.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 paymentPeriod = binding.spnPostpaid.selectedItem.toString()
-                Log.d("postpaid", paymentPeriod)
                 if (paymentPeriod != "Choose"){
                     binding.btnApprove.isEnabled = true
                     account = 0

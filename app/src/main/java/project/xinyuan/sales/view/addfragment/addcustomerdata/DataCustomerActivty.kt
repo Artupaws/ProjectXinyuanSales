@@ -315,7 +315,6 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
                 if (binding.etPlaceBirth.text.hashCode() == s.hashCode()){
                     if (s?.isNotEmpty()!!){
                         placeBirth = binding.etPlaceBirth.text.toString()
-                        Log.d("placeBirth", placeBirth)
                         binding.etDateBirth.isEnabled = true
                     } else {
                         binding.etDateBirth.text = null
@@ -324,7 +323,6 @@ class DataCustomerActivty : AppCompatActivity(), View.OnClickListener, DataCusto
                 } else if (binding.etDateBirth.text.hashCode() == s.hashCode()){
                     if (s?.isNotEmpty()!!){
                         dateBirth = binding.etDateBirth.text.toString()
-                        Log.d("dateBirth", dateBirth)
                     }
                 } else if (binding.etArea.text.hashCode() == s.hashCode()){
                     if (s?.isEmpty()!!){

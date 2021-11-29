@@ -60,7 +60,7 @@ class DetailTransactionActivity : AppCompatActivity(), View.OnClickListener, Det
         binding.toolbarDetailTransaction.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarDetailTransaction.title = "Detail Transaction"
         val dataTransaction = intent.getParcelableExtra<DataTransaction>("dataTransaction")
-        totalMustPayIDR = helper.convertToFormatMoneyIDR(dataTransaction.debt.toString())
+        totalMustPayIDR = helper.convertToFormatMoneyIDR(dataTransaction?.debt.toString())
         totalMustPayValue = dataTransaction?.debt.toString()
         idTransaction = dataTransaction?.idTransaction
         totalPrice = dataTransaction?.transactiondetails?.map { it?.price.toString().toInt()*it?.quantity.toString().toInt() }?.sum()

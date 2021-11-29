@@ -263,7 +263,6 @@ class AccountActivity : AppCompatActivity(), View.OnClickListener, AccountActivi
     }
 
     private fun setPhotoProfile(photoFile:String?){
-        Log.d("photoProfile", photoFile)
         if (photoFile?.contains(".png")!! || (photoFile.contains(".jpeg") || (photoFile.contains(".jpg")))){
             Glide.with(this).load(photoFile).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.ivProfile)
         } else {
